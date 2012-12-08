@@ -1,0 +1,77 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <StringProperty Name="Culture">en-GB</StringProperty>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>Aust</Value>
+      <Value>banid</Value>
+      <Value>banids</Value>
+      <Value>callback</Value>
+      <Value>chanop</Value>
+      <Value>debuglevel</Value>
+      <Value>dehop</Value>
+      <Value>deop</Value>
+      <Value>Erroneus</Value>
+      <Value>hopcount</Value>
+      <Value>hostmask</Value>
+      <Value>int</Value>
+      <Value>Intninety</Value>
+      <Value>irc</Value>
+      <Value>linkname</Value>
+      <Value>logfile</Value>
+      <Value>Lv</Value>
+      <Value>maxdepth</Value>
+      <Value>newtype</Value>
+      <Value>numerics</Value>
+      <Value>Oper</Value>
+      <Value>params</Value>
+      <Value>patchlevel</Value>
+      <Value>sendq</Value>
+      <Value>Serv</Value>
+      <Value>servername</Value>
+      <Value>Sv</Value>
+      <Value>toplevel</Value>
+      <Value>unexcept</Value>
+      <Value>yaircc</Value>
+      <Value>Yaircc</Value>
+      <Value>yaircc's</Value>
+    </CollectionProperty>
+  </GlobalSettings>
+  <Parsers>
+    <Parser ParserId="StyleCop.CSharp.CsParser">
+      <ParserSettings>
+        <BooleanProperty Name="AnalyzeDesignerFiles">False</BooleanProperty>
+      </ParserSettings>
+    </Parser>
+  </Parsers>
+  <Analyzers>
+    <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
+      <Rules>
+        <Rule Name="FieldNamesMustNotContainUnderscore">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+      </Rules>
+      <AnalyzerSettings>
+        <CollectionProperty Name="Hungarian">
+          <Value>os</Value>
+        </CollectionProperty>
+      </AnalyzerSettings>
+    </Analyzer>
+    <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
+      <Rules>
+        <Rule Name="DocumentationTextMustContainWhitespace">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="DocumentationMustMeetCharacterPercentage">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+      </Rules>
+      <AnalyzerSettings />
+    </Analyzer>
+  </Analyzers>
+</StyleCopSettings>
