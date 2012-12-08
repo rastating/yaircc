@@ -1,0 +1,109 @@
+﻿body {
+	font-family: monospace;
+	font-size: 10pt;
+	color: #222;
+}
+
+.message-table {
+	width: 100%;
+}
+
+.WelcomeMessage a 
+{
+	color: #FFFFFF;
+}
+
+#splash {
+	color: #DDD;
+	font-size: 24pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+.payload {
+	width: 100%;
+	padding: 1px 1px 1px 3px;
+	color: #000000;
+	white-space: pre-wrap;
+}
+
+.timestamp {
+	font-style: normal !important;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.source {
+	padding-right: 10px;
+	text-align: right;
+	vertical-align: top;
+	white-space: nowrap;
+	font-weight: bold;
+	color: black !important;
+}
+
+.ActionMessage .source, .ActionMessage .payload {
+	font-style: italic;
+}
+
+.ActionMessage .source {
+	padding-right: 0px;
+}
+
+.ErrorMessage .payload {
+	background: #A8221E;
+	color: #FFF;
+	white-space: pre-wrap;
+}
+
+.NoticeMessage .payload {
+	color: #AE4141;
+	background-color: #FFFFFF;
+	white-space: pre-wrap;
+	font-weight: bold;
+}
+
+.NotificationMessage .payload {
+	color: #0E9E0E;
+	background-color: #C3F7C3;
+	white-space: pre-wrap;
+}
+
+.WarningMessage .payload {
+	background: #FFF196;
+	color: #FF8D02;
+}
+
+.WarningMessage .source {
+	font-variant: small-caps;
+	font-size: 90%;
+	padding-right: 10px;
+	text-align: right;
+	vertical-align: top;
+	white-space: nowrap;
+	font-weight: bold;
+	color: #a8221e;
+}
+
+.WelcomeMessage .source {
+	font-variant: small-caps;
+	font-size: 90%;
+	color: #686699;
+}
+
+.WelcomeMessage .payload {
+	background-color: #1342A5;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.PRIVMSG .payload {
+	color: #555;
+	background-color: #F0F0F0;
+}
+
+.NICK .payload 
+{
+	color: #FFFFFF;
+	background-color: #4aa3ff;
+}
