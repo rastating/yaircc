@@ -116,15 +116,48 @@ namespace Yaircc
             IRCChannel channel = sender as IRCChannel;
             channel.TabPage.UserTreeView.InvokeAction(() =>
             {
+                string topNodePath = null;
+                bool topNodeIsGroup = false;
+
+                if (channel.TabPage.UserTreeView.TopNode != null)
+                {
+                    if (channel.TabPage.UserTreeView.TopNode.Tag is IRCUser)
+                    {
+                        topNodePath = channel.TabPage.UserTreeView.TopNode.FullPath;
+                    }
+                    else if (channel.TabPage.UserTreeView.TopNode.Nodes.Count > 0)
+                    {
+                        topNodeIsGroup = true;
+                        topNodePath = channel.TabPage.UserTreeView.TopNode.Nodes[0].FullPath;
+                    }
+                    else
+                    {
+                    }
+                }
+
                 channel.TabPage.UserTreeView.Nodes.Clear();
+                TreeNode topNode = null;
 
                 for (int i = 0; i < users.Count; i++)
                 {
-                    channel.TabPage.AddUserToList(users[i]);
+                    TreeNode node = channel.TabPage.AddUserToList(users[i]);
+                    if (topNodePath != null && node.FullPath.Equals(topNodePath))
+                    {
+                        topNode = topNodeIsGroup ? node.Parent : node;
+                    }
                 }
 
                 channel.TabPage.UserTreeView.Sort();
                 channel.TabPage.RefreshTreeNodeCollapseState();
+
+                if (topNode != null)
+                {
+                    channel.TabPage.UserTreeView.TopNode = topNode;
+                }
+                else
+                {
+                    channel.TabPage.UserTreeView.TopNode = channel.TabPage.UserTreeView.Nodes[0];
+                }
             });
         }
 
