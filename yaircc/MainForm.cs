@@ -349,7 +349,7 @@ namespace Yaircc
         /// <returns>True if <paramref name="command"/> starts with "/server", otherwise false.</returns>
         private bool CommandIsConnectionRequest(string command)
         {
-            return command.ToLower().StartsWith("/server");
+            return command.ToLower().StartsWith("/server") || command.ToLower().StartsWith("/connect");
         }
 
         /// <summary>
@@ -625,7 +625,7 @@ namespace Yaircc
         private void ListCommands()
         {
             IRCTabPage currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            currentTab.AppendMessage(null, "[INFO]", "away, back, ban, dehop, deop, except, hop, invite, j, join, kick, knock, leave, links, list", MessageType.ServerMessage);
+            currentTab.AppendMessage(null, "[INFO]", "away, back, ban, connect, dehop, deop, except, hop, invite, j, join, kick, knock, leave, links, list", MessageType.ServerMessage);
             currentTab.AppendMessage(null, "[INFO]", "map, me, mode, motd, msg, names, nick, notice, op, oper, part, ping, quit, stats, time, topic", MessageType.ServerMessage);
             currentTab.AppendMessage(null, "[INFO]", "unban, unexcept, userhost, voice, who, whois, whowas", MessageType.ServerMessage);
         }

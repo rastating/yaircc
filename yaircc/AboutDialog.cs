@@ -19,6 +19,7 @@ namespace Yaircc
 {
     using System;
     using System.Diagnostics;
+    using System.Reflection;
     using System.Windows.Forms;
 
     /// <summary>
@@ -32,6 +33,23 @@ namespace Yaircc
         public AboutDialog()
         {
             this.InitializeComponent();
+            this.versionLabel.Text = string.Format("Version {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
+
+        /// <summary>
+        /// Processes a command key.
+        /// </summary>
+        /// <param name="msg">A System.Windows.Forms.Message, passed by reference, that represents the Win32 message to process.</param>
+        /// <param name="keyData">One of the System.Windows.Forms.Keys values that represents the key to process.</param>
+        /// <returns>true if the keystroke was processed and consumed by the control; otherwise, false to allow further processing.</returns>
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         /// <summary>

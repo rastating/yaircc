@@ -33,6 +33,7 @@
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.closeButton = new System.Windows.Forms.Button();
             this.viewLicenseButton = new System.Windows.Forms.Button();
+            this.versionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,15 +88,27 @@
             this.viewLicenseButton.UseVisualStyleBackColor = true;
             this.viewLicenseButton.Click += new System.EventHandler(this.ViewLicenseButton_Click);
             // 
+            // versionLabel
+            // 
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.versionLabel.Location = new System.Drawing.Point(12, 505);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(89, 13);
+            this.versionLabel.TabIndex = 4;
+            this.versionLabel.Text = "Version 1.0.0.0";
+            // 
             // AboutDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 532);
+            this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.viewLicenseButton);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.textBoxDescription);
             this.Controls.Add(this.pictureBox1);
+            this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -115,5 +128,6 @@
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Button viewLicenseButton;
+        private System.Windows.Forms.Label versionLabel;
     }
 }
