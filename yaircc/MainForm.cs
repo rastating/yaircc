@@ -55,6 +55,7 @@ namespace Yaircc
         public MainForm()
         {
             this.InitializeComponent();
+            Yaircc.Properties.Settings.Default.Upgrade();
         }
 
         #endregion
