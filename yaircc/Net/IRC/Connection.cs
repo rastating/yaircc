@@ -408,7 +408,7 @@ namespace Yaircc.Net.IRC
             string portString = null;
             string password = null;
 
-            Regex regex = new Regex(@"/server(\s+)(?<server>[a-zA-Z\.0-9\-]+)(((\s+)(?<port>[0-9]+))?((\s+)(?<password>.*))?)?", RegexOptions.IgnoreCase);
+            Regex regex = new Regex(@"/(server|connect)(\s+)(?<server>[a-zA-Z\.0-9\-]+)(((\s+)(?<port>[0-9]+))?((\s+)(?<password>.*))?)?", RegexOptions.IgnoreCase);
             MatchCollection matches = regex.Matches(command);
 
             if (matches.Count > 0)
