@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="INSTALLLOCATION">
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="MainGroup">
+      <Component Id="cmpC6333A3266F9F2C87F8A844507C0772D" Directory="INSTALLLOCATION" Guid="{2F27A16F-0245-4CA3-BF96-30D63983CD8B}">
+        <File Id="fil5772280D22A98DD17D2AC4BC1AF10D0A" KeyPath="yes" Source="$(var.SourceDir)\License.txt" />
+      </Component>
+      <Component Id="cmp19204B0D163DB2EA2B461DF67C87D933" Directory="INSTALLLOCATION" Guid="{53C904DE-DF09-4CA5-8B68-C408101E1997}">
+        <File Id="filCCEA735ACB2429DD6B8735742198E43F" KeyPath="yes" Source="$(var.SourceDir)\yaircc.exe" />
+      </Component>
+      <Component Id="cmp47161CD58B8E2F4067E73745215E2B1A" Directory="INSTALLLOCATION" Guid="{A67003FE-83FE-4189-B202-29E43110913C}">
+        <File Id="filA6B4A258E845DACDB28EEC262B772702" KeyPath="yes" Source="$(var.SourceDir)\yaircc.exe.config" />
+      </Component>
+      <Component Id="cmp6391E20B1CC64199B6A33D327A766FBB" Directory="INSTALLLOCATION" Guid="{20B2D2CF-58A4-4736-9851-27594F905542}">
+        <File Id="fil8C9375F47853ADAE2533FDD77D3EB859" KeyPath="yes" Source="$(var.SourceDir)\yaircc.pdb" />
+      </Component>
+      <Component Id="cmpAEC3250DE2D48D148EAFF7A720442FBF" Directory="dirC722B493912DBADA3E912E61CAC1DA53" Guid="{88F7258B-085B-4B6C-A300-E1AD47E55EFB}">
+        <File Id="fil4E566DBAB5C6247F37DB86E0EA32CC6A" KeyPath="yes" Source="$(var.SourceDir)\themes\default.css" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <DirectoryRef Id="dirC722B493912DBADA3E912E61CAC1DA53" />
+  </Fragment>
+  <Fragment>
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Directory Id="dirC722B493912DBADA3E912E61CAC1DA53" Name="themes" />
+    </DirectoryRef>
+  </Fragment>
+</Wix>

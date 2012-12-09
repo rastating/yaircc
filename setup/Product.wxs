@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product 
+    Id="71184aae-4f4c-4d71-9b89-c3e0d9dd2942" 
+    Name="yaircc" 
+    Language="1033" 
+    Version="1.0.2.0" 
+    Manufacturer="intninety" 
+    UpgradeCode="26d4fbd8-f452-410c-a04e-cd40c3f36832">
+    
+		<Package InstallerVersion="200" Compressed="yes" />
+    <MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of yaircc is already installed. Setup will now exit."></MajorUpgrade>
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <UIRef Id="WixUI_Mondo" />
+    <WixVariable Id="WixUIDialogBmp" Value="WixUIDialogBmp.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="WixUIBannerBmp.bmp" />
+    
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLLOCATION" Name="yaircc">
+					<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+					<!-- <Component Id="ProductComponent" Guid="2b829f4b-7900-448e-92ce-11f4b791f555"> -->
+						<!-- TODO: Insert files, registry keys, and other resources here. -->
+					<!-- </Component> -->
+				</Directory>
+			</Directory>
+      
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="yaircc">
+          <Component Id="ApplicationShortcut" Guid="8eccfdbe-3be7-42ce-9d29-aa701f4c3e4c">
+            <Shortcut Id="ApplicationStartMenuShortcut"
+                      Name="yaircc"
+                      Description="A free, open-source, lightweight IRC client."
+                      Target="[INSTALLLOCATION]yaircc.exe"
+                      WorkingDirectory="INSTALLLOCATION"/>
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\Microsoft\yaircc" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+
+            <Shortcut Id="UninstallProduct"
+            Name="Uninstall yaircc"
+            Target="[SystemFolder]msiexec.exe"
+            Arguments="/x [ProductCode]"
+            Description="Uninstalls yaircc" />
+          </Component>
+        </Directory>
+      </Directory>
+      
+		</Directory>
+
+		<Feature Id="ProductFeature" ConfigurableDirectory="INSTALLLOCATION" Title="yaircc" Level="1">
+      <ComponentGroupRef Id="Product.Generated" />
+      <ComponentGroupRef Id="MainGroup" />
+      <ComponentRef Id="ApplicationShortcut" />
+		</Feature>
+	</Product>
+</Wix>
