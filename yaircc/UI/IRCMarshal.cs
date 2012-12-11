@@ -328,7 +328,7 @@ namespace Yaircc.UI
                 }
 
                 string tabName = string.Format("{0}_{1}", this.Connection.ToString(), displayName);
-                IRCTabPage tabPage = new IRCTabPage(tabName, displayName, type);
+                IRCTabPage tabPage = new IRCTabPage(this.ServerTab.OwningForm, tabName, displayName, type);
                 tabPage.Connection = this.Connection;
                 tabPage.ConnectionSpecificName = displayName;
 

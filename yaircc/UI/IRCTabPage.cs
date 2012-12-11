@@ -164,6 +164,11 @@ namespace Yaircc.UI
         /// </summary>
         private NickNameMentionedHandler nickNameMentioned;
 
+        /// <summary>
+        /// The form that the tab page is displayed on.
+        /// </summary>
+        private MainForm owningForm;
+
         #endregion
 
         #region Constructors
@@ -171,13 +176,16 @@ namespace Yaircc.UI
         /// <summary>
         /// Initialises a new instance of the <see cref="IRCTabPage"/> class.
         /// </summary>
+        /// <param name="owningForm">The form that the tab page is displayed on.</param>
         /// <param name="name">The name of the tab page.</param>
         /// <param name="text">The text to display in the caption.</param>
         /// <param name="type">The type of IRC entity being represented.</param>
-        public IRCTabPage(string name, string text, IRCTabType type)
+        public IRCTabPage(MainForm owningForm, string name, string text, IRCTabType type)
             : base(text)
         {
             GlobalSettings settings = new GlobalSettings();
+
+            this.owningForm = owningForm;
 
             this.adminGroupExpanded = true;
             this.founderGroupExpanded = true;
@@ -323,6 +331,14 @@ namespace Yaircc.UI
         public bool GroupingByMode
         {
             get { return this.groupingByMode; }
+        }
+
+        /// <summary>
+        /// Gets the form that the tab page is displayed on.
+        /// </summary>
+        public MainForm OwningForm
+        {
+            get { return this.owningForm; }
         }
 
         #endregion
@@ -636,7 +652,7 @@ namespace Yaircc.UI
                     {
                         if (this.TabType == IRCTabType.PM || payload.Contains(this.Marshal.Connection.Nickname))
                         {
-                            if ((this.Parent as TabControl).SelectedTab != this)
+                            if ((this.Parent as TabControl).SelectedTab != this || !this.OwningForm.IsForegroundWindow)
                             {
                                 this.ImageKey = "exclamation";
                                 if (this.nickNameMentioned != null)

@@ -60,6 +60,21 @@ namespace Yaircc
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Gets a value indicating whether or not the form is in the foreground.
+        /// </summary>
+        public bool IsForegroundWindow
+        {
+            get
+            {
+                return this.Handle.Equals(GetForegroundWindow());
+            }
+        }
+
+        #endregion
+
         #region Instance Methods
 
         /// <summary>
@@ -188,6 +203,9 @@ namespace Yaircc
 
             this.RefreshWindowsMenuItems(null);
         }
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
 
         /// <summary>
         /// Handles the Click event of ToolStripMenuItem.
@@ -686,7 +704,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            this.channelsTabControl.TabPages.Add(new IRCTabPage("consoleTabPage", "yaircc", IRCTabType.Console));
+            this.channelsTabControl.TabPages.Add(new IRCTabPage(this, "consoleTabPage", "yaircc", IRCTabType.Console));
             this.inputTextBox.Focus();
         }
 
@@ -751,7 +769,7 @@ namespace Yaircc
                 if (t == null)
                 {
                     GlobalSettings settings = new GlobalSettings();
-                    serverTab = new IRCTabPage(connection.ToString(), connection.Server, IRCTabType.Server);
+                    serverTab = new IRCTabPage(this, connection.ToString(), connection.Server, IRCTabType.Server);
                     serverTab.Connection = connection;
                     serverTab.Connection.UserName = settings.UserName;
                     serverTab.Connection.RealName = settings.RealName;
@@ -1066,6 +1084,20 @@ namespace Yaircc
                 ToolStripMenuItem item = sender as ToolStripMenuItem;
                 string tabName = item.Name.Substring(0, item.Name.LastIndexOf("_TabWindow"));
                 this.channelsTabControl.SelectedTab = this.channelsTabControl.TabPages[tabName];
+            }
+        }
+
+        /// <summary>
+        /// Handles the Activated event of System.Windows.Forms.Form.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void MainForm_Activated(object sender, EventArgs e)
+        {
+            if (this.channelsTabControl.SelectedIndex > 0)
+            {
+                IRCTabPage tabPage = this.channelsTabControl.SelectedTab as IRCTabPage;
+                tabPage.ImageIndex = tabPage.NormalImageIndex;
             }
         }
 

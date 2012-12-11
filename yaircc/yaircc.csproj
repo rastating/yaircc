@@ -222,12 +222,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\door_in.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\door.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\lightning.png" />
   </ItemGroup>
   <ItemGroup>
@@ -246,9 +240,6 @@
     <None Include="Resources\cut.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\page_white_copy.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\page_copy.png" />
   </ItemGroup>
   <ItemGroup>
@@ -259,12 +250,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tick.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\server.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\door_open.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cog.png" />
@@ -286,19 +271,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Resources\layout_edit.png" />
-    <None Include="Resources\bricks.png" />
-    <None Include="Resources\layout.png" />
-    <None Include="Resources\layout_add.png" />
-    <None Include="Resources\page_white_code.png" />
-    <None Include="Resources\folder.png" />
-    <None Include="Resources\disk1.png" />
     <None Include="Resources\application_form_magnify.png" />
     <None Include="Resources\1350082650_sort-alphabet.png" />
     <None Include="Resources\1350083455_sort-rating.png" />
-    <None Include="Resources\arrow_left.png" />
     <None Include="Resources\application_side_tree_remove1.png" />
-    <None Include="Resources\cancel.png" />
     <None Include="Resources\user_delete.png" />
     <None Include="Resources\bullet_green.png" />
     <None Include="Resources\user_comment.png" />
@@ -308,8 +284,6 @@
     <None Include="Resources\ste_graffiti.jpg" />
     <None Include="Resources\help.png" />
     <None Include="Resources\application_put.png" />
-    <None Include="Resources\drive_web.png" />
-    <Content Include="comments.ico" />
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
