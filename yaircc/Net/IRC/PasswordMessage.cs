@@ -31,6 +31,13 @@ namespace Yaircc.Net.IRC
         public PasswordMessage(string password)
             : base(string.Empty, "PASS", new string[] { password }, string.Empty)
         {
+            // If no password was specified we still need to send something
+            // as otherwise some servers (snircd being one) will complain that
+            // not enough parameters were specified.
+            if (string.IsNullOrEmpty(password))
+            {
+                this.Parameters = new string[] { "*" };
+            }
         }
 
         #endregion
