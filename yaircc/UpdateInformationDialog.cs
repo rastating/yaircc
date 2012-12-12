@@ -22,6 +22,8 @@ namespace Yaircc
     using System.Diagnostics;
     using System.IO;
     using System.Net;
+    using System.Security.Cryptography;
+    using System.Text;
     using System.Windows.Forms;
     using Yaircc.Localisation;
     using Yaircc.Net;
@@ -75,6 +77,34 @@ namespace Yaircc
         #region Instance Methods
 
         /// <summary>
+        /// Validates the integrity of an update file.
+        /// </summary>
+        /// <param name="fileName">The full path of the local file to validate.</param>
+        /// <param name="update">The upgrade the file is associated with.</param>
+        /// <returns>true if the hashes match, false if not.</returns>
+        private bool ValidateUpgradeFile(string fileName, ProgramUpdate update)
+        {
+            bool retval = false;
+
+            if (File.Exists(fileName))
+            {
+                SHA1Managed sha1 = new SHA1Managed();
+                StringBuilder sb = new StringBuilder(41);
+                byte[] data = File.ReadAllBytes(fileName);
+                byte[] hash = sha1.ComputeHash(data);
+                
+                for (int i = 0; i < hash.Length; i++)
+                {
+                    sb.Append(hash[i].ToString("X2"));
+                }
+
+                retval = sb.ToString().Equals(update.Hash, StringComparison.OrdinalIgnoreCase);
+            }
+
+            return retval;
+        }
+
+        /// <summary>
         /// Localise the form.
         /// </summary>
         private void Localise()
@@ -95,26 +125,36 @@ namespace Yaircc
         private void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             string fileName = e.UserState.ToString();
-            if (!e.Cancelled)
+            
+            this.statusStripLabel.Text = Strings_UpdateInformationDialog.VerifyingUpdate;
+            if (this.ValidateUpgradeFile(fileName, this.update))
             {
-                DialogResult result = MessageBox.Show(Strings_UpdateInformationDialog.DownloadComplete, this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-                if (result == DialogResult.Yes)
+                if (!e.Cancelled)
                 {
-                    Process.Start(fileName);
-                    Application.Exit();
+                    DialogResult result = MessageBox.Show(Strings_UpdateInformationDialog.DownloadComplete, this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                    if (result == DialogResult.Yes)
+                    {
+                        Process.Start(fileName);
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        this.DialogResult = DialogResult.OK;
+                    }
                 }
                 else
                 {
-                    this.DialogResult = DialogResult.OK; 
+                    if (File.Exists(e.UserState.ToString()))
+                    {
+                        File.Delete(e.UserState.ToString());
+                    }
+
+                    this.DialogResult = DialogResult.Cancel;
                 }
             }
             else
             {
-                if (File.Exists(e.UserState.ToString()))
-                {
-                    File.Delete(e.UserState.ToString());
-                }
-
+                MessageBox.Show(Strings_UpdateInformationDialog.UpdateCorrupt, Strings_General.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.DialogResult = DialogResult.Cancel;
             }
         }
