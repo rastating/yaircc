@@ -55,6 +55,11 @@ namespace Yaircc.Net
         /// </summary>
         private string uri;
 
+        /// <summary>
+        /// The hash used to check the file integrity.
+        /// </summary>
+        private string hash;
+
         #endregion
 
         #region Constructors
@@ -101,6 +106,14 @@ namespace Yaircc.Net
         public Uri URI
         {
             get { return new Uri(this.uri); }
+        }
+
+        /// <summary>
+        /// Gets the hash used to check the file integrity.
+        /// </summary>
+        public string Hash
+        {
+            get { return this.hash; }
         }
 
         #endregion
@@ -153,11 +166,15 @@ namespace Yaircc.Net
                 IEnumerable<string> uri =
                     from item in root.Descendants("uri")
                     select (string)item.Value;
+                IEnumerable<string> hash =
+                    from item in root.Descendants("hash")
+                    select (string)item.Value;
 
                 this.version = version.First();
                 this.summary = summary.First();
                 this.date = date.First();
                 this.uri = uri.First();
+                this.hash = hash.First();
             }
             catch
             {
