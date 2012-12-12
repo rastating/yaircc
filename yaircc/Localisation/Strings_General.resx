@@ -244,4 +244,7 @@
   <data name="BugReportRequest" xml:space="preserve">
     <value>An unexpected error has occurred and yaircc must be closed. Would you like to send an anonymous bug report to the developers to help fix this?</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
 </root>
