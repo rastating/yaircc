@@ -126,4 +126,10 @@
   <data name="StartingDownload" xml:space="preserve">
     <value>Starting download...</value>
   </data>
+  <data name="UpdateCorrupt" xml:space="preserve">
+    <value>The update file appears to have been corrupted while downloading. Try to run the update again, and if the problem persists visit http://www.yaircc.com/ to manually update.</value>
+  </data>
+  <data name="VerifyingUpdate" xml:space="preserve">
+    <value>Verifying update...</value>
+  </data>
 </root>

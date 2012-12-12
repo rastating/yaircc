@@ -86,5 +86,23 @@ namespace Yaircc.Localisation {
                 return ResourceManager.GetString("StartingDownload", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The update file appears to have been corrupted while downloading. Try to run the update again, and if the problem persists visit http://www.yaircc.com/ to manually update..
+        /// </summary>
+        internal static string UpdateCorrupt {
+            get {
+                return ResourceManager.GetString("UpdateCorrupt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verifying update....
+        /// </summary>
+        internal static string VerifyingUpdate {
+            get {
+                return ResourceManager.GetString("VerifyingUpdate", resourceCulture);
+            }
+        }
     }
 }
