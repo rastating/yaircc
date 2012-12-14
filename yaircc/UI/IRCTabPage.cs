@@ -341,6 +341,18 @@ namespace Yaircc.UI
             get { return this.owningForm; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether or not Internet Explorer has JavaScript enabled.
+        /// </summary>
+        public bool JavaScriptIsAvailable
+        {
+            get
+            {
+                // Verify that JavaScript is enabled by making a call to the *javaScriptIsAvailable* method.
+                return this.WebBrowser.Document.InvokeScript("javaScriptIsAvailable") != null;
+            }
+        }
+
         #endregion
 
         #region Instance Method
@@ -1141,13 +1153,28 @@ namespace Yaircc.UI
                 }
             }
 
-            this.Controls.Add(this.webBrowser);
-            this.SetSplashText();
-
-            if (this.type == IRCTabType.Console)
+            if (this.JavaScriptIsAvailable)
             {
-                this.SetupConsoleContent();
+                this.SetSplashText();
+
+                if (this.type == IRCTabType.Console)
+                {
+                    this.SetupConsoleContent();
+                }
             }
+            else
+            {
+                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Yaircc.UI.JavaScriptWarning.htm"))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        this.WebBrowser.Document.OpenNew(true);
+                        this.WebBrowser.Document.Write(reader.ReadToEnd());
+                    }
+                }
+            }
+
+            this.Controls.Add(this.webBrowser);
         }
 
         /// <summary>

@@ -683,21 +683,6 @@ namespace Yaircc
         }
 
         /// <summary>
-        /// Handles the Load event of System.Windows.Forms.Form.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event arguments.</param>
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            GlobalSettings settings = new GlobalSettings();
-            if (settings.CheckForUpdateOnStart == GlobalSettings.Boolean.Yes)
-            {
-                this.autoCheckingForUpdate = true;
-                this.CheckForUpdatesToolStripMenuItem_Click(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
         /// Handles the Shown event of System.Windows.Forms.Form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -705,7 +690,50 @@ namespace Yaircc
         private void MainForm_Shown(object sender, EventArgs e)
         {
             this.channelsTabControl.TabPages.Add(new IRCTabPage(this, "consoleTabPage", "yaircc", IRCTabType.Console));
-            this.inputTextBox.Focus();
+
+            if ((this.channelsTabControl.TabPages[0] as IRCTabPage).JavaScriptIsAvailable)
+            {
+                GlobalSettings settings = new GlobalSettings();
+                if (settings.CheckForUpdateOnStart == GlobalSettings.Boolean.Yes)
+                {
+                    this.autoCheckingForUpdate = true;
+                    this.CheckForUpdatesToolStripMenuItem_Click(this, EventArgs.Empty);
+                }
+
+                this.inputTextBox.Focus();
+            }
+            else
+            {
+                for (int i = 0; i < this.Controls.Count; i++)
+                {
+                    this.ToggleEnabledControl(this.Controls[i], false);
+                }
+
+                this.ToggleEnabledControl(this.splitContainer, true);
+                this.ToggleEnabledControl(this.standardToolStrip, false);
+            }
+        }
+
+        /// <summary>
+        /// Toggles whether or not a control and all child controls are enabled.
+        /// </summary>
+        /// <param name="control">The control to enable or disable.</param>
+        /// <param name="enabled">The enabled state to set.</param>
+        private void ToggleEnabledControl(Control control, bool enabled)
+        {
+            control.Enabled = enabled;
+            if (control is MenuStrip)
+            {
+                foreach (ToolStripItem item in (control as MenuStrip).Items)
+                {
+                    item.Enabled = enabled;
+                }
+            }
+
+            for (int i = 0; i < control.Controls.Count; i++)
+            {
+                this.ToggleEnabledControl(this.Controls[i], enabled);
+            }
         }
 
         /// <summary>
