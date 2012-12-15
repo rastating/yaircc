@@ -290,6 +290,7 @@
     <Content Include="themes\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="UI\JavaScriptWarning.htm" />
     <Content Include="yaircc.ico" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
