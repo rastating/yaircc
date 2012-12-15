@@ -1102,5 +1102,18 @@ namespace Yaircc
         }
 
         #endregion
+
+        /// <summary>
+        /// Handles the Resize event of System.Windows.Forms.Form.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            foreach (IRCTabPage tabPage in this.channelsTabControl.TabPages)
+            {
+                tabPage.ScrollToBottom();
+            }
+        }
     }
 }
