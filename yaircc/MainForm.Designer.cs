@@ -812,6 +812,7 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.Activated += new System.EventHandler(this.MainForm_Activated);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.splitContainer.Panel1.ResumeLayout(false);
