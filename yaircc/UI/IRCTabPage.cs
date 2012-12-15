@@ -645,7 +645,7 @@ namespace Yaircc.UI
 
                     if (scroll)
                     {
-                        this.WebBrowser.Document.Window.ScrollTo(0, this.WebBrowser.Document.Window.Size.Height);
+                        this.ScrollToBottom();
                     }
 
                     if (this.Marshal != null)
@@ -890,6 +890,14 @@ namespace Yaircc.UI
 
                     return retval;
                 });
+        }
+
+        /// <summary>
+        /// Scrolls to the bottom of the chat log.
+        /// </summary>
+        public void ScrollToBottom()
+        {
+            this.WebBrowser.Document.Window.ScrollTo(0, this.WebBrowser.Document.Window.Size.Height);
         }
 
         /// <summary>
