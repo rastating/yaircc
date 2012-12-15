@@ -7,6 +7,11 @@
 
 			var isAtBottom = true;
 			var previousScrollTop = 0;
+
+			function javaScriptIsAvailable() {
+			    return true;
+			}
+			
 			function isScrolledToTheBottom() {
 			    if ($(document).height() > $(window).height()) {
 			        var currentScrollTop = $(window).scrollTop();
