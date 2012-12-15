@@ -67,7 +67,7 @@ namespace Yaircc
             this.client.DownloadFileCompleted += new AsyncCompletedEventHandler(this.Client_DownloadFileCompleted);
 
             this.update = update;
-            this.summaryTextBox.Text = update.Summary;
+            this.summaryTextBox.Text = update.Summary.Replace("\n", Environment.NewLine);
 
             this.Localise();
         }
