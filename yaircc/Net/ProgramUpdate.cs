@@ -169,7 +169,7 @@ namespace Yaircc.Net
                 IEnumerable<string> hash =
                     from item in root.Descendants("hash")
                     select (string)item.Value;
-
+                
                 this.version = version.First();
                 this.summary = summary.First();
                 this.date = date.First();
