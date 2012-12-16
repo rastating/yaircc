@@ -19,6 +19,7 @@ namespace Yaircc
 {
     using System;
     using System.Windows.Forms;
+    using Yaircc.Settings;
 
     /// <summary>
     /// Represents the settings dialog.
@@ -42,7 +43,7 @@ namespace Yaircc
         public SettingsDialog()
         {
             this.InitializeComponent();
-            this.settings = new GlobalSettings();
+            this.settings = GlobalSettings.Instance;
             this.propertyGrid.SelectedObject = this.settings;
             this.SelectFirstGridItem();
         }

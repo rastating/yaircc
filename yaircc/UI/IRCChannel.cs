@@ -21,6 +21,7 @@ namespace Yaircc.UI
     using System.Collections.Generic;
     using Yaircc.Net.IRC;
     using TabControl = System.Windows.Forms.TabControl;
+    using Yaircc.Settings;
 
     /// <summary>
     /// Represents an IRC channel accessible via an <see cref="IRCTabPage"/>.
@@ -217,7 +218,7 @@ namespace Yaircc.UI
             Reply reply = (Reply)int.Parse(message.Command);
             MessageTypeAttribute attributes = IRCMarshal.GetReplyAttributes(reply);
             MessageType messageType = attributes.MessageType;
-            GlobalSettings settings = new GlobalSettings();
+            GlobalSettings settings = GlobalSettings.Instance;
             string source = attributes.Source;
             
             string content;
@@ -329,7 +330,7 @@ namespace Yaircc.UI
                 namesRequest.Invoke();
             }
 
-            GlobalSettings settings = new GlobalSettings();
+            GlobalSettings settings = GlobalSettings.Instance;
             if (settings.DebugMode == GlobalSettings.Boolean.Yes)
             {
                 this.TabPage.AppendMessage(message.Command, "[RAW]", message.ToString(), MessageType.WarningMessage);
