@@ -32,6 +32,7 @@ namespace Yaircc
     using Yaircc.Net.IRC;
     using Yaircc.UI;
     using Message = Yaircc.Net.IRC.Message;
+    using Yaircc.Settings;
     
     /// <summary>
     /// Represents the main form used in the application.
@@ -693,7 +694,7 @@ namespace Yaircc
 
             if ((this.channelsTabControl.TabPages[0] as IRCTabPage).JavaScriptIsAvailable)
             {
-                GlobalSettings settings = new GlobalSettings();
+                GlobalSettings settings = GlobalSettings.Instance;
                 if (settings.CheckForUpdateOnStart == GlobalSettings.Boolean.Yes)
                 {
                     this.autoCheckingForUpdate = true;
@@ -796,7 +797,7 @@ namespace Yaircc
                 IRCTabPage serverTab;
                 if (t == null)
                 {
-                    GlobalSettings settings = new GlobalSettings();
+                    GlobalSettings settings = GlobalSettings.Instance;
                     serverTab = new IRCTabPage(this, connection.ToString(), connection.Server, IRCTabType.Server);
                     serverTab.Connection = connection;
                     serverTab.Connection.UserName = settings.UserName;

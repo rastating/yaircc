@@ -72,7 +72,7 @@
     <Compile Include="FavouriteServersDialog.Designer.cs">
       <DependentUpon>FavouriteServersDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="IAssimilable.cs" />
     <Compile Include="IncomingReflectionMap.Designer.cs">
       <AutoGen>True</AutoGen>

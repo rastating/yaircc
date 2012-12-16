@@ -23,6 +23,7 @@ namespace Yaircc.UI
     using Yaircc.Localisation;
     using Yaircc.Net.IRC;
     using TabControl = System.Windows.Forms.TabControl;
+    using Yaircc.Settings;
 
     /// <summary>
     /// Represents a marshal that sits between an IRC connection and the application's UI.
@@ -364,7 +365,7 @@ namespace Yaircc.UI
             {
                 MessageTypeAttribute attributes = IRCMarshal.GetReplyAttributes(reply);
                 MessageType messageType = attributes.MessageType;
-                GlobalSettings settings = new GlobalSettings();
+                GlobalSettings settings = GlobalSettings.Instance;
                 string source = attributes.Source;
 
                 string content;
@@ -515,7 +516,7 @@ namespace Yaircc.UI
             // then also re-join any channels that we have in the Channels collection (i.e. reconnect to any channels)
             if (this.awaitingModeMessage && message is ModeMessage)
             {
-                GlobalSettings settings = new GlobalSettings();
+                GlobalSettings settings = GlobalSettings.Instance;
                 this.awaitingModeMessage = false;
                 this.Send(this.ServerTab, new ModeMessage(new string[] { this.Connection.Nickname, settings.Mode }));
                 this.Channels.ForEach(i => 
