@@ -1129,8 +1129,6 @@ namespace Yaircc
             }
         }
 
-        #endregion
-
         /// <summary>
         /// Handles the Resize event of System.Windows.Forms.Form.
         /// </summary>
@@ -1143,5 +1141,20 @@ namespace Yaircc
                 tabPage.ScrollToBottom();
             }
         }
+
+        /// <summary>
+        /// Handles the Click event of ToolStripMenuItem and the ButtonClick event of ToolStripSplitButton.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void FavouritesToolStripSplitButton_ButtonClick(object sender, EventArgs e)
+        {
+            using (FavouriteServersDialog dialog = new FavouriteServersDialog())
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        #endregion
     }
 }
