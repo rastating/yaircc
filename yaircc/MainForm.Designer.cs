@@ -41,6 +41,8 @@
             this.standardToolStrip = new System.Windows.Forms.ToolStrip();
             this.connectToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.disconnectToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.favouritesToolStripSplitButton = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.joinChannelToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.leaveChannelToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -60,6 +62,8 @@
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.favouriteServersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.joinChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leaveChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -217,6 +221,8 @@
             this.standardToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectToolStripButton,
             this.disconnectToolStripButton,
+            this.toolStripSeparator5,
+            this.favouritesToolStripSplitButton,
             this.toolStripSeparator1,
             this.joinChannelToolStripButton,
             this.leaveChannelToolStripButton,
@@ -257,6 +263,21 @@
             this.disconnectToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.disconnectToolStripButton.Text = "Disconnect";
             this.disconnectToolStripButton.Click += new System.EventHandler(this.DisconnectTabMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // favouritesToolStripSplitButton
+            // 
+            this.favouritesToolStripSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.favouritesToolStripSplitButton.Image = global::Yaircc.Properties.Resources.folder_heart;
+            this.favouritesToolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.favouritesToolStripSplitButton.Name = "favouritesToolStripSplitButton";
+            this.favouritesToolStripSplitButton.Size = new System.Drawing.Size(32, 22);
+            this.favouritesToolStripSplitButton.Text = "Favourite Servers...";
+            this.favouritesToolStripSplitButton.ButtonClick += new System.EventHandler(this.FavouritesToolStripSplitButton_ButtonClick);
             // 
             // toolStripSeparator1
             // 
@@ -399,6 +420,8 @@
             this.connectToolStripMenuItem,
             this.disconnectToolStripMenuItem,
             this.toolStripMenuItem1,
+            this.favouriteServersToolStripMenuItem,
+            this.toolStripMenuItem7,
             this.joinChannelToolStripMenuItem,
             this.leaveChannelToolStripMenuItem,
             this.toolStripMenuItem2,
@@ -415,7 +438,7 @@
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
             this.connectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
                         | System.Windows.Forms.Keys.C)));
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.connectToolStripMenuItem.Text = "&Connect...";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.ConnectToolStripMenuItem_Click);
             // 
@@ -425,14 +448,28 @@
             this.disconnectToolStripMenuItem.Image = global::Yaircc.Properties.Resources.lightning_delete;
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
             this.disconnectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.disconnectToolStripMenuItem.Text = "&Disconnect";
             this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.DisconnectToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(190, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(209, 6);
+            // 
+            // favouriteServersToolStripMenuItem
+            // 
+            this.favouriteServersToolStripMenuItem.Image = global::Yaircc.Properties.Resources.folder_heart;
+            this.favouriteServersToolStripMenuItem.Name = "favouriteServersToolStripMenuItem";
+            this.favouriteServersToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.favouriteServersToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.favouriteServersToolStripMenuItem.Text = "Favourite Servers...";
+            this.favouriteServersToolStripMenuItem.Click += new System.EventHandler(this.FavouritesToolStripSplitButton_ButtonClick);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(209, 6);
             // 
             // joinChannelToolStripMenuItem
             // 
@@ -440,7 +477,7 @@
             this.joinChannelToolStripMenuItem.Image = global::Yaircc.Properties.Resources.application_side_tree_plus;
             this.joinChannelToolStripMenuItem.Name = "joinChannelToolStripMenuItem";
             this.joinChannelToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
-            this.joinChannelToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.joinChannelToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.joinChannelToolStripMenuItem.Text = "&Join Channel...";
             this.joinChannelToolStripMenuItem.Click += new System.EventHandler(this.JoinChannelToolStripMenuItem_Click);
             // 
@@ -450,34 +487,34 @@
             this.leaveChannelToolStripMenuItem.Image = global::Yaircc.Properties.Resources.application_side_tree_remove;
             this.leaveChannelToolStripMenuItem.Name = "leaveChannelToolStripMenuItem";
             this.leaveChannelToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.leaveChannelToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.leaveChannelToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.leaveChannelToolStripMenuItem.Text = "&Leave Channel";
             this.leaveChannelToolStripMenuItem.Click += new System.EventHandler(this.LeaveChannelTabMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(190, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(209, 6);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Image = global::Yaircc.Properties.Resources.disk;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.saveAsToolStripMenuItem.Text = "&Save As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(190, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(209, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -903,6 +940,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
         private System.ComponentModel.BackgroundWorker updateCheckBackgroundWorker;
         private Intninety.TemporalTextBox inputTextBox;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem favouriteServersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripSplitButton favouritesToolStripSplitButton;
     }
 }
 

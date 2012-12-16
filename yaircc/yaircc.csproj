@@ -66,6 +66,12 @@
     </Compile>
     <Compile Include="ErrorLog.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FavouriteServersDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FavouriteServersDialog.Designer.cs">
+      <DependentUpon>FavouriteServersDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="IAssimilable.cs" />
     <Compile Include="IncomingReflectionMap.Designer.cs">
@@ -287,9 +293,13 @@
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\folder_heart.png" />
     <Content Include="themes\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="FavouriteServersDialog.resx">
+      <DependentUpon>FavouriteServersDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\JavaScriptWarning.htm" />
     <Content Include="yaircc.ico" />
     <EmbeddedResource Include="AboutDialog.resx">

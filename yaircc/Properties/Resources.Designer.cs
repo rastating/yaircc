@@ -158,6 +158,13 @@ namespace Yaircc.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap folder_heart {
+            get {
+                object obj = ResourceManager.GetObject("folder_heart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap help {
             get {
                 object obj = ResourceManager.GetObject("help", resourceCulture);
