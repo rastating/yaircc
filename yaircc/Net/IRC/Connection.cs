@@ -546,6 +546,9 @@ namespace Yaircc.Net.IRC
             catch (ObjectDisposedException)
             {
             }
+            catch (InvalidOperationException)
+            {
+            }
         }
 
         /// <summary>

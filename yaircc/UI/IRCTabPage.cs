@@ -675,8 +675,8 @@ namespace Yaircc.UI
                         }
                     }
                 }
-                catch (ObjectDisposedException) 
-                { 
+                catch (ObjectDisposedException)
+                {
                 }
             });
         }
@@ -714,7 +714,7 @@ namespace Yaircc.UI
                     int openBoldTags = 0;
                     int openUnderlineTags = 0;
                     int openItalicTags = 0;
-                    Regex colourRegex = new Regex(@"\x03(?<foreground>[0-9]{1,2})(,(?<background>[0-9]{1,2}))?", RegexOptions.IgnoreCase);
+                    Regex colourRegex = new Regex(@"^\x03(?<foreground>[0-9]{1,2})(,(?<background>[0-9]{1,2}))?", RegexOptions.IgnoreCase);
                     int currentBackgroundColour = -1;
                     int currentForegroundColour = -1;
                     int openColourTags = 0;
@@ -842,19 +842,31 @@ namespace Yaircc.UI
                                 }
 
                                 currentForegroundColour = int.Parse(match.Groups["foreground"].Value);
-                                string newTag = string.Format(
-                                    "<span style=\"color: {0}; background-color: {1};\">",
-                                    colours[currentForegroundColour],
-                                    currentBackgroundColour == -1 ? "transparent" : colours[currentBackgroundColour]);
 
-                                retval = retval.Insert(i, newTag);
-                                i += newTag.Length;
-                                retval = retval.Remove(i, match.Length);
-                                i -= 1;
+                                if (currentForegroundColour >= 0 && currentForegroundColour <= 16)
+                                {
+                                    string newTag = string.Empty;
+                                    newTag = string.Format(
+                                        "<span style=\"color: {0}; background-color: {1};\">",
+                                        colours[currentForegroundColour],
+                                        currentBackgroundColour == -1 ? "transparent" : colours[currentBackgroundColour]);
+
+
+                                    retval = retval.Insert(i, newTag);
+                                    i += newTag.Length;
+                                    retval = retval.Remove(i, match.Length);
+                                    i -= 1;
+
+                                    openColourTags++;
+                                    openTags++;
+                                }
+                                else
+                                {
+                                    // If the colour specified is invalid, remove it from the output
+                                    retval = retval.Remove(i, match.Length);
+                                    i -= 1;
+                                }
                             }
-
-                            openColourTags++;
-                            openTags++;
                         }
                         else if ((int)retval[i] == 2)
                         {
