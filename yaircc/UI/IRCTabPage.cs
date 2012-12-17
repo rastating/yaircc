@@ -851,7 +851,6 @@ namespace Yaircc.UI
                                         colours[currentForegroundColour],
                                         currentBackgroundColour == -1 ? "transparent" : colours[currentBackgroundColour]);
 
-
                                     retval = retval.Insert(i, newTag);
                                     i += newTag.Length;
                                     retval = retval.Remove(i, match.Length);
