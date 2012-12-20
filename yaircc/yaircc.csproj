@@ -64,6 +64,12 @@
     <Compile Include="ChannelDialog.Designer.cs">
       <DependentUpon>ChannelDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommandDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommandDialog.Designer.cs">
+      <DependentUpon>CommandDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorLog.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FavouriteServersDialog.cs">
@@ -72,6 +78,17 @@
     <Compile Include="FavouriteServersDialog.Designer.cs">
       <DependentUpon>FavouriteServersDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Localisation\Strings_FavouriteServers.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings_FavouriteServers.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localisation\Strings_Validation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings_Validation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\FavouriteServers.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="IAssimilable.cs" />
     <Compile Include="IncomingReflectionMap.Designer.cs">
@@ -207,6 +224,7 @@
     <Compile Include="SettingsDialog.Designer.cs">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings\Server.cs" />
     <Compile Include="ThemeFileNameEditor.cs" />
     <Compile Include="UI\FlashWindow.cs" />
     <Compile Include="UI\IRCChannel.cs" />
@@ -294,11 +312,23 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\folder_heart.png" />
+    <None Include="Resources\bullet_white.png" />
     <Content Include="themes\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="CommandDialog.resx">
+      <DependentUpon>CommandDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FavouriteServersDialog.resx">
       <DependentUpon>FavouriteServersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localisation\Strings_FavouriteServers.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings_FavouriteServers.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localisation\Strings_Validation.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings_Validation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\JavaScriptWarning.htm" />
     <Content Include="yaircc.ico" />

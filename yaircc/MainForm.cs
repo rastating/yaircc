@@ -26,13 +26,12 @@ namespace Yaircc
     using System.Reflection;
     using System.Text;
     using System.Windows.Forms;
-    using Intninety;
     using Yaircc.Localisation;
     using Yaircc.Net;
     using Yaircc.Net.IRC;
+    using Yaircc.Settings;
     using Yaircc.UI;
     using Message = Yaircc.Net.IRC.Message;
-    using Yaircc.Settings;
     
     /// <summary>
     /// Represents the main form used in the application.
@@ -46,6 +45,11 @@ namespace Yaircc
         /// </summary>
         private bool autoCheckingForUpdate;
 
+        /// <summary>
+        /// A queue of miscellaneous actions to execute.
+        /// </summary>
+        private Queue<Action> queuedActions;
+
         #endregion
 
         #region Constructors
@@ -56,6 +60,7 @@ namespace Yaircc
         public MainForm()
         {
             this.InitializeComponent();
+            this.queuedActions = new Queue<Action>();
             Yaircc.Properties.Settings.Default.Upgrade();
         }
 
@@ -203,6 +208,7 @@ namespace Yaircc
             treeView.BringToFront();
 
             this.RefreshWindowsMenuItems(null);
+            this.BuildFavouriteButtons();
         }
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
@@ -222,6 +228,43 @@ namespace Yaircc
         }
 
         /// <summary>
+        /// Build the favourite server shortcut buttons.
+        /// </summary>
+        private void BuildFavouriteButtons()
+        {
+            List<Server> favourites = FavouriteServers.Instance.Servers.OrderBy(s => s.Alias).ToList();
+            this.favouritesToolStripSplitButton.DropDownItems.Clear();
+            for (int i = 0; i < favourites.Count; i++)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem(favourites[i].Alias, Yaircc.Properties.Resources.bullet_white, new EventHandler(this.FavouriteServer_Click));
+                if (this.channelsTabControl.ContainsTabConnectedToServer(favourites[i]))
+                {
+                    item.Image = Yaircc.Properties.Resources.bullet_green;
+                }
+
+                item.Tag = favourites[i];
+                this.favouritesToolStripSplitButton.DropDownItems.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of System.Windows.Forms.ToolStripMenuItem.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void FavouriteServer_Click(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem button = sender as ToolStripMenuItem;
+                if (button.Tag is Server)
+                {
+                    this.ProcessConnectionRequest(button.Tag as Server);
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles the ControlRemoved event of System.Windows.Forms.TabControl.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -229,6 +272,7 @@ namespace Yaircc
         private void ChannelsTabControl_ControlRemoved(object sender, ControlEventArgs e)
         {
             this.RefreshWindowsMenuItems(e.Control);
+            this.queuedActions.Enqueue(() => this.BuildFavouriteButtons());
         }
 
         /// <summary>
@@ -713,6 +757,10 @@ namespace Yaircc
                 this.ToggleEnabledControl(this.splitContainer, true);
                 this.ToggleEnabledControl(this.standardToolStrip, false);
             }
+
+            // Connect to any favourite servers marked for auto connection.
+            FavouriteServers.Instance.Servers.Where(t => t.AutomaticallyConnect).ToList().ForEach(t => this.ProcessConnectionRequest(t));
+            this.BuildFavouriteButtons();
         }
 
         /// <summary>
@@ -788,7 +836,8 @@ namespace Yaircc
         /// Processes a connection request and creates marshals and tabs were needed.
         /// </summary>
         /// <param name="input">The raw connection command.</param>
-        private void ProcessConnectionRequest(string input)
+        /// <param name="server">The associated server, null if not applicable.</param>
+        private void ProcessConnectionRequest(string input, Server server)
         {
             Connection connection = new Connection();
             ParseResult result = connection.Parse(input);
@@ -797,14 +846,23 @@ namespace Yaircc
                 IRCTabPage serverTab;
                 if (t == null)
                 {
-                    GlobalSettings settings = GlobalSettings.Instance;
-                    serverTab = new IRCTabPage(this, connection.ToString(), connection.Server, IRCTabType.Server);
+                    serverTab = new IRCTabPage(this, connection.ToString(), server == null ? connection.Server : server.Alias, IRCTabType.Server);
                     serverTab.Connection = connection;
-                    serverTab.Connection.UserName = settings.UserName;
-                    serverTab.Connection.RealName = settings.RealName;
-                    serverTab.Connection.Nickname = settings.NickName;
-                    IRCMarshal marshal = new IRCMarshal(connection);
+                    serverTab.Connection.UserName = server == null ? GlobalSettings.Instance.UserName : server.UserName;
+                    serverTab.Connection.RealName = server == null ? GlobalSettings.Instance.RealName : server.RealName;
+                    serverTab.Connection.Nickname = server == null ? GlobalSettings.Instance.NickName : server.NickName;
+                    serverTab.Connection.Mode = server == null ? GlobalSettings.Instance.Mode : server.Mode;
+
+                    Queue<string> queue = null;
+
+                    if (server != null)
+                    {
+                        queue = new Queue<string>(server.Commands);
+                    }
+
+                    IRCMarshal marshal = new IRCMarshal(connection, this.channelsTabControl, queue);
                     marshal.ChannelCreated += new IRCMarshal.ChannelCreatedHandler(this.ChannelCreated);
+
                     serverTab.Marshal = marshal;
                     marshal.ServerTab = serverTab;
 
@@ -839,6 +897,26 @@ namespace Yaircc
                     connectAction.Invoke(null);
                 }
             }
+        }
+
+        /// <summary>
+        /// Processes a connection request and creates marshals and tabs were needed.
+        /// </summary>
+        /// <param name="server">The server to connect to.</param>
+        private void ProcessConnectionRequest(Server server)
+        {
+            string command = string.Format("/server {0}:{1}", server.Address, server.Port);
+            this.ProcessConnectionRequest(command, server);
+        }
+
+        /// <summary>
+        /// Processes a connection request and creates marshals and tabs were needed.
+        /// </summary>
+        /// <param name="input">The raw connection command.</param>
+        private void ProcessConnectionRequest(string input)
+        {
+            GlobalSettings settings = GlobalSettings.Instance;
+            this.ProcessConnectionRequest(input, null);
         }
 
         /// <summary>
@@ -1152,7 +1230,23 @@ namespace Yaircc
         {
             using (FavouriteServersDialog dialog = new FavouriteServersDialog())
             {
-                dialog.ShowDialog();
+                if (dialog.ShowDialog() == DialogResult.OK && dialog.ServerToOpen != null)
+                {
+                    this.ProcessConnectionRequest(dialog.ServerToOpen);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the Tick event of System.Windows.Forms.Timer.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void ActionQueueTimer_Tick(object sender, EventArgs e)
+        {
+            while (this.queuedActions.Count > 0)
+            {
+                this.queuedActions.Dequeue().Invoke();
             }
         }
 

@@ -118,5 +118,16 @@ namespace Yaircc.Properties {
                 this["CheckForUpdateOnStart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.SortedList FavouriteServers {
+            get {
+                return ((global::System.Collections.SortedList)(this["FavouriteServers"]));
+            }
+            set {
+                this["FavouriteServers"] = value;
+            }
+        }
     }
 }

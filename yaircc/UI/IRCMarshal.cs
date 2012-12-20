@@ -22,8 +22,8 @@ namespace Yaircc.UI
     using System.Text.RegularExpressions;
     using Yaircc.Localisation;
     using Yaircc.Net.IRC;
-    using TabControl = System.Windows.Forms.TabControl;
     using Yaircc.Settings;
+    using TabControl = System.Windows.Forms.TabControl;
 
     /// <summary>
     /// Represents a marshal that sits between an IRC connection and the application's UI.
@@ -41,6 +41,11 @@ namespace Yaircc.UI
         /// The channels that data is being marshalled to.
         /// </summary>
         private List<IRCChannel> channels;
+
+        /// <summary>
+        /// The TabControl that hosts the server and channel tabs.
+        /// </summary>
+        private TabControl tabHost;
 
         /// <summary>
         /// The tab page that represents the server connection.
@@ -82,6 +87,11 @@ namespace Yaircc.UI
         /// </summary>
         private ChannelCreatedHandler channelCreated;
 
+        /// <summary>
+        /// A queue of commands to execute when the mode message has been received.
+        /// </summary>
+        private Queue<string> queuedCommands;
+
         #endregion
 
         #region Constructors
@@ -90,13 +100,25 @@ namespace Yaircc.UI
         /// Initialises a new instance of the <see cref="IRCMarshal"/> class.
         /// </summary>
         /// <param name="connection">The connection to marshal data to and from.</param>
-        public IRCMarshal(Connection connection)
+        /// <param name="tabHost">The TabControl that hosts the server and channel tabs.</param>
+        /// <param name="autoCommands">A queue of commands to automatically execute once a connection is fully established.</param>
+        public IRCMarshal(Connection connection, TabControl tabHost, Queue<string> autoCommands)
         {
+            this.tabHost = tabHost;
             this.previousNickName = connection.Nickname;
             this.awaitingModeMessage = true;
             this.connection = connection;
             this.SetupConnectionEventHandlers();
             this.channels = new List<IRCChannel>();
+
+            if (autoCommands != null)
+            {
+                this.queuedCommands = autoCommands;
+            }
+            else
+            {
+                this.queuedCommands = new Queue<string>();
+            }
         }
 
         #endregion
@@ -145,6 +167,15 @@ namespace Yaircc.UI
         }
 
         /// <summary>
+        /// Gets or sets the TabControl that hosts the server and channel tabs.
+        /// </summary>
+        public TabControl TabHost
+        {
+            get { return this.tabHost; }
+            set { this.tabHost = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the tab page that represents the server connection.
         /// </summary>
         public IRCTabPage ServerTab
@@ -168,6 +199,14 @@ namespace Yaircc.UI
         {
             get { return this.disconnecting; }
             set { this.disconnecting = value; }
+        }
+
+        /// <summary>
+        /// Gets a queue of commands to execute when the mode message has been received.
+        /// </summary>
+        private Queue<string> QueuedCommands
+        {
+            get { return this.queuedCommands; }
         }
 
         #endregion
@@ -224,13 +263,8 @@ namespace Yaircc.UI
 
             this.Channels.ForEach(i => i.Dispose());
             this.Channels.Clear();
-
-            TabControl tabControl = this.ServerTab.Parent as TabControl;
-            tabControl.InvokeAction(() =>
-            {
-                tabControl.TabPages.Remove(this.ServerTab);
-                this.ServerTab.Dispose();
-            });
+            this.TabHost.InvokeAction(() => this.TabHost.TabPages.Remove(this.ServerTab));
+            this.ServerTab.Dispose();
         }
 
         #endregion
@@ -318,33 +352,32 @@ namespace Yaircc.UI
             IRCChannel retval = new IRCChannel(this, this.Connection);
             retval.Disposed += new IRCChannel.DisposedHandler(this.ChannelDisposed);
 
-            TabControl tabControl = this.ServerTab.Parent as TabControl;
-            tabControl.InvokeAction(() =>
+            IRCTabType type = IRCTabType.Channel;
+            Regex regex = new Regex(@"(?<channel>[#&][^\x07\x2C\s]{1,199})", RegexOptions.IgnoreCase);
+            if (!regex.Match(displayName).Success)
             {
-                IRCTabType type = IRCTabType.Channel;
-                Regex regex = new Regex(@"(?<channel>[#&][^\x07\x2C\s]{1,199})", RegexOptions.IgnoreCase);
-                if (!regex.Match(displayName).Success)
+                type = IRCTabType.PM;
+            }
+
+            string tabName = string.Format("{0}_{1}", this.Connection.ToString(), displayName);
+            IRCTabPage tabPage = new IRCTabPage(this.ServerTab.OwningForm, tabName, displayName, type);
+            tabPage.Connection = this.Connection;
+            tabPage.ConnectionSpecificName = displayName;
+
+            retval.TabPage = tabPage;
+            retval.TabPage.Marshal = this;
+            retval.Name = displayName;
+
+            this.TabHost.InvokeAction(() =>
                 {
-                    type = IRCTabType.PM;
-                }
+                    this.TabHost.TabPages.Add(tabPage);
+                    if (switchTo)
+                    {
+                        this.TabHost.SelectedTab = tabPage;
+                    }
+                });
 
-                string tabName = string.Format("{0}_{1}", this.Connection.ToString(), displayName);
-                IRCTabPage tabPage = new IRCTabPage(this.ServerTab.OwningForm, tabName, displayName, type);
-                tabPage.Connection = this.Connection;
-                tabPage.ConnectionSpecificName = displayName;
-
-                retval.TabPage = tabPage;
-                retval.TabPage.Marshal = this;
-                retval.Name = displayName;
-
-                tabControl.TabPages.Add(tabPage);
-                if (switchTo)
-                {
-                    tabControl.SelectedTab = tabPage;
-                }
-
-                this.Channels.Add(retval);
-            });
+            this.Channels.Add(retval);
 
             if (this.channelCreated != null)
             {
@@ -415,19 +448,18 @@ namespace Yaircc.UI
             // If the currently selected tab belongs to the channel list for this connection
             // AND we aren't awaiting a mode message (i.e. connecting to the server)
             // then marshal the message to the owning channel, otherwise default to the server tab
-            TabControl tabControl = this.ServerTab.Parent as TabControl;
-            tabControl.InvokeAction(() =>
-            {
-                IRCChannel selectedChannel = this.Channels.Find(i => tabControl.SelectedTab.Equals(i.TabPage));
-                if ((selectedChannel != null) && (!this.awaitingModeMessage))
+            this.TabHost.InvokeAction(() =>
                 {
-                    selectedChannel.HandleReply(message);
-                }
-                else
-                {
-                    appendMessage.Invoke(this.ServerTab);
-                }
-            });
+                    IRCChannel selectedChannel = this.Channels.Find(i => this.TabHost.SelectedTab.Equals(i.TabPage));
+                    if ((selectedChannel != null) && (!this.awaitingModeMessage))
+                    {
+                        selectedChannel.HandleReply(message);
+                    }
+                    else
+                    {
+                        appendMessage.Invoke(this.ServerTab);
+                    }
+                });
 
             // If a nick in use message comes through, we need to revert the nick against the connection
             // back to the previously assigned nick (if there is one).
@@ -494,31 +526,29 @@ namespace Yaircc.UI
                 // and a channel tab, then we need to check if the currently
                 // focused tab is a channel and if so handle it in the channel.
                 // Otherwise we can just print it in the server tab
-                TabControl tabControl = this.ServerTab.Parent as TabControl;
-                tabControl.InvokeAction(() =>
-                {
-                    if (tabControl.SelectedTab is IRCTabPage)
+                this.TabHost.InvokeAction(() =>
                     {
-                        IRCChannel channel = this.Channels.Find(i => i.TabPage.Equals(tabControl.SelectedTab));
-                        if ((channel != null) && (!this.awaitingModeMessage))
+                        if (this.TabHost.SelectedTab is IRCTabPage)
                         {
-                            channel.HandleMessage(message);
+                            IRCChannel channel = this.Channels.Find(i => i.TabPage.Equals(this.TabHost.SelectedTab));
+                            if ((channel != null) && (!this.awaitingModeMessage))
+                            {
+                                channel.HandleMessage(message);
+                            }
+                            else
+                            {
+                                this.ServerTab.AppendMessage(message.Command, message.Source, message.Content, message.Type);
+                            }
                         }
-                        else
-                        {
-                            this.ServerTab.AppendMessage(message.Command, message.Source, message.Content, message.Type);
-                        }
-                    }
-                });
+                    });
             }
 
             // If we are still awaiting the MODE message (i.e. we are awaiting confirmation we have finished connecting)
             // then also re-join any channels that we have in the Channels collection (i.e. reconnect to any channels)
             if (this.awaitingModeMessage && message is ModeMessage)
             {
-                GlobalSettings settings = GlobalSettings.Instance;
                 this.awaitingModeMessage = false;
-                this.Send(this.ServerTab, new ModeMessage(new string[] { this.Connection.Nickname, settings.Mode }));
+                this.Send(this.ServerTab, new ModeMessage(new string[] { this.Connection.Nickname, this.Connection.Mode }));
                 this.Channels.ForEach(i => 
                     { 
                         if (i.TabPage.TabType == IRCTabType.Channel) 
@@ -526,6 +556,16 @@ namespace Yaircc.UI
                             this.Send(this.ServerTab, new JoinMessage(i.Name)); 
                         } 
                     });
+
+                // If we have any commands queued execute them now.
+                while (this.QueuedCommands.Count > 0)
+                {
+                    MessageParseResult parseResult = MessageFactory.CreateFromUserInput(this.QueuedCommands.Dequeue(), null);
+                    if (parseResult.Success)
+                    {
+                        this.Send(this.ServerTab, parseResult.IRCMessage);
+                    }
+                }
             }
         }
 

@@ -79,6 +79,15 @@ namespace Yaircc.Localisation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to do this?.
+        /// </summary>
+        internal static string AreYouSureYouWantToDoThis {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToDoThis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An unexpected error has occurred and yaircc must be closed. Would you like to send an anonymous bug report to the developers to help fix this?.
         /// </summary>
         internal static string BugReportRequest {
