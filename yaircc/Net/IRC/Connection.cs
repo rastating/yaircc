@@ -82,6 +82,11 @@ namespace Yaircc.Net.IRC
         private string realName;
 
         /// <summary>
+        /// The mode string to use.
+        /// </summary>
+        private string mode;
+
+        /// <summary>
         /// A timer used to poll the connection.
         /// </summary>
         private System.Timers.Timer timer;
@@ -290,6 +295,15 @@ namespace Yaircc.Net.IRC
         {
             get { return this.realName; }
             set { this.realName = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the mode string to use.
+        /// </summary>
+        public string Mode
+        {
+            get { return this.mode; }
+            set { this.mode = value; }
         }
 
         /// <summary>

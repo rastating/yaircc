@@ -79,7 +79,7 @@ namespace Yaircc.Settings
         #region Constructors
 
         /// <summary>
-        /// Initialises a new instance of the Yaircc.GlobalSettings class.
+        /// Prevents a default instance of the <see cref="GlobalSettings" /> class from being created.
         /// </summary>
         private GlobalSettings()
         {

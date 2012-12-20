@@ -20,8 +20,8 @@ namespace Yaircc.UI
     using System;
     using System.Collections.Generic;
     using Yaircc.Net.IRC;
-    using TabControl = System.Windows.Forms.TabControl;
     using Yaircc.Settings;
+    using TabControl = System.Windows.Forms.TabControl;
 
     /// <summary>
     /// Represents an IRC channel accessible via an <see cref="IRCTabPage"/>.
@@ -177,18 +177,17 @@ namespace Yaircc.UI
         /// </summary>
         public void Dispose()
         {
-            TabControl tabControl = this.TabPage.Parent as TabControl;
-            tabControl.InvokeAction(() =>
-            {
-                if ((tabControl.SelectedTab == this.TabPage) && (tabControl.SelectedIndex > 0))
+            this.marshal.TabHost.InvokeAction(() =>
                 {
-                    tabControl.SelectedIndex--;
-                }
+                    if ((this.marshal.TabHost.SelectedTab == this.TabPage) && (this.marshal.TabHost.SelectedIndex > 0))
+                    {
+                        this.marshal.TabHost.SelectedIndex--;
+                    }
 
-                tabControl.TabPages.Remove(this.TabPage);
-                this.TabPage.Dispose();
-                this.users.Clear();
-            });
+                    this.marshal.TabHost.TabPages.Remove(this.TabPage);
+                    this.TabPage.Dispose();
+                    this.users.Clear();
+                });
 
             if (this.disposed != null)
             {

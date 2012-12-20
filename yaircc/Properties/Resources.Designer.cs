@@ -130,6 +130,13 @@ namespace Yaircc.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap bullet_white {
+            get {
+                object obj = ResourceManager.GetObject("bullet_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap cog {
             get {
                 object obj = ResourceManager.GetObject("cog", resourceCulture);
