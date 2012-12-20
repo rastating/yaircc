@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product 
-    Id="57c87999-84cb-4c4a-beb7-bdd9bcd2c2b8" 
+    Id="e1df4e6f-bcea-49bd-a41e-2f54195bb7bb" 
     Name="yaircc" 
     Language="1033" 
-    Version="1.0.4.0" 
+    Version="1.0.5.0" 
     Manufacturer="intninety" 
     UpgradeCode="26d4fbd8-f452-410c-a04e-cd40c3f36832">
     

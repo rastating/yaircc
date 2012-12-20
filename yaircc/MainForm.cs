@@ -440,6 +440,16 @@ namespace Yaircc
         }
 
         /// <summary>
+        /// Gets a value that indicates whether or not the command issued was /clear.
+        /// </summary>
+        /// <param name="input">The command to check.</param>
+        /// <returns>True if the command started with /clear.</returns>
+        private bool CommandIsClearCommand(string input)
+        {
+            return input.Trim().Equals("/clear", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
         /// Gets a value that indicates whether or not <paramref name="command"/> is a server command.
         /// </summary>
         /// <param name="command">The command to check.</param>
@@ -587,6 +597,10 @@ namespace Yaircc
             {
                 this.ListCommands();
             }
+            else if (this.CommandIsClearCommand(this.inputTextBox.Text))
+            {
+                this.ClearLogToolStripButton_Click(this, EventArgs.Empty);
+            }
             else
             {
                 IRCTabPage currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
@@ -722,9 +736,9 @@ namespace Yaircc
         private void ListCommands()
         {
             IRCTabPage currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            currentTab.AppendMessage(null, "[INFO]", "away, back, ban, connect, dehop, deop, except, hop, invite, j, join, kick, knock, leave, links, list", MessageType.ServerMessage);
-            currentTab.AppendMessage(null, "[INFO]", "map, me, mode, motd, msg, names, nick, notice, op, oper, part, ping, quit, stats, time, topic", MessageType.ServerMessage);
-            currentTab.AppendMessage(null, "[INFO]", "unban, unexcept, userhost, voice, who, whois, whowas", MessageType.ServerMessage);
+            currentTab.AppendMessage(null, "[INFO]", "away, back, ban, clear, connect, dehop, deop, except, hop, invite, j, join, kick, knock, leave", MessageType.ServerMessage);
+            currentTab.AppendMessage(null, "[INFO]", "links, list, map, me, mode, motd, msg, names, nick, notice, op, oper, part, ping, quit, stats", MessageType.ServerMessage);
+            currentTab.AppendMessage(null, "[INFO]", "time, topic, unban, unexcept, userhost, voice, who, whois, whowas", MessageType.ServerMessage);
         }
 
         /// <summary>
