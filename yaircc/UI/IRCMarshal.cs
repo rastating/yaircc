@@ -359,17 +359,17 @@ namespace Yaircc.UI
                 type = IRCTabType.PM;
             }
 
-            string tabName = string.Format("{0}_{1}", this.Connection.ToString(), displayName);
-            IRCTabPage tabPage = new IRCTabPage(this.ServerTab.OwningForm, tabName, displayName, type);
-            tabPage.Connection = this.Connection;
-            tabPage.ConnectionSpecificName = displayName;
-
-            retval.TabPage = tabPage;
-            retval.TabPage.Marshal = this;
-            retval.Name = displayName;
-
             this.TabHost.InvokeAction(() =>
                 {
+                    string tabName = string.Format("{0}_{1}", this.Connection.ToString(), displayName);
+                    IRCTabPage tabPage = new IRCTabPage(this.ServerTab.OwningForm, tabName, displayName, type);
+                    tabPage.Connection = this.Connection;
+                    tabPage.ConnectionSpecificName = displayName;
+
+                    retval.TabPage = tabPage;
+                    retval.TabPage.Marshal = this;
+                    retval.Name = displayName;
+
                     this.TabHost.TabPages.Add(tabPage);
                     if (switchTo)
                     {
