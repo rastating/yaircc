@@ -24,6 +24,7 @@ namespace Yaircc
     using System.Windows.Forms;
     using Yaircc.Localisation;
     using Yaircc.Settings;
+    using Connection = Yaircc.Net.IRC.Connection;
 
     /// <summary>
     /// Represents a dialog that allows for the management of a favourite server list.
@@ -57,6 +58,11 @@ namespace Yaircc
         /// </summary>
         private Server serverToOpen;
 
+        /// <summary>
+        /// The connections currently open in yaircc.
+        /// </summary>
+        private List<Connection> openConnections;
+
         #endregion
 
         #region Constructors
@@ -64,10 +70,12 @@ namespace Yaircc
         /// <summary>
         /// Initialises a new instance of the <see cref="FavouriteServersDialog"/> class.
         /// </summary>
-        public FavouriteServersDialog()
+        /// <param name="openConnections">The connections currently open in yaircc.</param>
+        public FavouriteServersDialog(List<Connection> openConnections)
         {
             this.InitializeComponent();
 
+            this.openConnections = openConnections;
             this.serverTreeView.Nodes[0].Nodes.Clear();
             this.isDirty = false;
             this.isPopulating = false;
@@ -87,9 +95,42 @@ namespace Yaircc
             get { return this.serverToOpen; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether or not changes have been made that are pending saving.
+        /// </summary>
+        private bool IsDirty
+        {
+            get
+            {
+                return this.isDirty;
+            }
+
+            set
+            {
+                this.isDirty = value;
+                this.saveButton.Enabled = this.isDirty;
+            }
+        }
+
         #endregion
 
         #region Instance Methods
+
+        /// <summary>
+        /// Processes a command key.
+        /// </summary>
+        /// <param name="msg">A System.Windows.Forms.Message, passed by reference, that represents the Win32 message to process.</param>
+        /// <param name="keyData">One of the System.Windows.Forms.Keys values that represents the key to process.</param>
+        /// <returns>true if the keystroke was processed and consumed by the control; otherwise, false to allow further processing.</returns>
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         /// <summary>
         /// Handles the Click event of System.Windows.Forms.Button.
@@ -103,8 +144,7 @@ namespace Yaircc
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     this.commandsListBox.Items.Add(dialog.Command);
-                    this.isDirty = true;
-                    this.saveButton.Enabled = true;
+                    this.IsDirty = true;
                 }
             }
         }
@@ -118,8 +158,18 @@ namespace Yaircc
         {
             TreeNode node = new TreeNode();
             node.Text = server.Alias;
-            node.ImageKey = "bullet_white";
-            node.SelectedImageKey = "bullet_white";
+
+            if (this.openConnections.Find(i => i.Server.Equals(server.Address, StringComparison.OrdinalIgnoreCase) && i.Port.Equals(server.Port)) != null)
+            {
+                node.ImageKey = "bullet_green";
+                node.SelectedImageKey = "bullet_green";
+            }
+            else
+            {
+                node.ImageKey = "bullet_white";
+                node.SelectedImageKey = "bullet_white";
+            }
+
             node.Tag = server;
 
             this.serverTreeView.Nodes[0].Nodes.Add(node);
@@ -208,8 +258,7 @@ namespace Yaircc
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     this.commandsListBox.Items[this.commandsListBox.SelectedIndex] = dialog.Command;
-                    this.isDirty = true;
-                    this.saveButton.Enabled = true;
+                    this.IsDirty = true;
                 }
             }
         }
@@ -221,7 +270,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void FavouriteServersDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.isDirty)
+            if (this.IsDirty)
             {
                 Server server = this.serverTreeView.SelectedNode.Tag as Server;
                 string question = string.Format(Strings_FavouriteServers.SaveChangesQuestion, server.Alias);
@@ -234,8 +283,7 @@ namespace Yaircc
                         break;
 
                     case DialogResult.No:
-                        this.isDirty = false;
-                        this.saveButton.Enabled = false;
+                        this.IsDirty = false;
                         break;
 
                     case DialogResult.Cancel:
@@ -265,8 +313,7 @@ namespace Yaircc
         {
             if (!this.isPopulating)
             {
-                this.isDirty = true;
-                this.saveButton.Enabled = true;
+                this.IsDirty = true;
             }
         }
 
@@ -286,8 +333,7 @@ namespace Yaircc
                 this.commandsListBox.SelectedIndex = index + 1;
                 this.commandsListBox.Focus();
 
-                this.isDirty = true;
-                this.saveButton.Enabled = true;
+                this.IsDirty = true;
             }
         }
 
@@ -307,8 +353,7 @@ namespace Yaircc
                 this.commandsListBox.SelectedIndex = index - 1;
                 this.commandsListBox.Focus();
 
-                this.isDirty = true;
-                this.saveButton.Enabled = true;
+                this.IsDirty = true;
             }
         }
 
@@ -320,8 +365,7 @@ namespace Yaircc
         private void RemoveCommandButton_Click(object sender, EventArgs e)
         {
             this.commandsListBox.Items.RemoveAt(this.commandsListBox.SelectedIndex);
-            this.isDirty = true;
-            this.saveButton.Enabled = true;
+            this.IsDirty = true;
             this.commandsListBox.Focus();
         }
 
@@ -340,8 +384,7 @@ namespace Yaircc
             {
                 FavouriteServers.Instance.Servers.Remove(server);
                 FavouriteServers.Instance.Save();
-                this.isDirty = false;
-                this.saveButton.Enabled = false;
+                this.IsDirty = false;
                 this.serverTreeView.Nodes.Remove(this.serverTreeView.SelectedNode);
             }
         }
@@ -372,8 +415,7 @@ namespace Yaircc
 
                 FavouriteServers.Instance.Save();
 
-                this.isDirty = false;
-                this.saveButton.Enabled = false;
+                this.IsDirty = false;
                 this.serverTreeView.SelectedNode.Text = server.Alias;
                 retval = true;
             }
@@ -449,7 +491,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void ServerTreeView_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-            if (this.isDirty)
+            if (this.IsDirty)
             {
                 Server server = this.serverTreeView.SelectedNode.Tag as Server;
                 string question = string.Format(Strings_FavouriteServers.SaveChangesQuestion, server.Alias);
@@ -466,8 +508,7 @@ namespace Yaircc
                         break;
 
                     case DialogResult.No:
-                        this.isDirty = false;
-                        this.saveButton.Enabled = false;
+                        this.IsDirty = false;
                         break;
 
                     case DialogResult.Cancel:

@@ -20,7 +20,7 @@ namespace Yaircc
     using System;
     using System.Net.Sockets;
     using System.Windows.Forms;
-using Yaircc.Settings;
+    using Yaircc.Settings;
     using Yaircc.UI;
 
     /// <summary>

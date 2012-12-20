@@ -1228,7 +1228,15 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void FavouritesToolStripSplitButton_ButtonClick(object sender, EventArgs e)
         {
-            using (FavouriteServersDialog dialog = new FavouriteServersDialog())
+            List<Connection> openConnections = new List<Connection>();
+            this.channelsTabControl.TabPages.OfType<IRCTabPage>()
+                                            .Where(tab => tab.Connection != null)
+                                            .GroupBy(tab => tab.Connection.ToString())
+                                            .Select(grp => grp.First())
+                                            .ToList()
+                                            .ForEach(tab => openConnections.Add(tab.Connection));
+
+            using (FavouriteServersDialog dialog = new FavouriteServersDialog(openConnections))
             {
                 if (dialog.ShowDialog() == DialogResult.OK && dialog.ServerToOpen != null)
                 {
