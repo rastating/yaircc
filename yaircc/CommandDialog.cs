@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="SettingsDialog.cs" company="intninety">
+// <copyright file="CommandDialog.cs" company="intninety">
 //     Copyright 2012 Robert Carr
 //     Licensed under the Apache License, Version 2.0 (the "License");
 //     you may not use this file except in compliance with the License.
@@ -19,65 +19,57 @@ namespace Yaircc
 {
     using System;
     using System.Windows.Forms;
-    using Yaircc.Settings;
 
     /// <summary>
-    /// Represents the settings dialog.
+    /// Represents a dialog that accepts an IRC command.
     /// </summary>
-    public partial class SettingsDialog : Form
+    public partial class CommandDialog : Form
     {
         #region Fields
 
         /// <summary>
-        /// The global user settings for the application.
+        /// The command entered.
         /// </summary>
-        private GlobalSettings settings;
+        private string command;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initialises a new instance of the <see cref="SettingsDialog"/> class.
+        /// Initialises a new instance of the <see cref="CommandDialog"/> class.
         /// </summary>
-        public SettingsDialog()
+        /// <param name="command">The command that is to be edited.</param>
+        public CommandDialog(string command)
         {
             this.InitializeComponent();
-            this.settings = GlobalSettings.Instance;
-            this.propertyGrid.SelectedObject = this.settings;
-            this.SelectFirstGridItem();
+            this.command = command;
+            this.commandTextBox.Text = command;
+        }
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="CommandDialog"/> class.
+        /// </summary>
+        public CommandDialog()
+        {
+            this.InitializeComponent();
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the command entered.
+        /// </summary>
+        public string Command
+        {
+            get { return this.command; }
         }
 
         #endregion
 
         #region Instance Methods
-
-        /// <summary>
-        /// Processes a command key.
-        /// </summary>
-        /// <param name="msg">A System.Windows.Forms.Message, passed by reference, that represents the Win32 message to process.</param>
-        /// <param name="keyData">One of the System.Windows.Forms.Keys values that represents the key to process.</param>
-        /// <returns>true if the keystroke was processed and consumed by the control; otherwise, false to allow further processing.</returns>
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Escape)
-            {
-                this.DialogResult = DialogResult.Cancel;
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        /// <summary>
-        /// Highlights the first item in the property grid.
-        /// </summary>
-        private void SelectFirstGridItem()
-        {
-            GridItem item = this.propertyGrid.SelectedGridItem;
-            GridItem parent = item.Parent.Parent;
-            parent.GridItems[0].GridItems[0].Select();
-            return;
-        }
 
         /// <summary>
         /// Handles the Click event of System.Windows.Forms.Button.
@@ -86,8 +78,18 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void OKButton_Click(object sender, EventArgs e)
         {
-            this.settings.Save();
+            this.command = this.commandTextBox.Text;
             this.DialogResult = DialogResult.OK;
+        }
+
+        /// <summary>
+        /// Handles the TextChanged event of System.Windows.Forms.TextBox.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void CommandTextBox_TextChanged(object sender, EventArgs e)
+        {
+            this.okButton.Enabled = !string.IsNullOrEmpty(this.commandTextBox.Text);
         }
 
         /// <summary>
@@ -98,6 +100,19 @@ namespace Yaircc
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        /// <summary>
+        /// Handles the KeyDown event of System.Windows.Forms.TextBox.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void CommandTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.OKButton_Click(sender, EventArgs.Empty);
+            }
         }
 
         #endregion

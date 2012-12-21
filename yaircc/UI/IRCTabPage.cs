@@ -25,6 +25,7 @@ namespace Yaircc.UI
     using System.Windows.Forms;
     using Yaircc.Localisation;
     using Yaircc.Net.IRC;
+    using Yaircc.Settings;
 
     /// <summary>
     /// Represents a specific type of <see cref="IRCTabPage"/>
@@ -183,7 +184,7 @@ namespace Yaircc.UI
         public IRCTabPage(MainForm owningForm, string name, string text, IRCTabType type)
             : base(text)
         {
-            GlobalSettings settings = new GlobalSettings();
+            GlobalSettings settings = GlobalSettings.Instance;
 
             this.owningForm = owningForm;
 
@@ -1203,7 +1204,7 @@ namespace Yaircc.UI
         {
             this.InitialiseWebBrowser();
 
-            GlobalSettings settings = new GlobalSettings();
+            GlobalSettings settings = GlobalSettings.Instance;
             this.LoadTheme(settings.ThemeFileName);
         }
 

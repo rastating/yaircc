@@ -117,137 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Admin" xml:space="preserve">
-    <value>Admin</value>
+  <data name="AddressInUse" xml:space="preserve">
+    <value>The address specified is already in use by another server.</value>
   </data>
-  <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+  <data name="BlankAddress" xml:space="preserve">
+    <value>The address cannot be left blank.</value>
   </data>
-  <data name="Cut" xml:space="preserve">
-    <value>Cut</value>
+  <data name="DuplicateAlias" xml:space="preserve">
+    <value>An alias with the specified name already exists.</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="NickName" xml:space="preserve">
+    <value>Nick names must be 2-9 characters long and may only contain letters, numbers or one of the following special characters: "[", "]", "\", "`", "_", "^", "{", "|", "}", "-"</value>
   </data>
-  <data name="DirectNoticeSource" xml:space="preserve">
-    <value>---</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="EndOfReplySource" xml:space="preserve">
-    <value>=-=</value>
-  </data>
-  <data name="Exit" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="File" xml:space="preserve">
-    <value>File</value>
-    <comment>The constant "File"</comment>
-  </data>
-  <data name="Founder" xml:space="preserve">
-    <value>Founder</value>
-  </data>
-  <data name="HalfOperator" xml:space="preserve">
-    <value>Half-Operator</value>
-  </data>
-  <data name="Help" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="InfoCapitilised" xml:space="preserve">
-    <value>INFO</value>
-  </data>
-  <data name="Insert" xml:space="preserve">
-    <value>Insert</value>
-  </data>
-  <data name="InSource" xml:space="preserve">
-    <value>--&gt;|</value>
-  </data>
-  <data name="New" xml:space="preserve">
-    <value>New</value>
-  </data>
-  <data name="Normal" xml:space="preserve">
-    <value>Normal</value>
-  </data>
-  <data name="NotificationSource" xml:space="preserve">
-    <value>=-=</value>
-  </data>
-  <data name="OpenEllipsis" xml:space="preserve">
-    <value>Open...</value>
-  </data>
-  <data name="Operator" xml:space="preserve">
-    <value>Operator</value>
-  </data>
-  <data name="OutSource" xml:space="preserve">
-    <value>|&lt;--</value>
-  </data>
-  <data name="Paste" xml:space="preserve">
-    <value>Paste</value>
-  </data>
-  <data name="PreviewEllipsis" xml:space="preserve">
-    <value>Preview...</value>
-  </data>
-  <data name="Ready" xml:space="preserve">
-    <value>Ready</value>
-  </data>
-  <data name="ReplySource" xml:space="preserve">
-    <value>===</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SaveAsEllipsis" xml:space="preserve">
-    <value>Save As...</value>
-  </data>
-  <data name="SelectAll" xml:space="preserve">
-    <value>Select All</value>
-  </data>
-  <data name="Users" xml:space="preserve">
-    <value>Users</value>
-  </data>
-  <data name="Voice" xml:space="preserve">
-    <value>Voice</value>
-  </data>
-  <data name="CheckingForUpdates" xml:space="preserve">
-    <value>Checking for updates...</value>
-  </data>
-  <data name="DoYouWantToDownloadIt" xml:space="preserve">
-    <value>Do you want to download it?</value>
-  </data>
-  <data name="NewVersionAvailable" xml:space="preserve">
-    <value>A new version of yaircc ({0}) is available.</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="UpdateAvailableTitle" xml:space="preserve">
-    <value>Update Available</value>
-  </data>
-  <data name="UpdateConnectivityFailure" xml:space="preserve">
-    <value>The update check failed to contact the server. Check that you are connected to the Internet and try again.</value>
-  </data>
-  <data name="UpToDate" xml:space="preserve">
-    <value>You are running the latest version of yaircc.</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-  <data name="AreYouSureYouWantToCancel" xml:space="preserve">
-    <value>Are you sure you want to cancel?</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="Cancelling" xml:space="preserve">
-    <value>Cancelling...</value>
-  </data>
-  <data name="BugReportRequest" xml:space="preserve">
-    <value>An unexpected error has occurred and yaircc must be closed. Would you like to send an anonymous bug report to the developers to help fix this?</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
-    <value>Are you sure you want to do this?</value>
+  <data name="NonNumericPort" xml:space="preserve">
+    <value>Port numbers must be numeric.</value>
   </data>
 </root>
