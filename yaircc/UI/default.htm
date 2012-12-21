@@ -38,6 +38,12 @@
 			    var sourceColumn = $('<td>').addClass('source').text(source);
 			    var payloadColumn = $('<td>').addClass('payload').html(payload).linkify();
 
+			    $(payloadColumn).find('a').each(function(index) {
+			        if ($(this).text().length > 60) {
+			            $(this).text($(this).text().substring(0, 57) + '...');
+			        }
+			    });
+
 			    timestampColumn.appendTo(row);
 			    sourceColumn.appendTo(row);
 			    payloadColumn.appendTo(row);
