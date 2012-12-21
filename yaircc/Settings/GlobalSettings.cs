@@ -15,7 +15,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Yaircc
+namespace Yaircc.Settings
 {
     using System;
     using System.ComponentModel;
@@ -25,9 +25,14 @@ namespace Yaircc
     /// <summary>
     /// Represents the global settings of the application.
     /// </summary>
-    public class GlobalSettings
+    public sealed class GlobalSettings
     {
         #region Fields
+
+        /// <summary>
+        /// The singleton instance of the class.
+        /// </summary>
+        private static readonly GlobalSettings SingletonInstance = new GlobalSettings();
 
         /// <summary>
         /// The preferred nick name to use when connecting to a server.
@@ -74,9 +79,9 @@ namespace Yaircc
         #region Constructors
 
         /// <summary>
-        /// Initialises a new instance of the Yaircc.GlobalSettings class.
+        /// Prevents a default instance of the <see cref="GlobalSettings" /> class from being created.
         /// </summary>
-        public GlobalSettings()
+        private GlobalSettings()
         {
             Yaircc.Properties.Settings settings = Yaircc.Properties.Settings.Default;
             string defaultName = Regex.Replace(Environment.MachineName, @"[^a-zA-Z0-9]+", string.Empty);
@@ -154,6 +159,14 @@ namespace Yaircc
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets the singleton instance of the class.
+        /// </summary>
+        public static GlobalSettings Instance
+        {
+            get { return GlobalSettings.SingletonInstance; }
+        }
 
         /// <summary>
         /// Gets or sets the preferred nick name to use when connecting to a server.
