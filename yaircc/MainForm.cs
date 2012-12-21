@@ -243,6 +243,7 @@ namespace Yaircc
                 }
 
                 item.Tag = favourites[i];
+                item.ToolTipText = string.Format("Connect to {0} ({1}:{2})...", favourites[i].Alias, favourites[i].Address, favourites[i].Port);
                 this.favouritesToolStripSplitButton.DropDownItems.Add(item);
             }
         }
@@ -1256,6 +1257,8 @@ namespace Yaircc
                 {
                     this.ProcessConnectionRequest(dialog.ServerToOpen);
                 }
+                
+                this.BuildFavouriteButtons();
             }
         }
 
