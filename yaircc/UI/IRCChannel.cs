@@ -20,6 +20,7 @@ namespace Yaircc.UI
     using System;
     using System.Collections.Generic;
     using Yaircc.Net.IRC;
+    using Yaircc.Settings;
     using TabControl = System.Windows.Forms.TabControl;
 
     /// <summary>
@@ -176,18 +177,17 @@ namespace Yaircc.UI
         /// </summary>
         public void Dispose()
         {
-            TabControl tabControl = this.TabPage.Parent as TabControl;
-            tabControl.InvokeAction(() =>
-            {
-                if ((tabControl.SelectedTab == this.TabPage) && (tabControl.SelectedIndex > 0))
+            this.marshal.TabHost.InvokeAction(() =>
                 {
-                    tabControl.SelectedIndex--;
-                }
+                    if ((this.marshal.TabHost.SelectedTab == this.TabPage) && (this.marshal.TabHost.SelectedIndex > 0))
+                    {
+                        this.marshal.TabHost.SelectedIndex--;
+                    }
 
-                tabControl.TabPages.Remove(this.TabPage);
-                this.TabPage.Dispose();
-                this.users.Clear();
-            });
+                    this.marshal.TabHost.TabPages.Remove(this.TabPage);
+                    this.TabPage.Dispose();
+                    this.users.Clear();
+                });
 
             if (this.disposed != null)
             {
@@ -217,7 +217,7 @@ namespace Yaircc.UI
             Reply reply = (Reply)int.Parse(message.Command);
             MessageTypeAttribute attributes = IRCMarshal.GetReplyAttributes(reply);
             MessageType messageType = attributes.MessageType;
-            GlobalSettings settings = new GlobalSettings();
+            GlobalSettings settings = GlobalSettings.Instance;
             string source = attributes.Source;
             
             string content;
@@ -329,7 +329,7 @@ namespace Yaircc.UI
                 namesRequest.Invoke();
             }
 
-            GlobalSettings settings = new GlobalSettings();
+            GlobalSettings settings = GlobalSettings.Instance;
             if (settings.DebugMode == GlobalSettings.Boolean.Yes)
             {
                 this.TabPage.AppendMessage(message.Command, "[RAW]", message.ToString(), MessageType.WarningMessage);

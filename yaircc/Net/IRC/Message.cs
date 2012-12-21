@@ -431,7 +431,10 @@ namespace Yaircc.Net.IRC
 
             for (int i = 0; i < this.Parameters.Length; i++)
             {
-                estimatedCapacity += this.Parameters[i].Length + 1;
+                if (!string.IsNullOrEmpty(this.Parameters[i]))
+                {
+                    estimatedCapacity += this.Parameters[i].Length + 1;
+                }
             }
 
             if (!string.IsNullOrEmpty(this.TrailingParameter))
@@ -454,8 +457,11 @@ namespace Yaircc.Net.IRC
             {
                 for (int i = 0; i < this.Parameters.Length; i++)
                 {
-                    sb.Append(" ");
-                    sb.Append(this.Parameters[i]);
+                    if (!string.IsNullOrEmpty(this.Parameters[i]))
+                    {
+                        sb.Append(" ");
+                        sb.Append(this.Parameters[i]);
+                    }
                 }
             }
 

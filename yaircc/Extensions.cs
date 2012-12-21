@@ -20,6 +20,8 @@ namespace Yaircc
     using System;
     using System.Net.Sockets;
     using System.Windows.Forms;
+    using Yaircc.Settings;
+    using Yaircc.UI;
 
     /// <summary>
     /// Contains extension methods for a number of classes.
@@ -149,6 +151,34 @@ namespace Yaircc
         {
             int dummy;
             return int.TryParse(source.ToString(), out dummy);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether or not the TabControl has a tab connected to the specified server.
+        /// </summary>
+        /// <param name="source">The TabControl.</param>
+        /// <param name="server">The server to search for.</param>
+        /// <returns>true if present.</returns>
+        public static bool ContainsTabConnectedToServer(this TabControl source, Server server)
+        {
+            for (int i = 0; i < source.TabPages.Count; i++)
+            {
+                if (source.TabPages[i] is IRCTabPage)
+                {
+                    IRCTabPage page = source.TabPages[i] as IRCTabPage;
+
+                    if (page.Connection != null)
+                    {
+                        if (page.Connection.Server.Equals(server.Address, StringComparison.OrdinalIgnoreCase) &&
+                            page.Connection.Port.Equals(server.Port))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
