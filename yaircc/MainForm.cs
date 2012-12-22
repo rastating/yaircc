@@ -50,6 +50,21 @@ namespace Yaircc
         /// </summary>
         private Queue<Action> queuedActions;
 
+        /// <summary>
+        /// A list containing the last 100 commands issued.
+        /// </summary>
+        private List<string> commandList;
+
+        /// <summary>
+        /// The index of the item currently scrolled to in the command list.
+        /// </summary>
+        private int commandListIndex;
+
+        /// <summary>
+        /// A value indicating whether or not the input box is being populated from the command list.
+        /// </summary>
+        private bool populatingInputBoxFromHistory;
+
         #endregion
 
         #region Constructors
@@ -76,6 +91,22 @@ namespace Yaircc
             get
             {
                 return this.Handle.Equals(GetForegroundWindow());
+            }
+        }
+
+        /// <summary>
+        /// Gets a list containing the last 100 commands issued.
+        /// </summary>
+        private List<string> CommandList
+        {
+            get
+            {
+                if (this.commandList == null)
+                {
+                    this.commandList = new List<string>(100);
+                }
+
+                return this.commandList;
             }
         }
 
@@ -658,6 +689,19 @@ namespace Yaircc
         }
 
         /// <summary>
+        /// Populates the input box from the command list using the specified index.
+        /// </summary>
+        /// <param name="index">The index of the item to use.</param>
+        private void PopulateInputBoxFromCommandList(int index)
+        {
+            this.commandListIndex = index;
+            this.populatingInputBoxFromHistory = true;
+            this.inputTextBox.Text = this.CommandList[this.commandListIndex];
+            this.populatingInputBoxFromHistory = false;
+            this.inputTextBox.SelectionStart = this.inputTextBox.Text.Length;
+        }
+
+        /// <summary>
         /// Handles the KeyDown event of Intninety.TemporalTextBox.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -668,11 +712,41 @@ namespace Yaircc
             {
                 IRCTabPage currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
                 this.HandleInput();
+
+                if (this.CommandList.Count == 100)
+                {
+                    this.CommandList.RemoveAt(99);
+                }
+
+                this.CommandList.Insert(0, this.inputTextBox.Text);
+
                 this.inputTextBox.Text = string.Empty;
                 currentTab.WebBrowser.Document.Window.ScrollTo(0, currentTab.WebBrowser.Document.Window.Size.Height);
                 this.inputTextBox.ClearStack();
                 this.InputTextBox_TextChanged(sender, e);
                 e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                if (this.CommandList.Count > 0)
+                {
+                    if (this.commandListIndex < this.CommandList.Count - 1)
+                    {
+                        this.PopulateInputBoxFromCommandList(this.commandListIndex + 1);
+                        e.Handled = true;
+                    }
+                }
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if (this.CommandList.Count > 0)
+                {
+                    if (this.commandListIndex > 0)
+                    {
+                        this.PopulateInputBoxFromCommandList(this.commandListIndex - 1);
+                        e.Handled = true;
+                    }
+                }
             }
         }
 
@@ -696,6 +770,15 @@ namespace Yaircc
         /// <param name="e">The event parameters.</param>
         private void InputTextBox_TextChanged(object sender, EventArgs e)
         {
+            if (this.populatingInputBoxFromHistory)
+            {
+                this.inputTextBox.ClearStack();
+            }
+            else
+            {
+                this.commandListIndex = -1;
+            }
+
             this.undoToolStripMenuItem.Enabled = this.inputTextBox.CanUndo;
             this.redoToolStripMenuItem.Enabled = this.inputTextBox.CanRedo;
             this.undoToolStripButton.Enabled = this.undoToolStripMenuItem.Enabled;
