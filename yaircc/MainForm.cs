@@ -951,14 +951,14 @@ namespace Yaircc
                     serverTab.Connection.Nickname = server == null ? GlobalSettings.Instance.NickName : server.NickName;
                     serverTab.Connection.Mode = server == null ? GlobalSettings.Instance.Mode : server.Mode;
 
-                    Queue<string> queue = null;
+                    List<string> commands = null;
 
                     if (server != null)
                     {
-                        queue = new Queue<string>(server.Commands);
+                        commands = server.Commands;
                     }
 
-                    IRCMarshal marshal = new IRCMarshal(connection, this.channelsTabControl, queue);
+                    IRCMarshal marshal = new IRCMarshal(connection, this.channelsTabControl, commands);
                     marshal.ChannelCreated += new IRCMarshal.ChannelCreatedHandler(this.ChannelCreated);
 
                     serverTab.Marshal = marshal;
