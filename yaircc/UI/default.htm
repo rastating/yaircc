@@ -45,53 +45,26 @@
 			    });
 
 			    var html = $(payloadColumn).html()
-			                    .replace(':)', '<span class="smiley smile"><span>:)</span></span>')
-			                    .replace(':-)', '<span class="smiley smile"><span>:-)</span></span>')
-			                    .replace(':D', '<span class="smiley grin"><span>:D</span></span>')
-			                    .replace(':-D', '<span class="smiley grin"><span>:-D</span></span>')
-			                    .replace(':|', '<span class="smiley ambivalent"><span>:|</span></span>')
-			                    .replace(':-|', '<span class="smiley ambivalent"><span>:-|</span></span>')
-			                    .replace(/(\s|<wbr \/>|&nbsp;|<\/wbr>)+(:\\)/gi, '$1<span class="smiley slant"><span>:\</span></span>')
-			                    .replace(/(\s|<wbr \/>|&nbsp;|<\/wbr>)+(:\/)/gi, '$1<span class="smiley slant"><span>:\</span></span>')
-			                    .replace(':-\\', '<span class="smiley slant"><span>:-\</span></span>')
-			                    .replace(':-/', '<span class="smiley slant"><span>:-/</span></span>')
-			                    .replace(':S', '<span class="smiley confused"><span>:S</span></span>')
-			                    .replace(':s', '<span class="smiley confused"><span>:s</span></span>')
-			                    .replace(':-S', '<span class="smiley confused"><span>:-S</span></span>')
-			                    .replace(':-s', '<span class="smiley confused"><span>:-s</span></span>')
-			                    .replace('8)', '<span class="smiley cool"><span>8)</span></span>')
-			                    .replace('8-)', '<span class="smiley cool"><span>8-)</span></span>')
-			                    .replace('(Y)', '<span class="smiley thumbs-up"><span>(Y)</span></span>')
-			                    .replace('(y)', '<span class="smiley thumbs-up"><span>(y)</span></span>')
-			                    .replace('(N)', '<span class="smiley thumbs-down"><span>(N)</span></span>')
-			                    .replace('(n)', '<span class="smiley thumbs-down"><span>(n)</span></span>')
-			                    .replace(':O', '<span class="smiley gasp"><span>:O</span></span>')
-			                    .replace(':o', '<span class="smiley gasp"><span>:o</span></span>')
-			                    .replace(':-o', '<span class="smiley gasp"><span>:-o</span></span>')
-			                    .replace(':-O', '<span class="smiley gasp"><span>:-O</span></span>')
-			                    .replace(':(', '<span class="smiley frown"><span>:(</span></span>')
-			                    .replace(':-(', '<span class="smiley frown"><span>:-(</span></span>')
-			                    .replace(':\'(', '<span class="smiley cry"><span>:\'(</span></span>')
-			                    .replace(':\'-(', '<span class="smiley cry"><span>:\'-(</span></span>')
-			                    .replace(':p', '<span class="smiley tongue"><span>:p</span></span>')
-			                    .replace(':P', '<span class="smiley tongue"><span>:P</span></span>')
-			                    .replace(':-p', '<span class="smiley tongue"><span>:-p</span></span>')
-			                    .replace(':-P', '<span class="smiley tongue"><span>:-P</span></span>')
-			                    .replace('(L)', '<span class="smiley heart"><span>(L)</span></span>')
-			                    .replace('(l)', '<span class="smiley heart"><span>(l)</span></span>')
+			                    .replace(/(:(\-)?\))/gi, '<span class="smiley smile"><span>$1</span></span>')
+			                    .replace(/(:(\-)?D)/gi, '<span class="smiley grin"><span>$1</span></span>')
+			                    .replace(/(:(\-)?\|)/gi, '<span class="smiley ambivalent"><span>$1</span></span>')
+			                    .replace(/(^|[\s\0]|<wbr \/>|&nbsp;|<\/wbr>)(:(\-)?\\)/gi, '$1<span class="smiley slant-reverse"><span>$2</span></span>')
+			                    .replace(/(^|[\s\0]|<wbr \/>|&nbsp;|<\/wbr>)(:(\-)?\/)/gi, '$1<span class="smiley slant"><span>$2</span></span>')
+			                    .replace(/(:(\-)?S)/gi, '<span class="smiley confused"><span>$1</span></span>')
+			                    .replace(/(8(\-)?\))/gi, '<span class="smiley cool"><span>$1</span></span>')
+			                    .replace(/(\(Y\))/gi, '<span class="smiley thumbs-up"><span>$1</span></span>')
+			                    .replace(/(\(N\))/gi, '<span class="smiley thumbs-down"><span>$1</span></span>')
+			                    .replace(/(:(\-)?O)/gi, '<span class="smiley gasp"><span>$1</span></span>')
+			                    .replace(/(:(\-)?\()/gi, '<span class="smiley frown"><span>$1</span></span>')
+			                    .replace(/(:'(\-)?\()/gi, '<span class="smiley cry"><span>$1</span></span>')
+			                    .replace(/(:(\-)?P)/gi, '<span class="smiley tongue"><span>$1</span></span>')
+			                    .replace(/(\(L\))/gi, '<span class="smiley heart"><span>$1</span></span>')
 			                    .replace('&lt;3', '<span class="smiley heart"><span>&lt;3</span></span>')
-			                    .replace(':-*', '<span class="smiley kiss"><span>:-*</span></span>')
-			                    .replace(':*', '<span class="smiley kiss"><span>:*</span></span>')
-			                    .replace('(K)', '<span class="smiley kiss"><span>(K)</span></span>')
-			                    .replace('(k)', '<span class="smiley kiss"><span>(k)</span></span>')
-			                    .replace(':@', '<span class="smiley angry"><span>:@</span></span>')
-			                    .replace(':-@', '<span class="smiley angry"><span>:-@</span></span>')
-			                    .replace(':x', '<span class="smiley sealed"><span>:x</span></span>')
-			                    .replace(':X', '<span class="smiley sealed"><span>:X</span></span>')
-			                    .replace(':-x', '<span class="smiley sealed"><span>:-x</span></span>')
-			                    .replace(':-X', '<span class="smiley sealed"><span>:-X</span></span>')
-			                    .replace(';)', '<span class="smiley wink"><span>;)</span></span>')
-			                    .replace(';-)', '<span class="smiley wink"><span>;-)</span></span>');
+			                    .replace(/(:(\-)?\*)/gi, '<span class="smiley kiss"><span>$1</span></span>')
+			                    .replace(/(\(K\))/gi, '<span class="smiley kiss"><span>$1</span></span>')
+			                    .replace(/(:(\-)?@)/gi, '<span class="smiley angry"><span>$1</span></span>')
+			                    .replace(/(:(\-)?X)/gi, '<span class="smiley sealed"><span>$1</span></span>')
+			                    .replace(/(;(\-)?\))/gi, '<span class="smiley wink"><span>$1</span></span>');
 			                    
 			    $(payloadColumn).html(html);
 
@@ -147,6 +120,11 @@
             span.slant
             {
             	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpEMjg5Q0E4NzBBMjA2ODExOEMxNEY4MTA3MzU0NDIxOCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDRUE1M0U2QTJCRjYxMUUwQUNGREVBMkU4MTVBNkQ0RSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDRUE1M0U2OTJCRjYxMUUwQUNGREVBMkU4MTVBNkQ0RSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkQzODlDQTg3MEEyMDY4MTE4QzE0RjgxMDczNTQ0MjE4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkQyODlDQTg3MEEyMDY4MTE4QzE0RjgxMDczNTQ0MjE4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+FDvnegAAA+VJREFUeNqslNtrHFUcx7+zM3vJZpPNbpPNvY12kzStaUyTYqRIkyLxofRBfBERFEQag1KkDwb0oQ9ilVghwQt9LFRRFEUxVhQFMUZTu2Jp6yVNzWWT7DZ7md2d3Z2dyznj76whf4EHvjDn8vvM73aO5DgO/o+hzM7OQpIkuFwuyLKMD19/TnpqAC1+NyZpf5w0tHM2RvqmbOHdS9eRfHzqPYcxho+nn69uSjMzM1XIJ2++INFcPj2ElxSv8mrvyUE0HzyC8N7DcGBDXYsh8efvuD33B2zDfuViDG/QeUaqhiSPjo7ii9mzAqI8ewQX9/TuOfvQmSfQ1nsIXp8XTiUNx0jDV+NBU1c7OkY6oW4kTvR5Kh2/JfDVLmh4eBgbN+cF5EKkPzJx/PRJuGwd3LAgMQWOI9N/HTiWAV5R4eY6uh7ch0wiPXhA1oME+5Y4XJbj89KpHkQDAfny2MQImKrC2lqHmViE5Ka8+ffTMQZ7+zr0pQXYBROUHLQdCuP2YvKBdr/z/lIGWZfwKuTDZOdgBMiq4PkyTDWPR89VwLQUuJmDQx5axTQeO1+BlS2CZUtgqRI6B0IQtoIhQB4OPBJpr4GRLIPpBhR/GGqBVpVmCicHRnJ5G6FqHEp9PWydkccVNLZ4IWwFQ4DcnGN/sEZCZUODXTLhaQnixEAA7lATeDkLrqvwhJsw1u+HuzkIVjRR2SwiIDlgHB2CUQ3NdmDo2zqMtAlbpUQ7BqbfPk5bGnlI4ZYpPEnD9DvHaM2q5snM2rA0S9RBFgxFlI6oifS23h121VAuDFx4OYbmNh+6okH0ROsQDrqhrxTB/zJg5Q3YmkkdKCOTMoTtRrWzBcdg+DEer3RHehtgpQp4ZvIYkitprC5v4ssbaXh8CjoJfE+LBwGqoJU14Y3UYe1OAcJWMOSuBroZEtIyY0/3DQZgr1uQixk03VuHnpFe9PR3olbi2FxSsfhTDgdDEnhJhtwt4+qvOSxn8GK6jLgAgT70vfXoSGzp9x0eb0X5VhFmPAsjkYBUUhEOeXCgvxFHjzaj9HcewbFGXJnbQqHIPlrcxAfkUVGAqi3+j4pYo4dH11YL0eh4E3xBH9hdG8aSBmOlQOFQZwc4WE8N5j5bx92M/fX3K5gi0wypIk9Mncfyte+oHWCv5vBzg8L9Szfy95t+htq+ANoebkXtUAgpj42bd3L44UoKmQK/NL+Oc2STJJXEFVH8fj92bnGRtLkQx2utdc7n2oL2ZOwXbdglbewTB7iDNarQtfUCLic03KKl1A6E7T4jYnz61pnqM0LykupIQVJgZy6GsfOzfLXB/pvvPiP/CjAAY77UwqosDHoAAAAASUVORK5CYII=);
+            }
+            
+            span.slant-reverse
+            {
+            	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjczMkQyOTRCNEQzNzExRTJCQjM2ODY4QTZCOTZBRkVCIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjczMkQyOTRDNEQzNzExRTJCQjM2ODY4QTZCOTZBRkVCIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NzMyRDI5NDk0RDM3MTFFMkJCMzY4NjhBNkI5NkFGRUIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NzMyRDI5NEE0RDM3MTFFMkJCMzY4NjhBNkI5NkFGRUIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7HHpTzAAADyUlEQVR42qyU7WtbVRzHPzf3pmmSNlnTpmtju9bVrNZZ25ki6hydw4eqCPMRXwjCRJwDQXSiL3yxF8qUIShOZe9URPTdwLnJfKEyNlHchpurdnPYh6RJl/SmbR5u7s198Jws21/ghS+ce87v9+H3Ped3juJ5Hv/Hp0wOXB089fpBVFXl63dfUp4boyfkZ4+YfkAo1Yw9LXS8WueTz/8g98ybn3qO4+C6LrKY6yAJFVJfTPGGFtDeTj5yC70j43QMpMSChj5/jqXpM8x8dxbbtN86dJr3RLzz5N6PPAlTB9ddh2gv3M6hzk3rXrvn5SkSyWECgSCeWRRaoTUcIr5xiP67htHTcztGWoy+M1mOTp865g2Ob78OkpD3u0dju7c9vxXNrONaDrgt4EmpKLaNI6CaUmHj3SMUMtktN6uVqID9EE9OuNKa8ugmkj0xdebhvcKGAXZ+BddYorX/Nvzr70BRQ9SXT2JmzqIG+1E7Y3hBjSPv/EhOd4a/vcgln9yXjlb29I914OQrOHqFul7mif016uUCnm2I6lZwSnke21fDKq7irlZBL9K/pRuZKxkS1OLCg109AaxsDdtw0CIRiiUXX6ALpyaqE0JbT3HNRQvFcAwTM1el+4YgMlcyJMjvuPS1KR61TBmnbAk7Ue4dDdESiwuLRdyqjr8jzo6xNlp6otgVi1q6RDSoiONnSDIa1hwPtV6qY+k29polpuoc+HgrnlISEGFLwKDEgYOTuJ6JXTQwCxbGFQPbw5QMTR6ZqCi9nLeSESWAXbIo/72MmS0LawF8mg99tc7FkwvM/rPK0mKNXVOdKD6NggCJ3Gzj2CXHdDgxlzaTE0MRrCsllJCPYtnm31yRBZFo1WwSXUEmxgbo2dmF9ds5/PEICzNFZK5kSFD9ss4XPtXclbrTwZv1YWcNDp+qMHBjkNR4gv7RDYSCPqxcDuP8NG5ZZCVt5jI1ZK5kNBqyUMXYEKEvt1i7deyhBMZMlcmnkyRHorRrYt/SGaoX5qjN6MI6RLZ1cvRImrWy882vGb4SoHKjIcWgTSixfZAP4jFt6v6dfbSWPOozoqfy1Ubr+3tC+G8KU2tXOH44TUG3v/9pllfE0qIEXbsioh2wZ1f4Jaq64UvnV8etkEN4cxuJ+3oJpzrI+23+vLzCz8fy6CX3sxPz7BM5OaHK1O797rXbrzQ3PiwU721ns7D6rGjXCZ9CI8L1mBMn9Pv8Gl9mS1wQU3kJkQU8/uqHntZ8QuTrZssS5caJwJLQX03LgWaM2VxfbTTV1X9HQuTifwIMADpvwYJldoUiAAAAAElFTkSuQmCC);
             }
             
             span.cool
