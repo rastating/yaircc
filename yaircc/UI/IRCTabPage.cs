@@ -698,7 +698,7 @@ namespace Yaircc.UI
                 type, 
                 (originalPayload) => 
                 {
-                    string retval = System.Security.SecurityElement.Escape(originalPayload);
+                    string retval = System.Security.SecurityElement.Escape(originalPayload).Replace("&apos;", "'");
 
                     /*
                      * As there are issues with using <pre> in a table cell
