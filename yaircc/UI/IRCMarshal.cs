@@ -88,9 +88,9 @@ namespace Yaircc.UI
         private ChannelCreatedHandler channelCreated;
 
         /// <summary>
-        /// A queue of commands to execute when the mode message has been received.
+        /// A list of commands to execute when the mode message has been received.
         /// </summary>
-        private Queue<string> queuedCommands;
+        private List<string> autoCommands;
 
         #endregion
 
@@ -102,7 +102,7 @@ namespace Yaircc.UI
         /// <param name="connection">The connection to marshal data to and from.</param>
         /// <param name="tabHost">The TabControl that hosts the server and channel tabs.</param>
         /// <param name="autoCommands">A queue of commands to automatically execute once a connection is fully established.</param>
-        public IRCMarshal(Connection connection, TabControl tabHost, Queue<string> autoCommands)
+        public IRCMarshal(Connection connection, TabControl tabHost, List<string> autoCommands)
         {
             this.tabHost = tabHost;
             this.previousNickName = connection.Nickname;
@@ -113,11 +113,11 @@ namespace Yaircc.UI
 
             if (autoCommands != null)
             {
-                this.queuedCommands = autoCommands;
+                this.autoCommands = autoCommands;
             }
             else
             {
-                this.queuedCommands = new Queue<string>();
+                this.autoCommands = new List<string>();
             }
         }
 
@@ -202,11 +202,11 @@ namespace Yaircc.UI
         }
 
         /// <summary>
-        /// Gets a queue of commands to execute when the mode message has been received.
+        /// Gets a list of commands to execute when the mode message has been received.
         /// </summary>
-        private Queue<string> QueuedCommands
+        private List<string> AutoCommands
         {
-            get { return this.queuedCommands; }
+            get { return this.autoCommands; }
         }
 
         #endregion
@@ -549,22 +549,34 @@ namespace Yaircc.UI
             {
                 this.awaitingModeMessage = false;
                 this.Send(this.ServerTab, new ModeMessage(new string[] { this.Connection.Nickname, this.Connection.Mode }));
-                this.Channels.ForEach(i => 
-                    { 
-                        if (i.TabPage.TabType == IRCTabType.Channel) 
-                        { 
-                            this.Send(this.ServerTab, new JoinMessage(i.Name)); 
-                        } 
-                    });
 
-                // If we have any commands queued execute them now.
-                while (this.QueuedCommands.Count > 0)
+                // Execute any auto commands.
+                if (this.AutoCommands.Count > 0)
                 {
-                    MessageParseResult parseResult = MessageFactory.CreateFromUserInput(this.QueuedCommands.Dequeue(), null);
-                    if (parseResult.Success)
+                    for (int i = 0; i < this.AutoCommands.Count; i++)
                     {
-                        this.Send(this.ServerTab, parseResult.IRCMessage);
+                        MessageParseResult parseResult = MessageFactory.CreateFromUserInput(this.AutoCommands[i], null);
+                        if (parseResult.Success)
+                        {
+                            this.Send(this.ServerTab, parseResult.IRCMessage);
+                        }
                     }
+                }
+
+                if (this.reconnecting)
+                {
+                    // Pause the thread for a second to give time for any authentication to 
+                    // take place and then rejoin the channels.
+                    System.Threading.Thread.Sleep(1000);
+                    this.Channels.ForEach(i =>
+                        {
+                            if (i.TabPage.TabType == IRCTabType.Channel)
+                            {
+                                this.Send(this.ServerTab, new JoinMessage(i.Name));
+                            }
+                        });
+
+                    this.reconnecting = false;
                 }
             }
         }
@@ -618,8 +630,6 @@ namespace Yaircc.UI
         /// <param name="e">The event arguments.</param>
         private void ConnectionEstablished(object sender, EventArgs e)
         {
-            this.reconnecting = false;
-
             this.PerformServerTabAction(() =>
             {
                 string message = string.Format(Strings_Connection.EstablishedConnection, this.Connection.Server);
