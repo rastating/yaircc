@@ -618,6 +618,14 @@ namespace Yaircc.UI
         }
 
         /// <summary>
+        /// Lists the supported emoticons in the tab.
+        /// </summary>
+        public void ListEmoticons()
+        {
+            this.WebBrowser.Document.InvokeScript("listEmoticons", new object[] { "[" + DateTime.Now.ToString("[{0:HH:mm}]") + "]", "[INFO]" });
+        }
+
+        /// <summary>
         /// Load a theme into the web browser control.
         /// </summary>
         /// <param name="path">The full path of the theme to load.</param>
@@ -653,7 +661,18 @@ namespace Yaircc.UI
                     payload = transform.Invoke(payload);
 
                     object[] args = new object[] { timestamp, source, payload, classes };
-                    bool scroll = (bool)this.WebBrowser.Document.InvokeScript("isScrolledToTheBottom");
+                    bool scroll = true;
+
+                    // If the selected tab is the one that we are appending to, then use the JavaScript
+                    // method "isScrolledToTheBottom" to determine whether or not we should scroll.
+                    if (this.Parent != null)
+                    {
+                        if ((this.Parent as TabControl).SelectedTab == this)
+                        {
+                            scroll = (bool)this.WebBrowser.Document.InvokeScript("isScrolledToTheBottom");
+                        }
+                    }
+
                     this.WebBrowser.Document.InvokeScript("appendMessage", args);
 
                     if (scroll)
