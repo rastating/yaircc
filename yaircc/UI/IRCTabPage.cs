@@ -622,7 +622,7 @@ namespace Yaircc.UI
         /// </summary>
         public void ListEmoticons()
         {
-            this.WebBrowser.Document.InvokeScript("listEmoticons", new object[] { "[" + DateTime.Now.ToString("[{0:HH:mm}]") + "]", "[INFO]" });
+            this.WebBrowser.Document.InvokeScript("listEmoticons", new object[] { "[" + DateTime.Now.ToString("HH:mm") + "]", "[INFO]" });
         }
 
         /// <summary>
