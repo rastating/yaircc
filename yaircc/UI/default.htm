@@ -73,6 +73,45 @@
 			    payloadColumn.appendTo(row);
 			    $('#message-table tbody').append(row);
 			}
+
+			function listEmoticon(timestamp, source, detail) {
+			    var row = $('<tr>').addClass("ServerMessage");
+			    var timestampColumn = $('<td>').addClass('timestamp').text(timestamp);
+			    var sourceColumn = $('<td>').addClass('source').text(source);
+			    var payloadColumn = $('<td>').addClass('payload').html(detail);
+
+			    timestampColumn.appendTo(row);
+			    sourceColumn.appendTo(row);
+			    payloadColumn.appendTo(row);
+			    $('#message-table tbody').append(row);
+			}
+
+			function listEmoticons(timestamp, source) {
+			    var emoticons = [
+			                        '<span style="display: inline-block; font-weight: bold; width: 100px;">Emoticon</span><strong>Keycode(s)</strong>',
+			                        '<span class="smiley smile" style="width: 100px;"><span>:)</span></span><span style="vertical-align: top;">:) :-)</span>',
+			                        '<span class="smiley grin" style="width: 100px;"><span>:D</span></span><span style="vertical-align: top;">:D :-D</span>',
+			                        '<span class="smiley ambivalent" style="width: 100px;"><span>:|</span></span><span style="vertical-align: top;">:| :-|</span>',
+			                        '<span class="smiley slant-reverse" style="width: 100px;"><span>:\\</span></span><span style="vertical-align: top;">:\\ :-\\</span>',
+			                        '<span class="smiley slant" style="width: 100px;"><span>:/</span></span><span style="vertical-align: top;">:/ :-/</span>',
+			                        '<span class="smiley confused" style="width: 100px;"><span>:S</span></span><span style="vertical-align: top;">:s :-s :S :-S</span>',
+			                        '<span class="smiley cool" style="width: 100px;"><span>8)</span></span><span style="vertical-align: top;">8) 8-)</span>',
+			                        '<span class="smiley gasp" style="width: 100px;"><span>:o</span></span><span style="vertical-align: top;">:o :-o :O :-O</span>',
+			                        '<span class="smiley frown" style="width: 100px;"><span>:(</span></span><span style="vertical-align: top;">:( :-(</span>',
+			                        '<span class="smiley cry" style="width: 100px;"><span>:\'(</span></span><span style="vertical-align: top;">:\'( :\'-(</span>',
+			                        '<span class="smiley tongue" style="width: 100px;"><span>:P</span></span><span style="vertical-align: top;">:p :-p :P :-P</span>',
+			                        '<span class="smiley kiss" style="width: 100px;"><span>:*</span></span><span style="vertical-align: top;">:* :-* (K) (k)</span>',
+			                        '<span class="smiley angry" style="width: 100px;"><span>:@</span></span><span style="vertical-align: top;">:@ :-@</span>',
+			                        '<span class="smiley sealed" style="width: 100px;"><span>:x</span></span><span style="vertical-align: top;">:x :-x :X :-X</span>',
+			                        '<span class="smiley wink" style="width: 100px;"><span>;)</span></span><span style="vertical-align: top;">;) ;-)</span>',
+			                        '<span class="smiley heart" style="width: 100px;"><span>&lt;3</span></span><span style="vertical-align: top;">&lt;3 (L) (l)</span>',
+			                        '<span class="smiley thumbs-up" style="width: 100px;"><span>(Y)</span></span><span style="vertical-align: top;">(Y) (y)</span>',
+			                        '<span class="smiley thumbs-down" style="width: 100px;"><span>(N)</span></span><span style="vertical-align: top;">(N) (n)</span>'
+			                     ];
+                $(emoticons).each(function(index, item) {
+                    listEmoticon(timestamp, source, item);
+                });
+			}
 			
 			function setStyle(style) {
 			    $("head").append('<style type="text/css">' + style + '</style>');

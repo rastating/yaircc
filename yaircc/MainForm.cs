@@ -65,6 +65,11 @@ namespace Yaircc
         /// </summary>
         private bool populatingInputBoxFromHistory;
 
+        /// <summary>
+        /// The currently selected tab.
+        /// </summary>
+        private IRCTabPage currentTab;
+
         #endregion
 
         #region Constructors
@@ -107,6 +112,22 @@ namespace Yaircc
                 }
 
                 return this.commandList;
+            }
+        }
+
+        /// <summary>
+        /// Gets the currently selected tab.
+        /// </summary>
+        private IRCTabPage CurrentTab
+        {
+            get 
+            {
+                if (this.channelsTabControl.SelectedTab != this.currentTab)
+                {
+                    this.currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
+                }
+
+                return this.currentTab;
             }
         }
 
@@ -371,44 +392,43 @@ namespace Yaircc
         {
             if (this.channelsTabControl.SelectedTab is IRCTabPage)
             {
-                IRCTabPage tabPage = this.channelsTabControl.SelectedTab as IRCTabPage;
-                tabPage.ImageIndex = tabPage.NormalImageIndex;
+                this.CurrentTab.ImageIndex = this.CurrentTab.NormalImageIndex;
 
-                if (tabPage.UserTreeView != null)
+                if (this.CurrentTab.UserTreeView != null)
                 {
-                    tabPage.UserTreeView.BringToFront();
+                    this.CurrentTab.UserTreeView.BringToFront();
                 }
                 else
                 {
                     this.userTreeView.BringToFront();
                 }
 
-                if (tabPage.TabType == IRCTabType.Server)
+                if (this.CurrentTab.TabType == IRCTabType.Server)
                 {
-                    this.Text = string.Format("{0} - yaircc", tabPage.Marshal.Connection.ToString());
+                    this.Text = string.Format("{0} - yaircc", this.CurrentTab.Marshal.Connection.ToString());
                 }
-                else if (tabPage.TabType == IRCTabType.Channel)
+                else if (this.CurrentTab.TabType == IRCTabType.Channel)
                 {
-                    if (tabPage.Marshal != null)
+                    if (this.CurrentTab.Marshal != null)
                     {
-                        this.Text = string.Format("{0} @ {1} - yaircc", tabPage.Text, tabPage.Marshal.Connection.ToString());
+                        this.Text = string.Format("{0} @ {1} - yaircc", this.CurrentTab.Text, this.CurrentTab.Marshal.Connection.ToString());
                     }
                 }
-                else if (tabPage.TabType == IRCTabType.Console)
+                else if (this.CurrentTab.TabType == IRCTabType.Console)
                 {
                     this.Text = "yaircc";
                 }
-                else if (tabPage.TabType == IRCTabType.PM)
+                else if (this.CurrentTab.TabType == IRCTabType.PM)
                 {
-                    this.Text = string.Format("Conversation with {0} on {1} - yaircc", tabPage.Text, tabPage.Marshal.Connection.ToString());
+                    this.Text = string.Format("Conversation with {0} on {1} - yaircc", this.CurrentTab.Text, this.CurrentTab.Marshal.Connection.ToString());
                 }
 
-                this.disconnectToolStripMenuItem.Enabled = tabPage.TabType != IRCTabType.Console;
-                this.disconnectToolStripButton.Enabled = tabPage.TabType != IRCTabType.Console;
-                this.joinChannelToolStripButton.Enabled = tabPage.TabType != IRCTabType.Console;
-                this.joinChannelToolStripMenuItem.Enabled = tabPage.TabType != IRCTabType.Console;
-                this.leaveChannelToolStripButton.Enabled = tabPage.TabType == IRCTabType.Channel;
-                this.leaveChannelToolStripMenuItem.Enabled = tabPage.TabType == IRCTabType.Channel;
+                this.disconnectToolStripMenuItem.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
+                this.disconnectToolStripButton.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
+                this.joinChannelToolStripButton.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
+                this.joinChannelToolStripMenuItem.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
+                this.leaveChannelToolStripButton.Enabled = this.CurrentTab.TabType == IRCTabType.Channel;
+                this.leaveChannelToolStripMenuItem.Enabled = this.CurrentTab.TabType == IRCTabType.Channel;
             }
 
             this.inputTextBox.Focus();
@@ -435,8 +455,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void ClearLogToolStripButton_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.ClearLog();
+            this.CurrentTab.ClearLog();
         }
 
         /// <summary>
@@ -446,8 +465,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void CloseChannelTabMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.Marshal.GetChannelByTab(tab).Dispose();
+            this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).Dispose();
         }
 
         /// <summary>
@@ -457,8 +475,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void CollapseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.UserTreeView.CollapseAll();
+            this.CurrentTab.UserTreeView.CollapseAll();
         }
 
         /// <summary>
@@ -475,10 +492,20 @@ namespace Yaircc
         /// Gets a value that indicates whether or not the command issued was /clear.
         /// </summary>
         /// <param name="input">The command to check.</param>
-        /// <returns>True if the command started with /clear.</returns>
+        /// <returns>true if the command started with /clear.</returns>
         private bool CommandIsClearCommand(string input)
         {
             return input.Trim().Equals("/clear", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Gets a value that indicates whether or not the command issued was /emoticons.
+        /// </summary>
+        /// <param name="input">The command to check.</param>
+        /// <returns>true if the command is equal to /emoticons.</returns>
+        private bool CommandIsEmoticonsCommand(string input)
+        {
+            return input.Trim().Equals("/emoticons", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -560,8 +587,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void DisconnectTabMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.Marshal.Send(tab, new QuitMessage());
+            this.CurrentTab.Marshal.Send(this.CurrentTab, new QuitMessage());
         }
 
         /// <summary>
@@ -571,8 +597,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void DisconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.Marshal.Send(tab, new QuitMessage());
+            this.CurrentTab.Marshal.Send(this.CurrentTab, new QuitMessage());
         }
 
         /// <summary>
@@ -592,8 +617,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void ExpandAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.UserTreeView.ExpandAll();
+            this.CurrentTab.UserTreeView.ExpandAll();
         }
 
         /// <summary>
@@ -611,9 +635,8 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void GroupByModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.ToggleGrouping();
-            this.groupByModeToolStripMenuItem.Checked = tab.GroupingByMode;
+            this.CurrentTab.ToggleGrouping();
+            this.groupByModeToolStripMenuItem.Checked = this.CurrentTab.GroupingByMode;
         }
 
         /// <summary>
@@ -633,57 +656,60 @@ namespace Yaircc
             {
                 this.ClearLogToolStripButton_Click(this, EventArgs.Empty);
             }
+            else if (this.CommandIsEmoticonsCommand(this.inputTextBox.Text))
+            {
+                this.CurrentTab.ListEmoticons();
+            }
             else
             {
-                IRCTabPage currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
-                if (currentTab.TabType != IRCTabType.Console)
+                if (this.CurrentTab.TabType != IRCTabType.Console)
                 {
-                    if (currentTab.Marshal.IsConnected)
+                    if (this.CurrentTab.Marshal.IsConnected)
                     {
                         string source = string.Empty;
-                        if (currentTab.TabType == IRCTabType.Channel || currentTab.TabType == IRCTabType.PM)
+                        if (this.CurrentTab.TabType == IRCTabType.Channel || this.CurrentTab.TabType == IRCTabType.PM)
                         {
-                            source = currentTab.ConnectionSpecificName;
+                            source = this.CurrentTab.ConnectionSpecificName;
                         }
 
                         MessageParseResult parseResult = MessageFactory.CreateFromUserInput(this.inputTextBox.Text, source);
                         if (parseResult.Success)
                         {
                             Message message = parseResult.IRCMessage;
-                            if ((message is PartMessage) && (currentTab.TabType == IRCTabType.PM))
+                            if ((message is PartMessage) && (this.CurrentTab.TabType == IRCTabType.PM))
                             {
-                                if ((this.channelsTabControl.SelectedTab == currentTab) && (this.channelsTabControl.SelectedIndex > 0))
+                                if ((this.channelsTabControl.SelectedTab == this.CurrentTab) && (this.channelsTabControl.SelectedIndex > 0))
                                 {
                                     this.channelsTabControl.SelectedIndex--;
                                 }
 
-                                currentTab.Marshal.GetChannelByTab(currentTab).Dispose();
+                                this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).Dispose();
                             }
                             else
                             {
-                                currentTab.Marshal.Send(currentTab, message);
+                                this.CurrentTab.Marshal.Send(this.CurrentTab, message);
                             }
                         }
                         else
                         {
                             if (string.IsNullOrEmpty(parseResult.Message))
                             {
-                                currentTab.AppendMessage(null, "[ERROR]", "Unrecognised command: " + this.inputTextBox.Text, MessageType.ErrorMessage);
+                                this.CurrentTab.AppendMessage(null, "[ERROR]", "Unrecognised command: " + this.inputTextBox.Text, MessageType.ErrorMessage);
                             }
                             else
                             {
-                                currentTab.AppendMessage(null, "[ERROR]", parseResult.Message, MessageType.ErrorMessage);
+                                this.CurrentTab.AppendMessage(null, "[ERROR]", parseResult.Message, MessageType.ErrorMessage);
                             }
                         }
                     }
                     else
                     {
-                        currentTab.AppendMessage(null, "[ERROR]", Strings_Connection.NotConnectedToThisServer, MessageType.ErrorMessage);
+                        this.CurrentTab.AppendMessage(null, "[ERROR]", Strings_Connection.NotConnectedToThisServer, MessageType.ErrorMessage);
                     }
                 }
                 else
                 {
-                    currentTab.AppendMessage(null, "[ERROR]", Strings_MessageParseResults.Server_InvalidMessageContext, MessageType.ErrorMessage);
+                    this.CurrentTab.AppendMessage(null, "[ERROR]", Strings_MessageParseResults.Server_InvalidMessageContext, MessageType.ErrorMessage);
                 }
             }
         }
@@ -710,7 +736,6 @@ namespace Yaircc
         {
             if (e.KeyCode == Keys.Enter)
             {
-                IRCTabPage currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
                 this.HandleInput();
 
                 if (this.CommandList.Count == 100)
@@ -719,9 +744,8 @@ namespace Yaircc
                 }
 
                 this.CommandList.Insert(0, this.inputTextBox.Text);
-
                 this.inputTextBox.Text = string.Empty;
-                currentTab.WebBrowser.Document.Window.ScrollTo(0, currentTab.WebBrowser.Document.Window.Size.Height);
+                this.CurrentTab.ScrollToBottom();
                 this.inputTextBox.ClearStack();
                 this.InputTextBox_TextChanged(sender, e);
                 e.Handled = true;
@@ -796,8 +820,7 @@ namespace Yaircc
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-                    tab.Marshal.Send(tab, new JoinMessage(dialog.ChannelName));
+                    this.CurrentTab.Marshal.Send(this.CurrentTab, new JoinMessage(dialog.ChannelName));
                 }
             }
         }
@@ -809,9 +832,8 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void LeaveChannelTabMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.Marshal.Send(tab, new PartMessage(tab.Text));
-            tab.Marshal.GetChannelByTab(tab).Dispose();
+            this.CurrentTab.Marshal.Send(this.CurrentTab, new PartMessage(this.CurrentTab.Text));
+            this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).Dispose();
         }
 
         /// <summary>
@@ -819,10 +841,9 @@ namespace Yaircc
         /// </summary>
         private void ListCommands()
         {
-            IRCTabPage currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            currentTab.AppendMessage(null, "[INFO]", "away, back, ban, clear, connect, dehop, deop, except, hop, invite, j, join, kick, knock, leave", MessageType.ServerMessage);
-            currentTab.AppendMessage(null, "[INFO]", "links, list, map, me, mode, motd, msg, names, nick, notice, op, oper, part, ping, quit, stats", MessageType.ServerMessage);
-            currentTab.AppendMessage(null, "[INFO]", "time, topic, unban, unexcept, userhost, voice, who, whois, whowas", MessageType.ServerMessage);
+            this.CurrentTab.AppendMessage(null, "[INFO]", "away, back, ban, clear, connect, dehop, deop, emoticons, except, hop, invite, j, join, kick, knock", MessageType.ServerMessage);
+            this.CurrentTab.AppendMessage(null, "[INFO]", "leave, links, list, map, me, mode, motd, msg, names, nick, notice, op, oper, part, ping, quit, stats", MessageType.ServerMessage);
+            this.CurrentTab.AppendMessage(null, "[INFO]", "time, topic, unban, unexcept, userhost, voice, who, whois, whowas", MessageType.ServerMessage);
         }
 
         /// <summary>
@@ -890,8 +911,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void ModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.SortByMode(true);
+            this.CurrentTab.SortByMode(true);
         }
 
         /// <summary>
@@ -901,8 +921,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void NicknameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.SortByMode(false);
+            this.CurrentTab.SortByMode(false);
         }
 
         /// <summary>
@@ -912,11 +931,10 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void OpenPrivateChatMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            IRCChannel channel = tab.Marshal.Channels.Find(i => i.Name.Equals(this.openPrivateChatMenuItem.Tag.ToString(), StringComparison.OrdinalIgnoreCase));
+            IRCChannel channel = this.CurrentTab.Marshal.Channels.Find(i => i.Name.Equals(this.openPrivateChatMenuItem.Tag.ToString(), StringComparison.OrdinalIgnoreCase));
             if (channel == null)
             {
-                channel = tab.Marshal.CreateChannel(this.openPrivateChatMenuItem.Tag.ToString(), true);
+                channel = this.CurrentTab.Marshal.CreateChannel(this.openPrivateChatMenuItem.Tag.ToString(), true);
             }
         }
 
@@ -1089,18 +1107,17 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
                 dialog.AddExtension = true;
                 dialog.CheckPathExists = true;
                 dialog.DefaultExt = "html";
-                dialog.FileName = tab.Text;
+                dialog.FileName = this.CurrentTab.Text;
                 dialog.Filter = "HTML file (*.html)|*.html";
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    File.WriteAllText(dialog.FileName, tab.WebBrowser.Document.Body.Parent.OuterHtml, Encoding.GetEncoding(tab.WebBrowser.Document.Encoding));
+                    File.WriteAllText(dialog.FileName, this.CurrentTab.WebBrowser.Document.Body.Parent.OuterHtml, Encoding.GetEncoding(this.CurrentTab.WebBrowser.Document.Encoding));
                 }
             }
         }
@@ -1118,10 +1135,9 @@ namespace Yaircc
             }
             else
             {
-                IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-                if (tab.WebBrowser.Focused)
+                if (this.CurrentTab.WebBrowser.Focused)
                 {
-                    tab.WebBrowser.Document.ExecCommand("SelectAll", false, null);
+                    this.CurrentTab.WebBrowser.Document.ExecCommand("SelectAll", false, null);
                 }
             }
         }
@@ -1236,8 +1252,7 @@ namespace Yaircc
 
             if (e.Button == MouseButtons.Right)
             {
-                IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-                if (tab.TabType == IRCTabType.Channel)
+                if (this.CurrentTab.TabType == IRCTabType.Channel)
                 {
                     if (info.Node != null && info.Node.Tag is IRCUser)
                     {
@@ -1255,7 +1270,7 @@ namespace Yaircc
                         this.userSeparator.Visible = false;
                     }
 
-                    this.groupByModeToolStripMenuItem.Checked = tab.GroupingByMode;
+                    this.groupByModeToolStripMenuItem.Checked = this.CurrentTab.GroupingByMode;
                     this.orderByMenuItem.Enabled = !this.groupByModeToolStripMenuItem.Checked;
                     this.userTreeViewContextMenu.Show(treeView, e.Location);
                 }
@@ -1269,8 +1284,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void WhoIsMenuItem_Click(object sender, EventArgs e)
         {
-            IRCTabPage tab = this.channelsTabControl.SelectedTab as IRCTabPage;
-            tab.Marshal.Send(tab, new WhoisMessage(this.whoIsMenuItem.Tag.ToString()));
+            this.CurrentTab.Marshal.Send(this.CurrentTab, new WhoisMessage(this.whoIsMenuItem.Tag.ToString()));
         }
 
         /// <summary>
@@ -1301,8 +1315,7 @@ namespace Yaircc
         {
             if (this.channelsTabControl.SelectedIndex > 0)
             {
-                IRCTabPage tabPage = this.channelsTabControl.SelectedTab as IRCTabPage;
-                tabPage.ImageIndex = tabPage.NormalImageIndex;
+                this.CurrentTab.ImageIndex = this.CurrentTab.NormalImageIndex;
             }
         }
 
