@@ -392,8 +392,10 @@ namespace Yaircc
         {
             if (this.channelsTabControl.SelectedTab is IRCTabPage)
             {
+                // Reset the tab icon in case it was previously marked as having an alert.
                 this.CurrentTab.ImageIndex = this.CurrentTab.NormalImageIndex;
 
+                // Bring the user tree view for this tab to the foreground
                 if (this.CurrentTab.UserTreeView != null)
                 {
                     this.CurrentTab.UserTreeView.BringToFront();
@@ -403,6 +405,7 @@ namespace Yaircc
                     this.userTreeView.BringToFront();
                 }
 
+                // Set the appropriate window title based on the type of tab being shown.
                 if (this.CurrentTab.TabType == IRCTabType.Server)
                 {
                     this.Text = string.Format("{0} - yaircc", this.CurrentTab.Marshal.Connection.ToString());
@@ -423,6 +426,10 @@ namespace Yaircc
                     this.Text = string.Format("Conversation with {0} on {1} - yaircc", this.CurrentTab.Text, this.CurrentTab.Marshal.Connection.ToString());
                 }
 
+                // Scroll the the log to the bottom
+                this.CurrentTab.ScrollToBottom();
+
+                // Enable / disable buttons based on the type of tab selected.
                 this.disconnectToolStripMenuItem.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
                 this.disconnectToolStripButton.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
                 this.joinChannelToolStripButton.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
@@ -1326,10 +1333,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            foreach (IRCTabPage tabPage in this.channelsTabControl.TabPages)
-            {
-                tabPage.ScrollToBottom();
-            }
+            this.CurrentTab.ScrollToBottom();
         }
 
         /// <summary>

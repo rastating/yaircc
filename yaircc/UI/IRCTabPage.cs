@@ -661,7 +661,7 @@ namespace Yaircc.UI
                     payload = transform.Invoke(payload);
 
                     object[] args = new object[] { timestamp, source, payload, classes };
-                    bool scroll = true;
+                    bool scroll = false;
 
                     // If the selected tab is the one that we are appending to, then use the JavaScript
                     // method "isScrolledToTheBottom" to determine whether or not we should scroll.
