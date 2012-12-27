@@ -69,7 +69,7 @@ namespace Yaircc.Net
         /// </summary>
         public ProgramUpdate()
         {
-            this.latestVersionUri = new Uri(@"http://www.yaircc.com/latest.xml");
+            this.latestVersionUri = new Uri(@"https://www.yaircc.com/latest.xml");
         }
 
         #endregion
