@@ -78,6 +78,11 @@
     <Compile Include="FavouriteServersDialog.Designer.cs">
       <DependentUpon>FavouriteServersDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Localisation\RegularExpressions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegularExpressions.resx</DependentUpon>
+    </Compile>
     <Compile Include="Localisation\Strings_FavouriteServers.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -321,6 +326,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FavouriteServersDialog.resx">
       <DependentUpon>FavouriteServersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localisation\RegularExpressions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegularExpressions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localisation\Strings_FavouriteServers.resx">
       <Generator>ResXFileCodeGenerator</Generator>

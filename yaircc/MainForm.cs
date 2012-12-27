@@ -861,7 +861,6 @@ namespace Yaircc
         private void MainForm_Shown(object sender, EventArgs e)
         {
             this.channelsTabControl.TabPages.Add(new IRCTabPage(this, "consoleTabPage", "yaircc", IRCTabType.Console));
-
             if ((this.channelsTabControl.TabPages[0] as IRCTabPage).JavaScriptIsAvailable)
             {
                 GlobalSettings settings = GlobalSettings.Instance;
