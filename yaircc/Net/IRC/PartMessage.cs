@@ -68,11 +68,11 @@ namespace Yaircc.Net.IRC
             {
                 if (string.IsNullOrEmpty(this.TrailingParameter))
                 {
-                    return string.Format("{0} has left {1}", base.Source, this.Parameters[0]);
+                    return string.Format("{0} has left {1}", base.Source, this.Channel);
                 }
                 else
                 {
-                    return string.Format("{0} has left {1} ({2})", base.Source, this.Parameters[0], this.TrailingParameter);
+                    return string.Format("{0} has left {1} ({2})", base.Source, this.Channel, this.TrailingParameter);
                 }
             }
         }
@@ -93,10 +93,7 @@ namespace Yaircc.Net.IRC
         /// </summary>
         public override string Target
         {
-            get
-            {
-                return this.Parameters[0];
-            }
+            get { return this.Channel; }
         }
 
         /// <summary>
@@ -123,7 +120,27 @@ namespace Yaircc.Net.IRC
         /// </summary>
         public string Channel
         {
-            get { return this.Parameters[0]; }
+            get 
+            {
+                // In some instances the channel name is sent in the trailing parameter
+                // so first make sure the parameter count is more than zero, if it is we
+                // will use the channel in the parameters at index zero (as it should be).
+                //
+                // However, if it is not greater than zero we will check the trailing 
+                // parameter, and if there is still no data we will return a blank target.
+                if (this.Parameters.Length > 0)
+                {
+                    return this.Parameters[0];
+                }
+                else if (!string.IsNullOrEmpty(this.TrailingParameter) && Regex.IsMatch(this.TrailingParameter, RegularExpressions.ChannelName))
+                {
+                    return this.TrailingParameter;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         #endregion
