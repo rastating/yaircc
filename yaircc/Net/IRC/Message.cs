@@ -480,7 +480,7 @@ namespace Yaircc.Net.IRC
         /// Returns the message using the <paramref name="format"/> specified.
         /// </summary>
         /// <param name="format">The format to use. 
-        /// <para>{0} will be replaced with all parameters (excluding the trailing parameter) separated by a <paramref name="parameterDelimiter"/>.</para>
+        /// <para>{0} will be replaced with all parameters separated by a <paramref name="parameterDelimiter"/>.</para>
         /// <para>{1} will be replaced with the trailing parameter.</para>
         /// <para>{2} will be replaced with the prefix.</para>
         /// <para>All others parameters are sequentially accessed e.g. the first parameter would be {3}.</para></param>
@@ -527,7 +527,7 @@ namespace Yaircc.Net.IRC
         /// Returns the message using the <paramref name="format"/> specified.
         /// </summary>
         /// <param name="format">The format to use. 
-        /// <para>{0} will be replaced with all parameters (excluding the trailing parameter) separated by a <paramref name="parameterDelimiter"/>.</para>
+        /// <para>{0} will be replaced with all parameters separated by a <paramref name="parameterDelimiter"/>.</para>
         /// <para>{1} will be replaced with the trailing parameter.</para>
         /// <para>{2} will be replaced with the prefix.</para>
         /// <para>All others parameters are sequentially accessed e.g. the first parameter would be {3}</para></param>
