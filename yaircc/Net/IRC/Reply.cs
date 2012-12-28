@@ -942,6 +942,12 @@ namespace Yaircc.Net.IRC
         /// </summary>
         RPLMAPEND = 007,
 
+        /// <summary>
+        /// Used to announce when services are not available.
+        /// </summary>
+        [MessageType(MessageType.WarningMessage, "ATTENTION: {0}", " ")]
+        ERR_SERVICESDOWN = 440,
+
         #endregion
 
         #region ircu
