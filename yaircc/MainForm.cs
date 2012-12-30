@@ -81,7 +81,7 @@ namespace Yaircc
         {
             this.InitializeComponent();
             this.queuedActions = new Queue<Action>();
-            Yaircc.Properties.Settings.Default.Upgrade();
+            this.UpgradeSettings();
         }
 
         #endregion
@@ -265,6 +265,27 @@ namespace Yaircc
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+
+        /// <summary>
+        /// Upgrades the settings file to the latest version where required.
+        /// </summary>
+        private void UpgradeSettings()
+        {
+            Version executingVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            Version settingsVersion = null;
+
+            if (!string.IsNullOrEmpty(Yaircc.Properties.Settings.Default.Version))
+            {
+                settingsVersion = new Version(Yaircc.Properties.Settings.Default.Version);
+            }
+
+            if (settingsVersion == null || settingsVersion < executingVersion)
+            {
+                Yaircc.Properties.Settings.Default.Upgrade();
+                Yaircc.Properties.Settings.Default.Version = executingVersion.ToString();
+                Yaircc.Properties.Settings.Default.Save();
+            }
+        }
 
         /// <summary>
         /// Handles the Click event of ToolStripMenuItem.
