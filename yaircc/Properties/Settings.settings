@@ -29,5 +29,8 @@
     <Setting Name="FavouriteServers" Type="System.Collections.SortedList" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="Version" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
