@@ -974,6 +974,12 @@ namespace Yaircc.Net.IRC
         [MessageTypeAttribute(MessageType.ServerMessage, typeof(ReplyDelegates), "TransformTopicWhoTimeReply")]
         RPL_TOPICWHOTIME = 333,
 
+        /// <summary>
+        /// Sent by the server in response to a WHOIS message, shows the actual host address.
+        /// </summary>
+        [MessageTypeAttribute(MessageType.ServerMessage, "{3}: Actual user@host: {4}, Actual IP: {5}")]
+        RPL_WHOISACTUALLY = 338,
+
         #endregion
 
         #region KinelIRCd
@@ -994,6 +1000,12 @@ namespace Yaircc.Net.IRC
         [MessageType(MessageType.WarningMessage, "{0} {1}", " ")]
         RPL_BOUNCE = 010,
 
+        /// <summary>
+        /// Sent by the server when the input was too long.
+        /// </summary>
+        [MessageType(MessageType.ErrorMessage, "{1}")]
+        RPL_417 = 417,
+
         #endregion
 
         #region Hybrid
@@ -1002,6 +1014,18 @@ namespace Yaircc.Net.IRC
         /// RPL_YOURCOOKIE
         /// </summary>
         RPL_YOURCOOKIE = 014,
+
+        /// <summary>
+        /// Also known as RPL_CURRENT_LOCAL.
+        /// </summary>
+        [MessageType(MessageType.ServerMessage, "{1}")]
+        RPL_LOCALUSERS = 265,
+
+        /// <summary>
+        /// Also known as RPL_CURRENT_GLOBAL
+        /// </summary>
+        [MessageType(MessageType.ServerMessage, "{1}")]
+        RPL_GLOBALUSERS = 266,
 
         #endregion
 
@@ -1040,7 +1064,17 @@ namespace Yaircc.Net.IRC
         /// Reply to a user when user mode +x (host masking) was set successfully
         /// </summary>
         [MessageType(MessageType.NotificationMessage, "{3} is now your hidden host", " ")]
-        RPL_HOSTHIDDEN = 396
+        RPL_HOSTHIDDEN = 396,
+
+        #endregion
+
+        #region Bahamut
+
+        /// <summary>
+        /// Contains a URL that the channel relates to that is sent upon joining.
+        /// </summary>
+        [MessageType(MessageType.ServerMessage, "{1}")]
+        RPL_CHANNEL_URL = 328
 
         #endregion
     }
