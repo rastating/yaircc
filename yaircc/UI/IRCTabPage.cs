@@ -862,9 +862,12 @@ namespace Yaircc.UI
                                 }
 
                                 currentForegroundColour = int.Parse(match.Groups["foreground"].Value);
-
+                                
                                 if (currentForegroundColour >= 0 && currentForegroundColour <= 16)
                                 {
+                                    // Reset any background colour higher than 16 to -1.
+                                    currentBackgroundColour = currentBackgroundColour > 16 ? -1 : currentBackgroundColour;
+
                                     string newTag = string.Empty;
                                     newTag = string.Format(
                                         "<span style=\"color: {0}; background-color: {1};\">",
