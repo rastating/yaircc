@@ -172,6 +172,13 @@ namespace Yaircc.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap folder_palette {
+            get {
+                object obj = ResourceManager.GetObject("folder_palette", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap help {
             get {
                 object obj = ResourceManager.GetObject("help", resourceCulture);

@@ -34,9 +34,9 @@
 
 			function appendMessage(timestamp, source, payload, classes) {
 			    var row = $('<tr>').addClass(classes);
-			    var timestampColumn = $('<td>').addClass('timestamp').text(timestamp);
-			    var sourceColumn = $('<td>').addClass('source').text(source);
-			    var payloadColumn = $('<td>').addClass('payload').html(payload).linkify();
+			    var timestampColumn = $('<td>').addClass('timestamp').append($('<span>').text(timestamp));
+			    var sourceColumn = $('<td>').addClass('source').append($('<span>').text(source));
+			    var payloadColumn = $('<td>').addClass('payload').append($('<span>').html(payload)).linkify();
 
 			    $(payloadColumn).find('a').each(function(index) {
 			        if ($(this).text().length > 60) {
@@ -112,9 +112,11 @@
                     listEmoticon(timestamp, source, item);
                 });
 			}
-			
+
 			function setStyle(style) {
-			    $("head").append('<style type="text/css">' + style + '</style>');
+			    $('style[title="theme"]').attr('disabled', 'disabled');
+			    $('style[title="theme"]').remove();
+			    $("head").append('<style title="theme" type="text/css">' + style + '</style>');
 			}
 
 			function clearMessageLog() {
