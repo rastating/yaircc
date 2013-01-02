@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="SummonMessage.cs" company="intninety">
-//     Copyright 2012 Robert Carr
+//     Copyright 2012-2013 Robert Carr
 //     Licensed under the Apache License, Version 2.0 (the "License");
 //     you may not use this file except in compliance with the License.
 //     You may obtain a copy of the License at

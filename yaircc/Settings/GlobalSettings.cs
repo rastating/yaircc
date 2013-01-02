@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="GlobalSettings.cs" company="intninety">
-//     Copyright 2012 Robert Carr
+//     Copyright 2012-2013 Robert Carr
 //     Licensed under the Apache License, Version 2.0 (the "License");
 //     you may not use this file except in compliance with the License.
 //     You may obtain a copy of the License at
@@ -258,6 +258,7 @@ namespace Yaircc.Settings
         /// <summary>
         /// Gets or sets the full path to the theme to use.
         /// </summary>
+        [Browsable(false)]
         [Category("User Interface"), DisplayName("Theme"), Description("The theme file used to skin the chat windows (Requires restart).")]
         [Editor(typeof(ThemeFileNameEditor), typeof(System.Drawing.Design.UITypeEditor))]
         public string ThemeFileName
