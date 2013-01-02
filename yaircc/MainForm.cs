@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="MainForm.cs" company="intninety">
-//     Copyright 2012 Robert Carr
+//     Copyright 2012-2013 Robert Carr
 //     Licensed under the Apache License, Version 2.0 (the "License");
 //     you may not use this file except in compliance with the License.
 //     You may obtain a copy of the License at
@@ -672,7 +672,11 @@ namespace Yaircc
         /// </summary>
         private void HandleInput()
         {
-            if (this.CommandIsConnectionRequest(this.inputTextBox.Text))
+            if (string.IsNullOrEmpty(this.inputTextBox.Text.Trim()))
+            {
+                this.inputTextBox.Text = string.Empty;
+            }
+            else if (this.CommandIsConnectionRequest(this.inputTextBox.Text))
             {
                 this.ProcessConnectionRequest(this.inputTextBox.Text);
             }
@@ -1392,6 +1396,26 @@ namespace Yaircc
             while (this.queuedActions.Count > 0)
             {
                 this.queuedActions.Dequeue().Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of ToolStripMenuItem.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void ThemesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (ThemeManager dialog = new ThemeManager())
+            {
+                dialog.ShowDialog();
+                if (dialog.IsDirty)
+                {
+                    for (int i = 0; i < this.channelsTabControl.TabPages.Count; i++)
+                    {
+                        (this.channelsTabControl.TabPages[i] as IRCTabPage).LoadTheme(GlobalSettings.Instance.ThemeFileName);
+                    }
+                }
             }
         }
 
