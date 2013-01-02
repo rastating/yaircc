@@ -672,7 +672,11 @@ namespace Yaircc
         /// </summary>
         private void HandleInput()
         {
-            if (this.CommandIsConnectionRequest(this.inputTextBox.Text))
+            if (string.IsNullOrEmpty(this.inputTextBox.Text.Trim()))
+            {
+                this.inputTextBox.Text = string.Empty;
+            }
+            else if (this.CommandIsConnectionRequest(this.inputTextBox.Text))
             {
                 this.ProcessConnectionRequest(this.inputTextBox.Text);
             }
