@@ -34,6 +34,11 @@ a
 	white-space: pre-wrap;
 }
 
+.payload span 
+{
+	vertical-align: top;
+}
+
 .timestamp {
 	font-style: normal !important;
 	vertical-align: top;
