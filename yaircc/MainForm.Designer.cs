@@ -80,11 +80,13 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yairccToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
@@ -109,6 +111,7 @@
             this.updateCheckBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.actionQueueTimer = new System.Windows.Forms.Timer(this.components);
             this.inputTextBox = new Intninety.TemporalTextBox();
+            this.themesToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip.SuspendLayout();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -237,6 +240,7 @@
             this.pasteToolStripButton,
             this.deleteToolStripButton,
             this.toolStripSeparator4,
+            this.themesToolStripButton,
             this.settingsToolStripButton});
             this.standardToolStrip.Location = new System.Drawing.Point(0, 24);
             this.standardToolStrip.Name = "standardToolStrip";
@@ -408,6 +412,7 @@
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.viewToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -530,9 +535,7 @@
             this.pasteToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.toolStripMenuItem5,
-            this.selectAllToolStripMenuItem,
-            this.toolStripMenuItem8,
-            this.settingsToolStripMenuItem});
+            this.selectAllToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -609,19 +612,6 @@
             this.selectAllToolStripMenuItem.Text = "Select All";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.SelectAllToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem8
-            // 
-            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(161, 6);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Image = global::Yaircc.Properties.Resources.cog;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.settingsToolStripMenuItem.Text = "Settings...";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
-            // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -645,6 +635,37 @@
             this.yairccToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.yairccToolStripMenuItem.Text = "yaircc";
             this.yairccToolStripMenuItem.Click += new System.EventHandler(this.WindowsToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.themesToolStripMenuItem,
+            this.toolStripMenuItem8,
+            this.settingsToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // themesToolStripMenuItem
+            // 
+            this.themesToolStripMenuItem.Image = global::Yaircc.Properties.Resources.folder_palette;
+            this.themesToolStripMenuItem.Name = "themesToolStripMenuItem";
+            this.themesToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.themesToolStripMenuItem.Text = "Themes...";
+            this.themesToolStripMenuItem.Click += new System.EventHandler(this.ThemesToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(122, 6);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Image = global::Yaircc.Properties.Resources.cog;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.settingsToolStripMenuItem.Text = "Settings...";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -829,7 +850,6 @@
             this.inputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.inputTextBox.Location = new System.Drawing.Point(3, 519);
-            this.inputTextBox.MaxLength = 400;
             this.inputTextBox.Name = "inputTextBox";
             this.inputTextBox.Size = new System.Drawing.Size(916, 21);
             this.inputTextBox.TabIndex = 2;
@@ -837,6 +857,16 @@
             this.inputTextBox.TextChanged += new System.EventHandler(this.InputTextBox_TextChanged);
             this.inputTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputTextBox_KeyDown);
             this.inputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.InputTextBox_KeyPress);
+            // 
+            // themesToolStripButton
+            // 
+            this.themesToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.themesToolStripButton.Image = global::Yaircc.Properties.Resources.folder_palette;
+            this.themesToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.themesToolStripButton.Name = "themesToolStripButton";
+            this.themesToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.themesToolStripButton.Text = "Themes...";
+            this.themesToolStripButton.Click += new System.EventHandler(this.ThemesToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -921,8 +951,6 @@
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton settingsToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ImageList userModeImageList;
         private System.Windows.Forms.ContextMenuStrip userTreeViewContextMenu;
@@ -953,6 +981,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
         private System.Windows.Forms.ToolStripSplitButton favouritesToolStripSplitButton;
         private System.Windows.Forms.Timer actionQueueTimer;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem themesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
+        private System.Windows.Forms.ToolStripButton themesToolStripButton;
     }
 }
 

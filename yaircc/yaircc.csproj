@@ -231,6 +231,12 @@
     </Compile>
     <Compile Include="Settings\Server.cs" />
     <Compile Include="ThemeFileNameEditor.cs" />
+    <Compile Include="ThemeManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThemeManager.Designer.cs">
+      <DependentUpon>ThemeManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\FlashWindow.cs" />
     <Compile Include="UI\IRCChannel.cs" />
     <Compile Include="UI\IRCMarshal.cs" />
@@ -242,6 +248,8 @@
     <Compile Include="UI\TemporalTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Theme.cs" />
+    <Compile Include="UI\Themes.cs" />
     <Compile Include="UI\UserNodeSorter.cs" />
     <Compile Include="UpdateInformationDialog.cs">
       <SubType>Form</SubType>
@@ -318,6 +326,7 @@
     </Content>
     <None Include="Resources\folder_heart.png" />
     <None Include="Resources\bullet_white.png" />
+    <None Include="Resources\folder_palette.png" />
     <Content Include="themes\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -339,7 +348,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings_Validation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="ThemeManager.resx">
+      <DependentUpon>ThemeManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\JavaScriptWarning.htm" />
+    <Content Include="themes\terminal.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="UI\ThemeSample.htm" />
     <Content Include="yaircc.ico" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
