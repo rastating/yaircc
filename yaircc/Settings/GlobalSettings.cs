@@ -74,6 +74,11 @@ namespace Yaircc.Settings
         /// </summary>
         private GlobalSettings.Boolean checkForUpdateOnStart;
 
+        /// <summary>
+        /// The flag that indicates whether or not to replace textual emoticons with graphical ones.
+        /// </summary>
+        private GlobalSettings.Boolean useEmoticons;
+
         #endregion
 
         #region Constructors
@@ -134,6 +139,7 @@ namespace Yaircc.Settings
             this.groupUsersByMode = Yaircc.Properties.Settings.Default.GroupUsersByMode ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
             this.debugMode = Yaircc.Properties.Settings.Default.DebugMode ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
             this.checkForUpdateOnStart = Yaircc.Properties.Settings.Default.CheckForUpdateOnStart ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
+            this.useEmoticons = Yaircc.Properties.Settings.Default.UseEmoticons ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
         }
 
         #endregion
@@ -282,6 +288,16 @@ namespace Yaircc.Settings
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether or not to use emoticons.
+        /// </summary>
+        [Category("User Interface"), DisplayName("Use emoticons"), Description("Enable or disable the use of graphical emoticons when the textual representations are sent or received.")]
+        public GlobalSettings.Boolean UseEmoticons
+        {
+            get { return this.useEmoticons; }
+            set { this.useEmoticons = value; }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether or not to enable the developer debugging features.
         /// </summary>
         [Category("Miscellaneous"), DisplayName("Enable debug mode"), Description("Enable the developer debug features. This may cause unexpected results, only enable this if you want to help in testing an issue.")]
@@ -323,6 +339,7 @@ namespace Yaircc.Settings
                 Yaircc.Properties.Settings.Default.GroupUsersByMode = this.groupUsersByMode == GlobalSettings.Boolean.Yes;
                 Yaircc.Properties.Settings.Default.ThemeFileName = this.themeFileName;
                 Yaircc.Properties.Settings.Default.CheckForUpdateOnStart = this.checkForUpdateOnStart == GlobalSettings.Boolean.Yes;
+                Yaircc.Properties.Settings.Default.UseEmoticons = this.useEmoticons == GlobalSettings.Boolean.Yes;
                 Yaircc.Properties.Settings.Default.Save();
             }
             catch
