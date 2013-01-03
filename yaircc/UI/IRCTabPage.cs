@@ -660,7 +660,7 @@ namespace Yaircc.UI
                     source = type == MessageType.UserMessage ? string.Format("<{0}>", source) : source;
                     payload = transform.Invoke(payload);
 
-                    object[] args = new object[] { timestamp, source, payload, classes };
+                    object[] args = new object[] { timestamp, source, payload, classes, GlobalSettings.Instance.UseEmoticons };
                     bool scroll = false;
 
                     // If the selected tab is the one that we are appending to, then use the JavaScript

@@ -32,7 +32,7 @@
 			    return isAtBottom;
 			}
 
-			function appendMessage(timestamp, source, payload, classes) {
+			function appendMessage(timestamp, source, payload, classes, transformEmoticons) {
 			    var row = $('<tr>').addClass(classes);
 			    var timestampColumn = $('<td>').addClass('timestamp').append($('<span>').text(timestamp));
 			    var sourceColumn = $('<td>').addClass('source').append($('<span>').text(source));
@@ -44,7 +44,8 @@
 			        }
 			    });
 
-			    var html = $(payloadColumn).html()
+			    if (transformEmoticons) {
+			        var html = $(payloadColumn).html()
 			                    .replace(/(:(\-)?\))/gi, '<span class="smiley smile"><span>$1</span></span>')
 			                    .replace(/(:(\-)?D)/gi, '<span class="smiley grin"><span>$1</span></span>')
 			                    .replace(/(:(\-)?\|)/gi, '<span class="smiley ambivalent"><span>$1</span></span>')
@@ -65,8 +66,9 @@
 			                    .replace(/(:(\-)?@)/gi, '<span class="smiley angry"><span>$1</span></span>')
 			                    .replace(/(:(\-)?X)/gi, '<span class="smiley sealed"><span>$1</span></span>')
 			                    .replace(/(;(\-)?\))/gi, '<span class="smiley wink"><span>$1</span></span>');
-			                    
-			    $(payloadColumn).html(html);
+
+			        $(payloadColumn).html(html);
+			    }
 
 			    timestampColumn.appendTo(row);
 			    sourceColumn.appendTo(row);
