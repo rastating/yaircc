@@ -141,5 +141,17 @@ namespace Yaircc.Properties {
                 this["Version"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseEmoticons {
+            get {
+                return ((bool)(this["UseEmoticons"]));
+            }
+            set {
+                this["UseEmoticons"] = value;
+            }
+        }
     }
 }
