@@ -21,6 +21,9 @@
       <Component Id="cmpAEC3250DE2D48D148EAFF7A720442FBF" Directory="dirC722B493912DBADA3E912E61CAC1DA53" Guid="{88F7258B-085B-4B6C-A300-E1AD47E55EFB}">
         <File Id="fil4E566DBAB5C6247F37DB86E0EA32CC6A" KeyPath="yes" Source="$(var.SourceDir)\themes\default.css" />
       </Component>
+      <Component Id="cmp15078140D698F1B006DF4A20F278B4AB" Directory="dirC722B493912DBADA3E912E61CAC1DA53" Guid="{9166287A-DD75-4033-A3E5-4FD2C1811FAE}">
+        <File Id="filD31DF3419238E27254356073DE805580" KeyPath="yes" Source="$(var.SourceDir)\themes\terminal.css" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
