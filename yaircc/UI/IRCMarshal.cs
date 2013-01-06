@@ -20,6 +20,7 @@ namespace Yaircc.UI
     using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
+    using System.Threading;
     using Yaircc.Localisation;
     using Yaircc.Net.IRC;
     using Yaircc.Settings;
@@ -92,6 +93,21 @@ namespace Yaircc.UI
         /// </summary>
         private List<string> autoCommands;
 
+        /// <summary>
+        /// The AutoResetEvent that signals to the queue processing thread to stop waiting.
+        /// </summary>
+        private AutoResetEvent queueResetEvent;
+
+        /// <summary>
+        /// The thread that processes the queue of pending messages.
+        /// </summary>
+        private Thread queueProcessingThread;
+
+        /// <summary>
+        /// A queue containing messages to be processed by the marshal to the user interface.
+        /// </summary>
+        private Queue<Message> messageQueue;
+
         #endregion
 
         #region Constructors
@@ -110,6 +126,7 @@ namespace Yaircc.UI
             this.connection = connection;
             this.SetupConnectionEventHandlers();
             this.channels = new List<IRCChannel>();
+            this.messageQueue = new Queue<Message>(15);
 
             if (autoCommands != null)
             {
@@ -119,6 +136,10 @@ namespace Yaircc.UI
             {
                 this.autoCommands = new List<string>();
             }
+
+            this.queueResetEvent = new AutoResetEvent(false);
+            this.queueProcessingThread = new Thread(this.ProcessQueue);
+            this.queueProcessingThread.Start();
         }
 
         #endregion
@@ -255,6 +276,7 @@ namespace Yaircc.UI
         public void Dispose()
         {
             this.disposing = true;
+            this.queueResetEvent.Set();
 
             if (this.Connection.IsConnected)
             {
@@ -691,16 +713,11 @@ namespace Yaircc.UI
         {
             Message message = MessageFactory.AssimilateMessage(Message.ParseMessage(e.Data));
             message.AssociatedConnection = this.connection;
-            if (!string.IsNullOrEmpty(message.Command))
+
+            lock (this.messageQueue)
             {
-                if (message.Command.IsNumeric())
-                {
-                    this.ProcessNumericReply(message);
-                }
-                else
-                {
-                    this.ProcessMessage(message);
-                }
+                this.messageQueue.Enqueue(message);
+                this.queueResetEvent.Set();
             }
         }
 
@@ -726,6 +743,43 @@ namespace Yaircc.UI
             if (this.ServerTab != null)
             {
                 action.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Processes all the current items in the message queue.
+        /// </summary>
+        private void ProcessQueue()
+        {
+            while (!this.disposing)
+            {
+                this.queueResetEvent.WaitOne();
+
+                Message message = null;
+                lock (this.messageQueue)
+                {
+                    message = this.messageQueue.Count > 0 ? this.messageQueue.Dequeue() : null;
+                }
+
+                while (message != null)
+                {
+                    if (!string.IsNullOrEmpty(message.Command))
+                    {
+                        if (message.Command.IsNumeric())
+                        {
+                            this.ProcessNumericReply(message);
+                        }
+                        else
+                        {
+                            this.ProcessMessage(message);
+                        }
+                    }
+
+                    lock (this.messageQueue)
+                    {
+                        message = this.messageQueue.Count > 0 ? this.messageQueue.Dequeue() : null;
+                    }
+                }
             }
         }
 

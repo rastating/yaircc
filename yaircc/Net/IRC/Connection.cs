@@ -608,14 +608,14 @@ namespace Yaircc.Net.IRC
                 int delimiterIndex = this.currentDataSet.IndexOf('\n') + 1;
                 string payload = this.currentDataSet.Substring(0, delimiterIndex);
 
-                if (payload.StartsWith("PING"))
+                if (payload.StartsWith("PING", StringComparison.OrdinalIgnoreCase))
                 {
                     this.ReplyToPing(payload);
                 }
 
                 if (this.dataReceived != null)
                 {
-                    if (!payload.StartsWith("PING"))
+                    if (!payload.StartsWith("PING", StringComparison.OrdinalIgnoreCase))
                     {
                         this.dataReceived(this, new DataReceivedEventArgs(payload));
                     }
