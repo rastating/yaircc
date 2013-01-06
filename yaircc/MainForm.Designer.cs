@@ -56,6 +56,7 @@
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.deleteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.themesToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.settingsToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,7 +112,6 @@
             this.updateCheckBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.actionQueueTimer = new System.Windows.Forms.Timer(this.components);
             this.inputTextBox = new Intninety.TemporalTextBox();
-            this.themesToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip.SuspendLayout();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -395,6 +395,16 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // themesToolStripButton
+            // 
+            this.themesToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.themesToolStripButton.Image = global::Yaircc.Properties.Resources.folder_palette;
+            this.themesToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.themesToolStripButton.Name = "themesToolStripButton";
+            this.themesToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.themesToolStripButton.Text = "Themes...";
+            this.themesToolStripButton.Click += new System.EventHandler(this.ThemesToolStripMenuItem_Click);
             // 
             // settingsToolStripButton
             // 
@@ -858,16 +868,6 @@
             this.inputTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputTextBox_KeyDown);
             this.inputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.InputTextBox_KeyPress);
             // 
-            // themesToolStripButton
-            // 
-            this.themesToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.themesToolStripButton.Image = global::Yaircc.Properties.Resources.folder_palette;
-            this.themesToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.themesToolStripButton.Name = "themesToolStripButton";
-            this.themesToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.themesToolStripButton.Text = "Themes...";
-            this.themesToolStripButton.Click += new System.EventHandler(this.ThemesToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -886,6 +886,7 @@
             this.Text = "yaircc";
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.Activated += new System.EventHandler(this.MainForm_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();

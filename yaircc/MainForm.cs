@@ -1361,6 +1361,32 @@ namespace Yaircc
         }
 
         /// <summary>
+        /// Handles the FormClosing event of System.Windows.Forms.Form.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // If the user is closing the program we need to dispose
+            // of each active IRCMarshal in order to quit the network
+            // in a clean fashion, and to exit all the background threads.
+            List<IRCMarshal> marshals = new List<IRCMarshal>();
+            for (int i = 0; i < this.channelsTabControl.TabPages.Count; i++)
+            {
+                IRCTabPage tab = this.channelsTabControl.TabPages[i] as IRCTabPage;
+                if (tab != null && tab.Marshal != null)
+                {
+                    if (!marshals.Contains(tab.Marshal))
+                    {
+                        marshals.Add(tab.Marshal);
+                    }
+                }
+            }
+
+            marshals.ForEach(i => i.Dispose());
+        }
+
+        /// <summary>
         /// Handles the Click event of ToolStripMenuItem and the ButtonClick event of ToolStripSplitButton.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
