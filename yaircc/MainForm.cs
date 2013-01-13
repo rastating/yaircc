@@ -263,6 +263,32 @@ namespace Yaircc
             this.BuildFavouriteButtons();
         }
 
+        /// <summary>
+        /// Indicates that a marshal has successfully registered on a network.
+        /// </summary>
+        /// <param name="marshal">The marshal that has registered.</param>
+        public void MarshalRegistered(IRCMarshal marshal)
+        {
+            if (this.CurrentTab != null && this.CurrentTab.Marshal == marshal)
+            {
+                this.channelBrowserToolStripButton.Enabled = true;
+                this.channelBrowserToolStripMenuItem.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Indicates that a marshal has unregistered from a network.
+        /// </summary>
+        /// <param name="marshal">The marshal that has unregistered.</param>
+        public void MarshalUnregistered(IRCMarshal marshal)
+        {
+            if (this.CurrentTab != null && this.CurrentTab.Marshal == marshal)
+            {
+                this.channelBrowserToolStripButton.Enabled = false;
+                this.channelBrowserToolStripMenuItem.Enabled = false;
+            }
+        }
+
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
@@ -471,8 +497,8 @@ namespace Yaircc
                 this.joinChannelToolStripMenuItem.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
                 this.leaveChannelToolStripButton.Enabled = this.CurrentTab.TabType == IRCTabType.Channel;
                 this.leaveChannelToolStripMenuItem.Enabled = this.CurrentTab.TabType == IRCTabType.Channel;
-                this.channelBrowserToolStripButton.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
-                this.channelBrowserToolStripMenuItem.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
+                this.channelBrowserToolStripButton.Enabled = this.CurrentTab.TabType != IRCTabType.Console && !this.CurrentTab.Marshal.AwaitingModeMessage;
+                this.channelBrowserToolStripMenuItem.Enabled = this.CurrentTab.TabType != IRCTabType.Console && !this.CurrentTab.Marshal.AwaitingModeMessage;
             }
 
             this.inputTextBox.Focus();

@@ -70,6 +70,7 @@ namespace Yaircc
             this.marshal = marshal;
             this.sorter = new ItemSorter();
             this.channelListView.Columns[1].Tag = typeof(int);
+            this.ChannelListView_Resize(this, EventArgs.Empty);
         }
 
         #endregion
@@ -119,7 +120,6 @@ namespace Yaircc
             this.refreshButton.Enabled = true;
             this.channelListView.Enabled = true;
             this.filterTextBox.Enabled = true;
-            this.joinButton.Enabled = true;
             this.statusToolStripStatusLabel.Text = string.Format(Strings_ChannelBrowser.DisplayingChannels, this.channelListView.Items.Count, this.items.Count);
             this.statusToolStripProgressBar.Visible = false;
             this.lastUpdatedLabel.Text = string.Format(Strings_ChannelBrowser.LastRefreshed, DateTime.Now);
@@ -211,7 +211,7 @@ namespace Yaircc
         private void ChannelListView_Resize(object sender, EventArgs e)
         {
             int width = this.channelListView.Width - (this.channelListView.Columns[0].Width + this.channelListView.Columns[1].Width);
-            this.channelListView.Columns[2].Width = width - 25;
+            this.channelListView.Columns[2].Width = width - 30;
         }
 
         /// <summary>

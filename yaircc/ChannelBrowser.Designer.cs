@@ -79,7 +79,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Topic";
-            this.columnHeader3.Width = 368;
+            this.columnHeader3.Width = 344;
             // 
             // statusStrip1
             // 
