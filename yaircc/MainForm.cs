@@ -263,6 +263,32 @@ namespace Yaircc
             this.BuildFavouriteButtons();
         }
 
+        /// <summary>
+        /// Indicates that a marshal has successfully registered on a network.
+        /// </summary>
+        /// <param name="marshal">The marshal that has registered.</param>
+        public void MarshalRegistered(IRCMarshal marshal)
+        {
+            if (this.CurrentTab != null && this.CurrentTab.Marshal == marshal)
+            {
+                this.channelBrowserToolStripButton.Enabled = true;
+                this.channelBrowserToolStripMenuItem.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Indicates that a marshal has unregistered from a network.
+        /// </summary>
+        /// <param name="marshal">The marshal that has unregistered.</param>
+        public void MarshalUnregistered(IRCMarshal marshal)
+        {
+            if (this.CurrentTab != null && this.CurrentTab.Marshal == marshal)
+            {
+                this.channelBrowserToolStripButton.Enabled = false;
+                this.channelBrowserToolStripMenuItem.Enabled = false;
+            }
+        }
+
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
@@ -318,6 +344,20 @@ namespace Yaircc
                 item.Tag = favourites[i];
                 item.ToolTipText = string.Format("Connect to {0} ({1}:{2})...", favourites[i].Alias, favourites[i].Address, favourites[i].Port);
                 this.favouritesToolStripSplitButton.DropDownItems.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of ToolStripButton.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void ChannelBrowserToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (this.CurrentTab.Marshal != null)
+            {
+                this.CurrentTab.Marshal.ChannelBrowser.Show();
+                this.CurrentTab.Marshal.ChannelBrowser.BringToFront();
             }
         }
 
@@ -457,6 +497,8 @@ namespace Yaircc
                 this.joinChannelToolStripMenuItem.Enabled = this.CurrentTab.TabType != IRCTabType.Console;
                 this.leaveChannelToolStripButton.Enabled = this.CurrentTab.TabType == IRCTabType.Channel;
                 this.leaveChannelToolStripMenuItem.Enabled = this.CurrentTab.TabType == IRCTabType.Channel;
+                this.channelBrowserToolStripButton.Enabled = this.CurrentTab.TabType != IRCTabType.Console && !this.CurrentTab.Marshal.AwaitingModeMessage;
+                this.channelBrowserToolStripMenuItem.Enabled = this.CurrentTab.TabType != IRCTabType.Console && !this.CurrentTab.Marshal.AwaitingModeMessage;
             }
 
             this.inputTextBox.Focus();
@@ -1007,7 +1049,7 @@ namespace Yaircc
                         commands = server.Commands;
                     }
 
-                    IRCMarshal marshal = new IRCMarshal(connection, this.channelsTabControl, commands);
+                    IRCMarshal marshal = new IRCMarshal(connection, this.channelsTabControl, commands, this);
                     marshal.ChannelCreated += new IRCMarshal.ChannelCreatedHandler(this.ChannelCreated);
 
                     serverTab.Marshal = marshal;

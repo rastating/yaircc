@@ -58,6 +58,12 @@
     <Compile Include="AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChannelBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChannelBrowser.Designer.cs">
+      <DependentUpon>ChannelBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChannelDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RegularExpressions.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localisation\Strings_ChannelBrowser.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings_ChannelBrowser.resx</DependentUpon>
     </Compile>
     <Compile Include="Localisation\Strings_FavouriteServers.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -245,6 +256,7 @@
     </Compile>
     <Compile Include="UI\IRCUser.cs" />
     <Compile Include="UI\IRCUserMode.cs" />
+    <Compile Include="UI\ItemSorter.cs" />
     <Compile Include="UI\TemporalTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -327,9 +339,14 @@
     <None Include="Resources\folder_heart.png" />
     <None Include="Resources\bullet_white.png" />
     <None Include="Resources\folder_palette.png" />
+    <None Include="Resources\folder_find.png" />
+    <None Include="Resources\find.png" />
     <Content Include="themes\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="ChannelBrowser.resx">
+      <DependentUpon>ChannelBrowser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommandDialog.resx">
       <DependentUpon>CommandDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -339,6 +356,10 @@
     <EmbeddedResource Include="Localisation\RegularExpressions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RegularExpressions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localisation\Strings_ChannelBrowser.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings_ChannelBrowser.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localisation\Strings_FavouriteServers.resx">
       <Generator>ResXFileCodeGenerator</Generator>

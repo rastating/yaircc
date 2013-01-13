@@ -108,6 +108,16 @@ namespace Yaircc.UI
         /// </summary>
         private Queue<Message> messageQueue;
 
+        /// <summary>
+        /// The channel browser associated with the connection.
+        /// </summary>
+        private ChannelBrowser channelBrowser;
+
+        /// <summary>
+        /// The owning form of the marshal.
+        /// </summary>
+        private MainForm parent;
+
         #endregion
 
         #region Constructors
@@ -118,15 +128,18 @@ namespace Yaircc.UI
         /// <param name="connection">The connection to marshal data to and from.</param>
         /// <param name="tabHost">The TabControl that hosts the server and channel tabs.</param>
         /// <param name="autoCommands">A queue of commands to automatically execute once a connection is fully established.</param>
-        public IRCMarshal(Connection connection, TabControl tabHost, List<string> autoCommands)
+        /// <param name="parent">The owning form.</param>
+        public IRCMarshal(Connection connection, TabControl tabHost, List<string> autoCommands, MainForm parent)
         {
             this.tabHost = tabHost;
+            this.parent = parent;
             this.previousNickName = connection.Nickname;
-            this.awaitingModeMessage = true;
+            this.AwaitingModeMessage = true;
             this.connection = connection;
             this.SetupConnectionEventHandlers();
             this.channels = new List<IRCChannel>();
             this.messageQueue = new Queue<Message>(15);
+            this.channelBrowser = new ChannelBrowser(this);
 
             if (autoCommands != null)
             {
@@ -171,6 +184,31 @@ namespace Yaircc.UI
         #region Properties
 
         /// <summary>
+        /// Gets a value indicating whether or not the initial mode message is pending.
+        /// </summary>
+        public bool AwaitingModeMessage
+        {
+            get 
+            { 
+                return this.awaitingModeMessage; 
+            }
+
+            private set
+            {
+                if (value)
+                {
+                    this.parent.InvokeAction(() => this.parent.MarshalUnregistered(this));
+                }
+                else
+                {
+                    this.parent.InvokeAction(() => this.parent.MarshalRegistered(this));
+                }
+
+                this.awaitingModeMessage = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the channels that data is being marshalled to.
         /// </summary>
         public List<IRCChannel> Channels
@@ -211,6 +249,22 @@ namespace Yaircc.UI
         public bool IsConnected
         {
             get { return this.connection.IsConnected; }
+        }
+
+        /// <summary>
+        /// Gets the channel browser associated with the connection.
+        /// </summary>
+        public ChannelBrowser ChannelBrowser
+        {
+            get
+            {
+                if (this.channelBrowser == null)
+                {
+                    this.channelBrowser = new ChannelBrowser(this);
+                }
+
+                return this.channelBrowser;
+            }
         }
 
         /// <summary>
@@ -281,6 +335,11 @@ namespace Yaircc.UI
             if (this.Connection.IsConnected)
             {
                 this.connection.Close();
+            }
+
+            if (this.channelBrowser != null)
+            {
+                this.channelBrowser.Dispose();
             }
 
             this.Channels.ForEach(i => i.Dispose());
@@ -441,10 +500,27 @@ namespace Yaircc.UI
                 tabPage.AppendMessage(reply.ToString(), source, content, messageType);
             };
 
+            // If we are retrieving list replies we need to populate the channel browser
+            if (reply == Reply.RPL_LISTSTART)
+            {
+                this.parent.InvokeAction(() => this.ChannelBrowser.BeginRefresh(true));
+                return;
+            }
+            else if (reply == Reply.RPL_LIST)
+            {
+                this.ChannelBrowser.AddChannel(message);
+                return;
+            }
+            else if (reply == Reply.RPL_LISTEND)
+            {
+                this.parent.InvokeAction(() => this.ChannelBrowser.FlushChannels());
+                return;
+            }
+
             // If we have a names reply or an end of names reply, then we need to check the channel 
             // it is in regards to exists in our channel list, and if it does check to see if it 
             // is awaiting a reply from a names request (i.e. it is wanting to refresh the user list).
-
+            //
             // If this is indeed the case, we need to force it through to that channel rather than
             // following the default procedure of going to the selected tab.
             if ((reply == Reply.RPL_NAMREPLY) || (reply == Reply.RPL_ENDOFNAMES))
@@ -473,7 +549,7 @@ namespace Yaircc.UI
             this.TabHost.InvokeAction(() =>
                 {
                     IRCChannel selectedChannel = this.Channels.Find(i => this.TabHost.SelectedTab.Equals(i.TabPage));
-                    if ((selectedChannel != null) && (!this.awaitingModeMessage))
+                    if ((selectedChannel != null) && (!this.AwaitingModeMessage))
                     {
                         selectedChannel.HandleReply(message);
                     }
@@ -497,7 +573,7 @@ namespace Yaircc.UI
                 }
                 else
                 {
-                    if (!this.awaitingModeMessage)
+                    if (!this.AwaitingModeMessage)
                     {
                         this.Connection.Nickname = this.previousNickName;
                     }
@@ -553,7 +629,7 @@ namespace Yaircc.UI
                         if (this.TabHost.SelectedTab is IRCTabPage)
                         {
                             IRCChannel channel = this.Channels.Find(i => i.TabPage.Equals(this.TabHost.SelectedTab));
-                            if ((channel != null) && (!this.awaitingModeMessage))
+                            if ((channel != null) && (!this.AwaitingModeMessage))
                             {
                                 channel.HandleMessage(message);
                             }
@@ -567,9 +643,9 @@ namespace Yaircc.UI
 
             // If we are still awaiting the MODE message (i.e. we are awaiting confirmation we have finished connecting)
             // then also re-join any channels that we have in the Channels collection (i.e. reconnect to any channels)
-            if (this.awaitingModeMessage && message is ModeMessage)
+            if (this.AwaitingModeMessage && message is ModeMessage)
             {
-                this.awaitingModeMessage = false;
+                this.AwaitingModeMessage = false;
                 this.Send(this.ServerTab, new ModeMessage(new string[] { this.Connection.Nickname, this.Connection.Mode }));
 
                 // Execute any auto commands.
@@ -609,7 +685,7 @@ namespace Yaircc.UI
         private void Reconnect()
         {
             this.reconnecting = true;
-            this.awaitingModeMessage = true;
+            this.AwaitingModeMessage = true;
             if (this.reconnectTimer == null)
             {
                 this.reconnectTimer = new System.Timers.Timer(15000);
