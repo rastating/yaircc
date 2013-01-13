@@ -303,7 +303,7 @@
             this.channelBrowserToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.channelBrowserToolStripButton.Name = "channelBrowserToolStripButton";
             this.channelBrowserToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.channelBrowserToolStripButton.Text = "Channel Browser...";
+            this.channelBrowserToolStripButton.Text = "Browse Channels...";
             this.channelBrowserToolStripButton.Click += new System.EventHandler(this.ChannelBrowserToolStripButton_Click);
             // 
             // toolStripSeparator6
