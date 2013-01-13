@@ -30,6 +30,14 @@ namespace Yaircc.Net.IRC
         /// <summary>
         /// Initialises a new instance of the <see cref="KillMessage"/> class.
         /// </summary>
+        public KillMessage()
+            : base("KILL")
+        {
+        }
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="KillMessage"/> class.
+        /// </summary>
         /// <param name="nickname">The nick name of the user to remove from the network.</param>
         /// <param name="comment">The reason behind removing the user.</param>
         public KillMessage(string nickname, string comment)
