@@ -36,7 +36,20 @@
 			    var row = $('<tr>').addClass(classes);
 			    var timestampColumn = $('<td>').addClass('timestamp').append($('<span>').text(timestamp));
 			    var sourceColumn = $('<td>').addClass('source').append($('<span>').text(source));
-			    var payloadColumn = $('<td>').addClass('payload').append($('<span>').html(payload)).linkify();
+			    var payloadColumn = $('<td>').addClass('payload').append($('<span>').html(payload)).linkify({
+			        handleLinks: function(links) {
+			            links.each(function() {
+			                var originalText = $(this).text();
+			                var trimmedText = $.trim(originalText);
+			                $(this).attr('href', $.trim($(this).attr('href')));
+			                $(this).text(trimmedText);
+
+			                if (trimmedText.length < originalText.length) {
+			                    $(this).after('&nbsp;');
+			                }
+			            });
+			        }
+			    });
 
 			    $(payloadColumn).find('a').each(function(index) {
 			        if ($(this).text().length > 60) {
