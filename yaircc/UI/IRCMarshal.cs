@@ -108,6 +108,16 @@ namespace Yaircc.UI
         /// </summary>
         private Queue<Message> messageQueue;
 
+        /// <summary>
+        /// The channel browser associated with the connection.
+        /// </summary>
+        private ChannelBrowser channelBrowser;
+
+        /// <summary>
+        /// The owning form of the marshal.
+        /// </summary>
+        private MainForm parent;
+
         #endregion
 
         #region Constructors
@@ -118,15 +128,18 @@ namespace Yaircc.UI
         /// <param name="connection">The connection to marshal data to and from.</param>
         /// <param name="tabHost">The TabControl that hosts the server and channel tabs.</param>
         /// <param name="autoCommands">A queue of commands to automatically execute once a connection is fully established.</param>
-        public IRCMarshal(Connection connection, TabControl tabHost, List<string> autoCommands)
+        /// <param name="parent">The owning form.</param>
+        public IRCMarshal(Connection connection, TabControl tabHost, List<string> autoCommands, MainForm parent)
         {
             this.tabHost = tabHost;
+            this.parent = parent;
             this.previousNickName = connection.Nickname;
             this.awaitingModeMessage = true;
             this.connection = connection;
             this.SetupConnectionEventHandlers();
             this.channels = new List<IRCChannel>();
             this.messageQueue = new Queue<Message>(15);
+            this.channelBrowser = new ChannelBrowser(this);
 
             if (autoCommands != null)
             {
@@ -214,6 +227,22 @@ namespace Yaircc.UI
         }
 
         /// <summary>
+        /// Gets the channel browser associated with the connection.
+        /// </summary>
+        public ChannelBrowser ChannelBrowser
+        {
+            get
+            {
+                if (this.channelBrowser == null)
+                {
+                    this.channelBrowser = new ChannelBrowser(this);
+                }
+
+                return this.channelBrowser;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether or not the server is being disconnected from.
         /// </summary>
         public bool IsDisconnecting
@@ -281,6 +310,11 @@ namespace Yaircc.UI
             if (this.Connection.IsConnected)
             {
                 this.connection.Close();
+            }
+
+            if (this.channelBrowser != null)
+            {
+                this.channelBrowser.Dispose();
             }
 
             this.Channels.ForEach(i => i.Dispose());
@@ -441,10 +475,27 @@ namespace Yaircc.UI
                 tabPage.AppendMessage(reply.ToString(), source, content, messageType);
             };
 
+            // If we are retrieving list replies we need to populate the channel browser
+            if (reply == Reply.RPL_LISTSTART)
+            {
+                this.parent.InvokeAction(() => this.ChannelBrowser.BeginRefresh(true));
+                return;
+            }
+            else if (reply == Reply.RPL_LIST)
+            {
+                this.ChannelBrowser.AddChannel(message);
+                return;
+            }
+            else if (reply == Reply.RPL_LISTEND)
+            {
+                this.parent.InvokeAction(() => this.ChannelBrowser.FlushChannels());
+                return;
+            }
+
             // If we have a names reply or an end of names reply, then we need to check the channel 
             // it is in regards to exists in our channel list, and if it does check to see if it 
             // is awaiting a reply from a names request (i.e. it is wanting to refresh the user list).
-
+            //
             // If this is indeed the case, we need to force it through to that channel rather than
             // following the default procedure of going to the selected tab.
             if ((reply == Reply.RPL_NAMREPLY) || (reply == Reply.RPL_ENDOFNAMES))
