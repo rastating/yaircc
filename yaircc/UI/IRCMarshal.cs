@@ -451,7 +451,24 @@ namespace Yaircc.UI
                     retval.TabPage.Marshal = this;
                     retval.Name = displayName;
 
-                    this.TabHost.TabPages.Add(tabPage);
+                    // Iterate through the tab pages to figure out how to place
+                    // this channels tab page in a group of other ones on the
+                    // same network, in alphabetical order.
+                    int index = this.TabHost.TabPages.IndexOf(this.ServerTab) + 1;
+                    for (int i = index; i < this.TabHost.TabPages.Count; i++)
+                    {
+                        IRCTabPage tab = this.TabHost.TabPages[i] as IRCTabPage;
+                        if (tab != null && tab.Marshal == this && tab.Text.CompareTo(retval.TabPage.Text) < 0)
+                        {
+                            index = i + 1;
+                        }
+                        else if (tab != null && tab.Marshal != this)
+                        {
+                            break;
+                        }
+                    }
+                    
+                    this.TabHost.TabPages.Insert(index, tabPage);
                     if (switchTo)
                     {
                         this.TabHost.SelectedTab = tabPage;
