@@ -132,7 +132,7 @@ Prekesh (https://twitter.com/prekesh) for the design of the emoticons.
 
 Yusuke Kamiyamane (http://twitter.com/ykamiyamane) for the icons used in the sort mode menu.
 
-This software is developed and distributed under the Apache License, Version 2.0 (ALv2). For more information on the licensing click the "View License" button below.</value>
+This software is developed and distributed under the GNU General Public License (v3). For more information on the licensing click the "View License" button below.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
