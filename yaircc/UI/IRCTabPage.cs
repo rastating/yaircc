@@ -946,7 +946,7 @@ namespace Yaircc.UI
         /// </summary>
         public void ScrollToBottom()
         {
-            this.WebBrowser.Document.Window.ScrollTo(0, this.WebBrowser.Document.Window.Size.Height);
+            this.WebBrowser.Document.Window.ScrollTo(0, this.WebBrowser.Document.Body.ScrollRectangle.Height * 2);
         }
 
         /// <summary>
