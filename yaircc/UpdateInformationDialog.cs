@@ -218,7 +218,8 @@ namespace Yaircc
         {
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                dialog.FileName = Path.GetFileName(this.update.URI.LocalPath);
+                dialog.FileName = "yaircc-setup.exe";
+                dialog.Filter = "Programs (*.exe)|*.exe"; 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     this.yesButton.Enabled = false;
