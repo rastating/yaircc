@@ -45,14 +45,14 @@
 	</Target>
 	-->
   <ItemGroup>
-    <BootstrapperFile Include="Microsoft.Net.Framework.3.5">
-      <ProductName>.NET Framework 3.5</ProductName>
+    <BootstrapperFile Include=".NETFramework,Version=v4.0,Profile=Client">
+      <ProductName>.NET Framework 4 Client Profile</ProductName>
     </BootstrapperFile>
     <BootstrapperFile Include="Microsoft.Windows.Installer.3.1">
       <ProductName>Windows Installer 3.1</ProductName>
     </BootstrapperFile>
   </ItemGroup>
   <Target Name="AfterBuild">
-    <GenerateBootstrapper ApplicationFile="$(TargetFileName)" ApplicationName="yaircc" BootstrapperItems="@(BootstrapperFile)" ComponentsLocation="HomeSite" CopyComponents="True" OutputPath="$(OutputPath)" Path="C:\Program Files (x86)\Microsoft SDKs\Windows\v6.0A\Bootstrapper\" />
+    <GenerateBootstrapper ApplicationFile="$(TargetFileName)" ApplicationName="yaircc" BootstrapperItems="@(BootstrapperFile)" ComponentsLocation="HomeSite" CopyComponents="True" OutputPath="$(OutputPath)" Path="C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bootstrapper\" />
   </Target>
 </Project>
