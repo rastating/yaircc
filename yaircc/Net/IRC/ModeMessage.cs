@@ -117,7 +117,7 @@ namespace Yaircc.Net.IRC
         {
             get
             {
-                return this.Parameters.Length > 2;
+                return this.Nickname.StartsWithEither("#", "&") || this.Parameters.Length > 2;
             }
         }
 

@@ -80,7 +80,7 @@ namespace Yaircc
         /// <param name="source">The string to check.</param>
         /// <param name="strings">The strings the string may start with.</param>
         /// <returns>True if <paramref name="source"/> starts with one of the strings passed in <paramref name="strings"/></returns>
-        public static bool StartsWithEither(this string source, string[] strings)
+        public static bool StartsWithEither(this string source, params string[] strings)
         {
             for (int i = 0; i < strings.GetLength(0); i++)
             {
