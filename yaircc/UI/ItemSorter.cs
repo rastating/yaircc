@@ -20,6 +20,7 @@
 
 namespace Yaircc.UI
 {
+    using System;
     using System.Windows.Forms;
 
     /// <summary>
@@ -87,7 +88,7 @@ namespace Yaircc.UI
         {
             if (x.ListView != null)
             {
-                if (x.ListView.Columns[this.Column].Tag == typeof(int))
+                if ((Type)x.ListView.Columns[this.Column].Tag == typeof(int))
                 {
                     if (this.Order == SortOrder.Descending)
                     {
