@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yaircc", "yaircc\yaircc.csproj", "{805A0282-2F5C-4B6A-8145-C55B0EAAAB16}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "setup", "setup\setup.wixproj", "{9A67EC11-1592-4C84-98A3-62B4064F4427}"
