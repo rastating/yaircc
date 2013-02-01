@@ -8,6 +8,7 @@ To download the latest stable release visit https://www.yaircc.com/
 - [intninety](http://blog.intninety.co.uk/) ([@int0x90](https://twitter.com/int0x90))
 
 ## Contributors
+- [Everaldo Coelho](http://www.everaldo.com/) ([@_Everaldo](https://twitter.com/_Everaldo)) - Graphic Design
 - Mark James ([@markjames](https://twitter.com/markjames)) - Icon Design
 - [Phyushin](https://github.com/phyushin) ([@phyushin](https://twitter.com/phyushin)) - Testing
 - [ponix4k](https://github.com/ponix4k) ([@ponix4k](https://twitter.com/ponix4k)) - Testing
