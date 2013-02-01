@@ -51,7 +51,6 @@
 		</Directory>
 
 		<Feature Id="ProductFeature" ConfigurableDirectory="INSTALLLOCATION" Title="yaircc" Level="1">
-      <ComponentGroupRef Id="Product.Generated" />
       <ComponentGroupRef Id="MainGroup" />
       <ComponentRef Id="ApplicationShortcut" />
 		</Feature>
