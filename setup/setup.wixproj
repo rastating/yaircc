@@ -24,8 +24,10 @@
     <DefineConstants>SourceDir=..\yaircc\bin\Release</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="YairccExitDialog.wxs" />
     <Compile Include="MainFragment.wxs" />
     <Compile Include="Product.wxs" />
+    <Compile Include="YairccWixUI_InstallDir.wxs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="License.rtf" />
@@ -48,6 +50,10 @@
     </BootstrapperFile>
   </ItemGroup>
   <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
     <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>

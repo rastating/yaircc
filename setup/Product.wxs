@@ -4,9 +4,9 @@
     Id="02cc5e11-cef5-44c4-befa-fd9ee2372ccc" 
     Name="yaircc" 
     Language="1033" 
-    Version="1.0.14.0" 
+    Version="1.1.15.0" 
     Manufacturer="intninety" 
-    UpgradeCode="26d4fbd8-f452-410c-a04e-cd40c3f36832">
+    UpgradeCode="d234ebda-cfc8-47dd-90b6-eea8c6a4fe2d">
     
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of yaircc is already installed. Setup will now exit."></MajorUpgrade>
@@ -53,11 +53,20 @@
 		</Feature>
 
     <!-- User Interface-->
-    <UIRef Id="WixUI_InstallDir" />
+    <UI>
+      <UIRef Id="YairccWixUI_InstallDir" />
+      <Publish Dialog="YairccExitDialog"
+               Control="Finish"
+               Event="DoAction"
+               Value="LaunchApplication">LAUNCHAPPONEXIT = 1 and NOT Installed</Publish>
+    </UI>
     <WixVariable Id="WixUIDialogBmp" Value="WixUIDialogBmp.bmp" />
     <WixVariable Id="WixUIBannerBmp" Value="WixUIBannerBmp.bmp" />
     <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <Property Id="WixShellExecTarget" Value="[#filCCEA735ACB2429DD6B8735742198E43F]" />
+    <Property Id="LAUNCHAPPONEXIT" Value="1" />
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
     
 	</Product>
 </Wix>
