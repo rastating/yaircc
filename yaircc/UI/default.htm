@@ -8,31 +8,36 @@
 			var isAtBottom = true;
 			var previousScrollTop = 0;
 
-			function javaScriptIsAvailable() {
-			    return true;
+			function setSplashText(text) {
+			    $('#splash').text(text);
 			}
-			
-			function isScrolledToTheBottom() {
-			    if ($(document).height() > $(window).height()) {
-			        var currentScrollTop = $(window).scrollTop();
-			        if (currentScrollTop >= previousScrollTop) {
-			            if (!isAtBottom) {
-			                isAtBottom = ($(window).scrollTop() + $(window).height() >= ($(document).height() - 50));
-			            }
-			        }
-			        else {
-			            isAtBottom = false;
-			        }
 
-			        previousScrollTop = currentScrollTop;
-			    }
-			    else {
-			        isAtBottom = true;
-			    }
-			    return isAtBottom;
+			function exportHtml(fileName) {
+			    var html = "<html>" + $("html").html() + "</html>";
+			    marshal.ExportHtml(fileName, html);
+			}
+
+			function isScrolledIntoView(elem) {
+			    var docViewTop = $(window).scrollTop();
+			    var docViewBottom = docViewTop + $(window).height();
+
+			    var elemTop = $(elem).offset().top;
+			    var elemBottom = elemTop + $(elem).height();
+
+			    return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom)
+                  && (elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 			}
 
 			function appendMessage(timestamp, source, payload, classes, transformEmoticons) {
+			    var shouldScroll = false;
+			    var rows = $('#message-table tbody tr');
+                
+			    if ($(rows).length > 0) {
+			        if (isScrolledIntoView($(rows).last())) {
+			            shouldScroll = true;
+			        }
+			    }
+
 			    var row = $('<tr>').addClass(classes);
 			    var timestampColumn = $('<td>').addClass('timestamp').append($('<span>').text(timestamp));
 			    var sourceColumn = $('<td>').addClass('source').append($('<span>').text(source));
@@ -57,13 +62,13 @@
 			        }
 			    });
 
-			    if (transformEmoticons) {
+			    if (transformEmoticons == 1) {
 			        var html = $(payloadColumn).html()
 			                    .replace(/(:(\-)?\))/gi, '<span class="smiley smile"><span>$1</span></span>')
 			                    .replace(/(:(\-)?D)/gi, '<span class="smiley grin"><span>$1</span></span>')
 			                    .replace(/(:(\-)?\|)/gi, '<span class="smiley ambivalent"><span>$1</span></span>')
-			                    .replace(/(^|[\s\0]|<wbr \/>|&nbsp;|<\/wbr>)(:(\-)?\\)/gi, '$1<span class="smiley slant-reverse"><span>$2</span></span>')
-			                    .replace(/(^|[\s\0]|<wbr \/>|&nbsp;|<\/wbr>)(:(\-)?\/)/gi, '$1<span class="smiley slant"><span>$2</span></span>')
+			                    .replace(/(^|[\s\0]|<wbr>|<wbr\/>|<wbr \/>|&nbsp;|<\/wbr>)(:(\-)?\\)/gi, '$1<span class="smiley slant-reverse"><span>$2</span></span>')
+			                    .replace(/(^|[\s\0]|<wbr>|<wbr\/>|<wbr \/>|&nbsp;|<\/wbr>)(:(\-)?\/)/gi, '$1<span class="smiley slant"><span>$2</span></span>')
 			                    .replace(/(:(\-)?S)/gi, '<span class="smiley confused"><span>$1</span></span>')
 			                    .replace(/(8(\-)?\))/gi, '<span class="smiley cool"><span>$1</span></span>')
 			                    .replace(/(\(Y\))/gi, '<span class="smiley thumbs-up"><span>$1</span></span>')
@@ -87,6 +92,15 @@
 			    sourceColumn.appendTo(row);
 			    payloadColumn.appendTo(row);
 			    $('#message-table tbody').append(row);
+
+			    if (shouldScroll) {
+			        $(window).scrollTop(document.body.scrollHeight);
+			    }
+
+			    $('#message-table tbody tr').last().find('a').click(function (e) {
+			        e.preventDefault();
+			        marshal.OpenUrl($(this).attr('href'));
+			    });
 			}
 
 			function listEmoticon(timestamp, source, detail) {
@@ -137,6 +151,10 @@
 			function clearMessageLog() {
 			    $('#message-table tbody').empty();
 			}
+
+			$(function () {
+			    marshal.InitialiseSubscribers();
+			});
 		</script>
 		
 		<style type="text/css">
@@ -244,8 +262,8 @@
             }
         </style>
 	</head>
-	<body>
-		<div style="padding-top: 153px; padding-bottom: 153px;" name="splash" id="splash">*yaircc*</div>
+	<body oncontextmenu="return false">
+		<div style="padding-top: 153px; padding-bottom: 153px;" name="splash" id="splash"></div>
 		<table id="message-table" name="message-table" class="message-table">
 			<tbody>		
 			</tbody>

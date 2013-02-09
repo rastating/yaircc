@@ -16,12 +16,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug;SourceDir=..\yaircc\bin\Release</DefineConstants>
+    <DefineConstants>Debug;SourceDir=..\yaircc\bin\x86\Debug</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>SourceDir=..\yaircc\bin\Release</DefineConstants>
+    <DefineConstants>SourceDir=..\yaircc\bin\x86\Release</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="YairccExitDialog.wxs" />
