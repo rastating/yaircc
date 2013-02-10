@@ -21,3 +21,8 @@ If you want to contribute to the project ensure that all code written passes a S
 All comments must be in English (British English preferred for consistency, but any flavour will work as long as it's legible!).
 
 Alternatively if you want to contribute in way of resources such as icons, [Open an Issue](https://github.com/intninety/yaircc/issues/new) describing how you want to contribute.
+
+## Building the Project
+To build the latest version of the project a number of dependencies will be required, which can be found here: http://dl.dropbox.com/u/50025441/yaircc-dependencies.zip
+
+A reference must be added in the project to both CefSharp.dll and CefSharp.WinForms.dll, and the rest of the files must be present in the output directory in order to run.
