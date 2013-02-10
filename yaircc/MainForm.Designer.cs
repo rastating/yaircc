@@ -117,7 +117,6 @@
             this.actionQueueTimer = new System.Windows.Forms.Timer(this.components);
             this.inputTextBox = new Intninety.TemporalTextBox();
             this.statusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
@@ -935,7 +934,6 @@
             this.statusStrip.PerformLayout();
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.standardToolStrip.ResumeLayout(false);
             this.standardToolStrip.PerformLayout();
