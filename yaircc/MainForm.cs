@@ -24,10 +24,8 @@ namespace Yaircc
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
-    using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Text;
     using System.Windows.Forms;
     using Yaircc.Localisation;
     using Yaircc.Net;
@@ -73,6 +71,11 @@ namespace Yaircc
         /// </summary>
         private IRCTabPage currentTab;
 
+        /// <summary>
+        /// The splash screen.
+        /// </summary>
+        private SplashScreen splashScreen;
+
         #endregion
 
         #region Constructors
@@ -83,6 +86,10 @@ namespace Yaircc
         public MainForm()
         {
             this.InitializeComponent();
+            
+            this.splashScreen = new SplashScreen(this);
+            this.splashScreen.Show();
+
             this.queuedActions = new Queue<Action>();
             this.UpgradeSettings();
         }
@@ -125,9 +132,18 @@ namespace Yaircc
         {
             get 
             {
-                if (this.channelsTabControl.SelectedTab != this.currentTab)
+                if (this.channelsTabControl != null)
                 {
-                    this.currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
+                    try
+                    {
+                        if (this.channelsTabControl.SelectedTab != this.currentTab)
+                        {
+                            this.currentTab = this.channelsTabControl.SelectedTab as IRCTabPage;
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                    }
                 }
 
                 return this.currentTab;
@@ -290,6 +306,29 @@ namespace Yaircc
                 this.channelBrowserToolStripButton.Enabled = false;
                 this.channelBrowserToolStripMenuItem.Enabled = false;
             }
+        }
+
+        /// <summary>
+        /// Sets up the console page and initiates an update check.
+        /// </summary>
+        public void SetupForm()
+        {
+            IRCTabPage consoleTabPage = new IRCTabPage(this, "consoleTabPage", "yaircc", IRCTabType.Console);
+            consoleTabPage.WebViewInitialised += () => this.ShowForm();
+            this.channelsTabControl.TabPages.Add(consoleTabPage);
+
+            GlobalSettings settings = GlobalSettings.Instance;
+            if (settings.CheckForUpdateOnStart == GlobalSettings.Boolean.Yes)
+            {
+                this.autoCheckingForUpdate = true;
+                this.CheckForUpdatesToolStripMenuItem_Click(this, EventArgs.Empty);
+            }
+
+            this.inputTextBox.Focus();
+
+            // Connect to any favourite servers marked for auto connection.
+            FavouriteServers.Instance.Servers.Where(t => t.AutomaticallyConnect).ToList().ForEach(t => this.ProcessConnectionRequest(t));
+            this.BuildFavouriteButtons();
         }
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
@@ -930,32 +969,6 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            this.channelsTabControl.TabPages.Add(new IRCTabPage(this, "consoleTabPage", "yaircc", IRCTabType.Console));
-            if ((this.channelsTabControl.TabPages[0] as IRCTabPage).JavaScriptIsAvailable)
-            {
-                GlobalSettings settings = GlobalSettings.Instance;
-                if (settings.CheckForUpdateOnStart == GlobalSettings.Boolean.Yes)
-                {
-                    this.autoCheckingForUpdate = true;
-                    this.CheckForUpdatesToolStripMenuItem_Click(this, EventArgs.Empty);
-                }
-
-                this.inputTextBox.Focus();
-            }
-            else
-            {
-                for (int i = 0; i < this.Controls.Count; i++)
-                {
-                    this.ToggleEnabledControl(this.Controls[i], false);
-                }
-
-                this.ToggleEnabledControl(this.splitContainer, true);
-                this.ToggleEnabledControl(this.standardToolStrip, false);
-            }
-
-            // Connect to any favourite servers marked for auto connection.
-            FavouriteServers.Instance.Servers.Where(t => t.AutomaticallyConnect).ToList().ForEach(t => this.ProcessConnectionRequest(t));
-            this.BuildFavouriteButtons();
         }
 
         /// <summary>
@@ -1193,7 +1206,7 @@ namespace Yaircc
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    File.WriteAllText(dialog.FileName, this.CurrentTab.WebBrowser.Document.Body.Parent.OuterHtml, Encoding.GetEncoding(this.CurrentTab.WebBrowser.Document.Encoding));
+                    ChromiumMarshal.BeginExport(dialog.FileName, this.CurrentTab.WebView);
                 }
             }
         }
@@ -1211,9 +1224,9 @@ namespace Yaircc
             }
             else
             {
-                if (this.CurrentTab.WebBrowser.Focused)
+                if (this.CurrentTab.WebView.Focused)
                 {
-                    this.CurrentTab.WebBrowser.Document.ExecCommand("SelectAll", false, null);
+                    this.CurrentTab.WebView.SelectAll();
                 }
             }
         }
@@ -1229,6 +1242,23 @@ namespace Yaircc
             {
                 dialog.ShowDialog();
             }
+        }
+
+        /// <summary>
+        /// Hide the splash screen and show the main form.
+        /// </summary>
+        private void ShowForm()
+        {
+            this.InvokeAction(() =>
+                {
+                    this.Hide();
+                    this.splashScreen.Close();
+                    this.splashScreen.Dispose();
+                    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                    this.WindowState = FormWindowState.Normal;
+                    this.Show();
+                    this.ShowInTaskbar = true;
+                });
         }
 
         /// <summary>
@@ -1402,7 +1432,10 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            this.CurrentTab.ScrollToBottom();
+            if (this.CurrentTab != null)
+            {
+                this.CurrentTab.ScrollToBottom();
+            }
         }
 
         /// <summary>

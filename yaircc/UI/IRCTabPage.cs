@@ -26,35 +26,11 @@ namespace Yaircc.UI
     using System.Reflection;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
+    using CefSharp;
+    using CefSharp.WinForms;
     using Yaircc.Localisation;
     using Yaircc.Net.IRC;
     using Yaircc.Settings;
-
-    /// <summary>
-    /// Represents a specific type of <see cref="IRCTabPage"/>
-    /// </summary>
-    public enum IRCTabType
-    {
-        /// <summary>
-        /// A console tab
-        /// </summary>
-        Console = 0,
-
-        /// <summary>
-        /// A server tab
-        /// </summary>
-        Server = 1,
-
-        /// <summary>
-        /// A channel tab
-        /// </summary>
-        Channel = 2,
-
-        /// <summary>
-        /// A private message tab
-        /// </summary>
-        PM = 3
-    }
 
     /// <summary>
     /// Represents a TabPage that can communicate with an IRC server
@@ -69,9 +45,9 @@ namespace Yaircc.UI
         private Connection connection;
 
         /// <summary>
-        /// The WebBrowser control that the tab prints messages to.
+        /// A value indicating whether or not the WebView is ready.
         /// </summary>
-        private WebBrowser webBrowser;
+        private bool webViewIsReady;
 
         /// <summary>
         /// The type of IRC entity the tab represents.
@@ -169,11 +145,36 @@ namespace Yaircc.UI
         private NickNameMentionedHandler nickNameMentioned;
 
         /// <summary>
+        /// Occurs when the WebView has finished initialising.
+        /// </summary>
+        private WebViewInitialisedHandler webViewInitialised;
+
+        /// <summary>
         /// The form that the tab page is displayed on.
         /// </summary>
         private MainForm owningForm;
 
+        /// <summary>
+        /// The WebView containing the chat log.
+        /// </summary>
+        private WebView webView;
+
         #endregion
+
+        /// <summary>
+        /// A value indicating whether or not the tab is still initialising.
+        /// </summary>
+        private bool initialising;
+
+        /// <summary>
+        /// The marshal for the WebView.
+        /// </summary>
+        private ChromiumMarshal chromiumMarshal;
+
+        /// <summary>
+        /// The queue of pending messages.
+        /// </summary>
+        private Queue<Action> messageQueue;
 
         #region Constructors
 
@@ -187,6 +188,7 @@ namespace Yaircc.UI
         public IRCTabPage(MainForm owningForm, string name, string text, IRCTabType type)
             : base(text)
         {
+            this.initialising = true;
             GlobalSettings settings = GlobalSettings.Instance;
 
             this.owningForm = owningForm;
@@ -198,6 +200,7 @@ namespace Yaircc.UI
             this.voiceGroupExpanded = true;
             this.normalGroupExpanded = true;
 
+            this.MessageQueue = new Queue<Action>();
             this.Name = name;
             this.type = type;
             this.ConnectionSpecificName = string.Empty;
@@ -235,6 +238,11 @@ namespace Yaircc.UI
         /// </summary>
         public delegate void NickNameMentionedHandler();
 
+        /// <summary>
+        /// Delegate for event <see cref="WebViewInitialised"/>
+        /// </summary>
+        public delegate void WebViewInitialisedHandler();
+
         #endregion
 
         #region Events
@@ -246,6 +254,15 @@ namespace Yaircc.UI
         {
             add { this.nickNameMentioned += value; }
             remove { this.nickNameMentioned -= value; }
+        }
+
+        /// <summary>
+        /// Occurs when the <see cref="WebView"/> has finished fully initialising its content.
+        /// </summary>
+        public event WebViewInitialisedHandler WebViewInitialised
+        {
+            add { this.webViewInitialised += value; }
+            remove { this.webViewInitialised -= value; }
         }
 
         #endregion
@@ -262,11 +279,11 @@ namespace Yaircc.UI
         }
 
         /// <summary>
-        /// Gets the WebBrowser used to display the tab's content
+        /// Gets the WebView used to display the tab's content
         /// </summary>
-        public WebBrowser WebBrowser
+        public WebView WebView
         {
-            get { return this.webBrowser; }
+            get { return this.webView; }
         }
 
         /// <summary>
@@ -346,20 +363,29 @@ namespace Yaircc.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether or not Internet Explorer has JavaScript enabled.
+        /// Gets or sets the queue of pending messages.
         /// </summary>
-        public bool JavaScriptIsAvailable
+        private Queue<Action> MessageQueue
         {
-            get
-            {
-                // Verify that JavaScript is enabled by making a call to the *javaScriptIsAvailable* method.
-                return this.WebBrowser.Document.InvokeScript("javaScriptIsAvailable") != null;
-            }
+            get { return this.messageQueue; }
+            set { this.messageQueue = value; }
         }
 
         #endregion
 
         #region Instance Method
+
+        /// <summary>
+        /// Flush queued messages to the chat log.
+        /// </summary>
+        public void FlushQueuedMessages()
+        {
+            while (this.MessageQueue.Count > 0)
+            {
+                Action action = this.MessageQueue.Dequeue();
+                this.WebView.InvokeAction(action);
+            }
+        }
 
         /// <summary>
         /// Toggles whether or not grouping is enabled.
@@ -617,7 +643,7 @@ namespace Yaircc.UI
         /// </summary>
         public void ClearLog()
         {
-            this.WebBrowser.Document.InvokeScript("clearMessageLog");
+            this.WebView.ExecuteScript("clearMessageLog()");
         }
 
         /// <summary>
@@ -625,7 +651,8 @@ namespace Yaircc.UI
         /// </summary>
         public void ListEmoticons()
         {
-            this.WebBrowser.Document.InvokeScript("listEmoticons", new object[] { "[" + DateTime.Now.ToString("HH:mm") + "]", "[INFO]" });
+            string script = string.Format("listEmoticons('[{0}]', '[INFO]')", DateTime.Now.ToString("HH:mm"));
+            this.WebView.ExecuteScript(script);
         }
 
         /// <summary>
@@ -635,7 +662,11 @@ namespace Yaircc.UI
         public void LoadTheme(string path)
         {
             string style = File.ReadAllText(path);
-            this.WebBrowser.Document.InvokeScript("setStyle", new object[] { style });
+
+            style = style.Replace("\r", " ").Replace("\n", " ").Replace("'", @"\'");
+            string script = @"setStyle('" + style + "')";
+
+            this.WebView.ExecuteScript(script);
         }
 
         /// <summary>
@@ -648,60 +679,57 @@ namespace Yaircc.UI
         /// <param name="transform">A delegate that will be called to transform the payload content before appending.</param>
         public void AppendMessage(string command, string source, string payload, MessageType type, Func<string, string> transform)
         {
-            this.webBrowser.InvokeAction(() =>
-            {
-                try
+            Action action = new Action(() =>
                 {
-                    string timestamp = string.Format("[{0:HH:mm}]", DateTime.Now);
-                    string classes = type.ToString();
-
-                    if (!string.IsNullOrEmpty(command))
+                    try
                     {
-                        classes = string.Format("{0} {1}", classes, command.ToUpper());
-                    }
+                        string timestamp = string.Format("[{0:HH:mm}]", DateTime.Now);
+                        string classes = type.ToString();
 
-                    source = type == MessageType.UserMessage ? string.Format("<{0}>", source) : source;
-                    payload = transform.Invoke(payload);
-
-                    object[] args = new object[] { timestamp, source, payload, classes, GlobalSettings.Instance.UseEmoticons };
-                    bool scroll = false;
-
-                    // If the selected tab is the one that we are appending to, then use the JavaScript
-                    // method "isScrolledToTheBottom" to determine whether or not we should scroll.
-                    if (this.Parent != null)
-                    {
-                        if ((this.Parent as TabControl).SelectedTab == this)
+                        if (!string.IsNullOrEmpty(command))
                         {
-                            scroll = (bool)this.WebBrowser.Document.InvokeScript("isScrolledToTheBottom");
+                            classes = string.Format("{0} {1}", classes, command.ToUpper());
                         }
-                    }
 
-                    this.WebBrowser.Document.InvokeScript("appendMessage", args);
+                        source = type == MessageType.UserMessage ? string.Format("<{0}>", source) : source;
+                        payload = transform.Invoke(payload);
+                        string script = string.Format(
+                            "appendMessage('{0}', '{1}', '{2}', '{3}', {4})",
+                            timestamp,
+                            source.PrepareForJS(),
+                            payload.PrepareForJS(),
+                            classes,
+                            (int)GlobalSettings.Instance.UseEmoticons);
+                        this.WebView.ExecuteScript(script);
 
-                    if (scroll)
-                    {
-                        this.ScrollToBottom();
-                    }
-
-                    if (this.Marshal != null)
-                    {
-                        if (this.TabType == IRCTabType.PM || payload.Contains(this.Marshal.Connection.Nickname))
+                        if (this.Marshal != null)
                         {
-                            if ((this.Parent as TabControl).SelectedTab != this || !this.OwningForm.IsForegroundWindow)
+                            if (this.TabType == IRCTabType.PM || payload.IndexOf(this.Marshal.Connection.Nickname, StringComparison.OrdinalIgnoreCase) >= 0)
                             {
-                                this.ImageKey = "exclamation";
-                                if (this.nickNameMentioned != null)
+                                if ((this.Parent as TabControl).SelectedTab != this || !this.OwningForm.IsForegroundWindow)
                                 {
-                                    this.nickNameMentioned.Invoke();
+                                    this.ImageKey = "exclamation";
+                                    if (this.nickNameMentioned != null)
+                                    {
+                                        this.nickNameMentioned.Invoke();
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                catch (ObjectDisposedException)
-                {
-                }
-            });
+                    catch (ObjectDisposedException)
+                    {
+                    }
+                });
+
+            if (!this.initialising)
+            {
+                this.WebView.InvokeAction(action);
+            }
+            else
+            {
+                this.MessageQueue.Enqueue(action);
+            }
         }
 
         /// <summary>
@@ -721,17 +749,6 @@ namespace Yaircc.UI
                 (originalPayload) => 
                 {
                     string retval = System.Security.SecurityElement.Escape(originalPayload).Replace("&apos;", "'");
-
-                    /*
-                     * As there are issues with using <pre> in a table cell
-                     * and as IE does not support the pre-wrap property of 
-                     * white-space, we need to alternate between &nbsp; and
-                     * <wbr/> so that a break can occur after each space.
-                     *
-                     * Thanks to ponix for figuring this one out! https://twitter.com/ponix
-                     */
-                    retval = retval.Replace(" ", "&nbsp;<wbr/>");
-
                     string closeTag = "</span>";
                     int openTags = 0;
                     int openBoldTags = 0;
@@ -946,7 +963,10 @@ namespace Yaircc.UI
         /// </summary>
         public void ScrollToBottom()
         {
-            this.WebBrowser.Document.Window.ScrollTo(0, this.WebBrowser.Document.Body.ScrollRectangle.Height * 2);
+            if (this.WebView.IsBrowserInitialized && !this.WebView.IsLoading)
+            {
+                this.WebView.ExecuteScript("$(window).scrollTop(document.body.scrollHeight);");
+            }
         }
 
         /// <summary>
@@ -969,45 +989,15 @@ namespace Yaircc.UI
         }
 
         /// <summary>
-        /// Handles the DocumentCompleted event of System.Windows.Forms.WebBrowser.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event arguments.</param>
-        private void WebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            this.webBrowser.Document.Body.ScrollIntoView(false);
-            this.webBrowser.Tag = true;
-        }
-
-        /// <summary>
         /// Handles the PreviewKeyDown event of System.Windows.Forms.WebBrowser.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event arguments.</param>
-        private void WebBrowser_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void WebView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if ((e.Modifiers == Keys.Control) && (e.KeyCode == Keys.C))
             {
-                this.webBrowser.Document.ExecCommand("Copy", false, null);
-            }
-        }
-
-        /// <summary>
-        /// Handles the Navigating event of System.Windows.Forms.WebBrowser.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event arguments.</param>
-        private void WebBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
-        {
-            if (!e.Url.ToString().Equals("about:blank"))
-            {
-                System.Diagnostics.Process.Start(e.Url.ToString());
-                e.Cancel = true;
-            }
-
-            if (this.webBrowser.Tag != null && this.webBrowser.Tag.Equals(true))
-            {
-                e.Cancel = true;
+                this.WebView.Copy();
             }
         }
 
@@ -1016,8 +1006,8 @@ namespace Yaircc.UI
         /// </summary>
         private void SetSplashText()
         {
-            HtmlElement splashText = this.webBrowser.Document.Body.Children.GetElementsByName("splash")[0];
-            splashText.InnerText = this.Text;
+            string script = string.Format(@"setSplashText('{0}')", this.Text.PrepareForJS());
+            this.WebView.ExecuteScript(script);
         }
 
         /// <summary>
@@ -1156,70 +1146,78 @@ namespace Yaircc.UI
         }
 
         /// <summary>
-        /// Initialise the WebBrowser control
+        /// Initialise the WebView control
         /// </summary>
-        private void InitialiseWebBrowser()
+        private void InitialiseWebView()
         {
-            // WebBrowser
-            this.webBrowser = new WebBrowser();
-            this.webBrowser.Name = string.Format("{0}WebBrowser", this.Name);
+            // Disable caching.
+            BrowserSettings settings = new BrowserSettings();
+            settings.ApplicationCacheDisabled = true;
+            settings.PageCacheDisabled = true;
 
-            // Setup the event handlers for the WebBrowser
-            this.webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(this.WebBrowser_DocumentCompleted);
-            this.webBrowser.Navigating += new WebBrowserNavigatingEventHandler(this.WebBrowser_Navigating);
-            this.webBrowser.PreviewKeyDown += new PreviewKeyDownEventHandler(this.WebBrowser_PreviewKeyDown);
+            // Initialise the WebView.
+            this.webView = new WebView(string.Empty, settings);
+            this.WebView.Name = string.Format("{0}WebBrowser", this.Name);
+            this.WebView.Dock = DockStyle.Fill;
 
-            // Setup properties to fill the tab and prevent shortcuts
-            this.webBrowser.Dock = DockStyle.Fill;
-            this.webBrowser.WebBrowserShortcutsEnabled = false;
-            this.webBrowser.IsWebBrowserContextMenuEnabled = false;
+            // Setup and regsiter the marshal for the WebView.
+            this.chromiumMarshal = new ChromiumMarshal(new Action(() => { this.FlushQueuedMessages(); this.initialising = false; }));
+            this.WebView.RegisterJsObject("marshal", this.chromiumMarshal);
+            
+            // Setup the event handlers for the WebView.
+            this.WebView.PropertyChanged += this.WebView_PropertyChanged;
+            this.WebView.PreviewKeyDown += new PreviewKeyDownEventHandler(this.WebView_PreviewKeyDown);
 
-            // Load a blank document
-            this.webBrowser.Navigate("about:blank");
-            if (this.webBrowser.Document != null)
+            this.Controls.Add(this.WebView);
+        }
+
+        /// <summary>
+        /// Handles the PropertyChanged event of CefSharp.WinForms.WebView.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void WebView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            // Once the browser is initialised, load the HTML for the tab.
+            if (!this.webViewIsReady)
             {
-                this.webBrowser.Document.Write(string.Empty);
-            }
-
-            // Load the appropriate resources into the web browser
-            string resourceName = "Yaircc.UI.default.htm";
-            switch (this.type)
-            {
-                case IRCTabType.Console:
-                    resourceName = "Yaircc.UI.default.htm";
-                    break;
-            }
-
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
+                if (e.PropertyName.Equals("IsBrowserInitialized", StringComparison.OrdinalIgnoreCase))
                 {
-                    this.webBrowser.Document.Write(reader.ReadToEnd());
-                }
-            }
-
-            if (this.JavaScriptIsAvailable)
-            {
-                this.SetSplashText();
-
-                if (this.type == IRCTabType.Console)
-                {
-                    this.SetupConsoleContent();
-                }
-            }
-            else
-            {
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Yaircc.UI.JavaScriptWarning.htm"))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
+                    this.webViewIsReady = this.WebView.IsBrowserInitialized;
+                    if (this.webViewIsReady)
                     {
-                        this.WebBrowser.Document.OpenNew(true);
-                        this.WebBrowser.Document.Write(reader.ReadToEnd());
+                        string resourceName = "Yaircc.UI.default.htm";
+                        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                        {
+                            using (StreamReader reader = new StreamReader(stream))
+                            {
+                                this.WebView.LoadHtml(reader.ReadToEnd());
+                            }
+                        }
                     }
                 }
             }
 
-            this.Controls.Add(this.webBrowser);
+            // Once the HTML has finished loading, begin loading the initial content.
+            if (e.PropertyName.Equals("IsLoading", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!this.WebView.IsLoading)
+                {
+                    this.SetSplashText();
+                    if (this.type == IRCTabType.Console)
+                    {
+                        this.SetupConsoleContent();
+                    }
+
+                    GlobalSettings settings = GlobalSettings.Instance;
+                    this.LoadTheme(settings.ThemeFileName);
+
+                    if (this.webViewInitialised != null)
+                    {
+                        this.webViewInitialised.Invoke();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -1227,19 +1225,7 @@ namespace Yaircc.UI
         /// </summary>
         private void Initialise()
         {
-            this.InitialiseWebBrowser();
-
-            GlobalSettings settings = GlobalSettings.Instance;
-            this.LoadTheme(settings.ThemeFileName);
-        }
-
-        /// <summary>
-        /// Initialise the component.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            this.ResumeLayout(false);
+            this.InitialiseWebView();
         }
 
         #endregion

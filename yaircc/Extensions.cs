@@ -183,5 +183,15 @@ namespace Yaircc
 
             return false;
         }
+
+        /// <summary>
+        /// Escapes backslashes and single quotation marks for use in a JavaScript function.
+        /// </summary>
+        /// <param name="source">The string.</param>
+        /// <returns>The escaped string.</returns>
+        public static string PrepareForJS(this string source)
+        {
+            return source.Replace(@"\", @"\\").Replace("'", @"\'");
+        }
     }
 }
