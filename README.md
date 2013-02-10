@@ -8,6 +8,7 @@ To download the latest stable release visit https://www.yaircc.com/
 - [intninety](http://blog.intninety.co.uk/) ([@int0x90](https://twitter.com/int0x90))
 
 ## Contributors
+- [Asif Aleem](http://www.freebiesgallery.com/) ([@freebiegallery](https://twitter.com/freebiegallery)) - Splash Screen Design
 - [Everaldo Coelho](http://www.everaldo.com/) ([@_Everaldo](https://twitter.com/_Everaldo)) - Graphic Design
 - Mark James ([@markjames](https://twitter.com/markjames)) - Icon Design
 - [Phyushin](https://github.com/phyushin) ([@phyushin](https://twitter.com/phyushin)) - Testing
