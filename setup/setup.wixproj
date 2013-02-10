@@ -42,8 +42,8 @@
 	</Target>
 	-->
   <ItemGroup>
-    <BootstrapperFile Include=".NETFramework,Version=v4.0,Profile=Client">
-      <ProductName>.NET Framework 4 Client Profile</ProductName>
+    <BootstrapperFile Include="Microsoft.Net.Client.3.5">
+      <ProductName>.NET Framework 3.5 Client Profile</ProductName>
     </BootstrapperFile>
     <BootstrapperFile Include="Microsoft.Windows.Installer.3.1">
       <ProductName>Windows Installer 3.1</ProductName>
