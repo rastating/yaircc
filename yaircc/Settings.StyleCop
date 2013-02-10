@@ -6,6 +6,8 @@
       <Value>banid</Value>
       <Value>banids</Value>
       <Value>callback</Value>
+      <Value>Cef</Value>
+      <Value>CefSharp</Value>
       <Value>chanop</Value>
       <Value>debuglevel</Value>
       <Value>dehop</Value>
