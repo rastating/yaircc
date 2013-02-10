@@ -117,6 +117,7 @@
             this.actionQueueTimer = new System.Windows.Forms.Timer(this.components);
             this.inputTextBox = new Intninety.TemporalTextBox();
             this.statusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
@@ -144,9 +145,9 @@
             // 
             // splitContainer
             // 
-            this.splitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer.Location = new System.Drawing.Point(0, 52);
             this.splitContainer.Name = "splitContainer";
@@ -159,7 +160,7 @@
             // 
             this.splitContainer.Panel2.Controls.Add(this.channelsTabControl);
             this.splitContainer.Size = new System.Drawing.Size(923, 462);
-            this.splitContainer.SplitterDistance = 170;
+            this.splitContainer.SplitterDistance = 191;
             this.splitContainer.TabIndex = 1;
             // 
             // userTreeView
@@ -179,7 +180,7 @@
             treeNode1});
             this.userTreeView.SelectedImageIndex = 0;
             this.userTreeView.ShowLines = false;
-            this.userTreeView.Size = new System.Drawing.Size(170, 462);
+            this.userTreeView.Size = new System.Drawing.Size(191, 462);
             this.userTreeView.TabIndex = 0;
             this.userTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UserTreeView_MouseDown);
             // 
@@ -208,11 +209,11 @@
             this.channelsTabControl.Location = new System.Drawing.Point(0, 0);
             this.channelsTabControl.Name = "channelsTabControl";
             this.channelsTabControl.SelectedIndex = 0;
-            this.channelsTabControl.Size = new System.Drawing.Size(749, 462);
+            this.channelsTabControl.Size = new System.Drawing.Size(728, 462);
             this.channelsTabControl.TabIndex = 2;
-            this.channelsTabControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ChannelsTabControl_MouseDown);
             this.channelsTabControl.SelectedIndexChanged += new System.EventHandler(this.ChannelsTabControl_SelectedIndexChanged);
             this.channelsTabControl.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.ChannelsTabControl_ControlRemoved);
+            this.channelsTabControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ChannelsTabControl_MouseDown);
             // 
             // roomImageList
             // 
@@ -476,8 +477,8 @@
             // 
             this.connectToolStripMenuItem.Image = global::Yaircc.Properties.Resources.lightning;
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
-                        | System.Windows.Forms.Keys.C)));
+            this.connectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.C)));
             this.connectToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.connectToolStripMenuItem.Text = "&Connect...";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.ConnectToolStripMenuItem_Click);
@@ -516,8 +517,8 @@
             this.channelBrowserToolStripMenuItem.Enabled = false;
             this.channelBrowserToolStripMenuItem.Image = global::Yaircc.Properties.Resources.folder_find;
             this.channelBrowserToolStripMenuItem.Name = "channelBrowserToolStripMenuItem";
-            this.channelBrowserToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
-                        | System.Windows.Forms.Keys.B)));
+            this.channelBrowserToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.B)));
             this.channelBrowserToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.channelBrowserToolStripMenuItem.Text = "Browse Channels...";
             this.channelBrowserToolStripMenuItem.Click += new System.EventHandler(this.ChannelBrowserToolStripButton_Click);
@@ -886,8 +887,8 @@
             this.updateCheckBackgroundWorker.WorkerReportsProgress = true;
             this.updateCheckBackgroundWorker.WorkerSupportsCancellation = true;
             this.updateCheckBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.UpdateCheckBackgroundWorker_DoWork);
-            this.updateCheckBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.UpdateCheckBackgroundWorker_RunWorkerCompleted);
             this.updateCheckBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.UpdateCheckBackgroundWorker_ProgressChanged);
+            this.updateCheckBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.UpdateCheckBackgroundWorker_RunWorkerCompleted);
             // 
             // actionQueueTimer
             // 
@@ -897,8 +898,8 @@
             // 
             // inputTextBox
             // 
-            this.inputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.inputTextBox.Location = new System.Drawing.Point(3, 519);
             this.inputTextBox.Name = "inputTextBox";
             this.inputTextBox.Size = new System.Drawing.Size(916, 21);
@@ -919,19 +920,22 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "yaircc";
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.standardToolStrip.ResumeLayout(false);
             this.standardToolStrip.PerformLayout();

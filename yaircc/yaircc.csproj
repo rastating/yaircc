@@ -51,7 +51,33 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CefSharp, Version=0.12.4596.50, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\intninety\Desktop\CefSharp-0.12\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.WinForms, Version=0.12.4596.53, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\intninety\Desktop\CefSharp-0.12\CefSharp.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -120,6 +146,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings_Validation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\FavouriteServers.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
@@ -222,14 +253,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -258,6 +284,12 @@
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\Server.cs" />
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThemeFileNameEditor.cs" />
     <Compile Include="ThemeManager.cs">
       <SubType>Form</SubType>
@@ -265,12 +297,14 @@
     <Compile Include="ThemeManager.Designer.cs">
       <DependentUpon>ThemeManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ChromiumMarshal.cs" />
     <Compile Include="UI\FlashWindow.cs" />
     <Compile Include="UI\IRCChannel.cs" />
     <Compile Include="UI\IRCMarshal.cs" />
     <Compile Include="UI\IRCTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\IRCTabType.cs" />
     <Compile Include="UI\IRCUser.cs" />
     <Compile Include="UI\IRCUserMode.cs" />
     <Compile Include="UI\ItemSorter.cs" />
@@ -358,6 +392,8 @@
     <None Include="Resources\folder_palette.png" />
     <None Include="Resources\folder_find.png" />
     <None Include="Resources\find.png" />
+    <None Include="Resources\aluminium.bmp" />
+    <None Include="Resources\splash-screen.jpg" />
     <Content Include="themes\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -385,6 +421,9 @@
     <EmbeddedResource Include="Localisation\Strings_Validation.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings_Validation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ThemeManager.resx">
       <DependentUpon>ThemeManager.cs</DependentUpon>

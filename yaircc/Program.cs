@@ -24,8 +24,10 @@ namespace Yaircc
     using System.Collections.Specialized;
     using System.IO;
     using System.Net;
+    using System.Threading;
     using System.Windows.Forms;
     using System.Xml.Serialization;
+    using CefSharp;
     using Yaircc.Localisation;
 
     /// <summary>
@@ -45,6 +47,10 @@ namespace Yaircc
                 AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             }
 
+            CefSharp.Settings settings = new CefSharp.Settings();
+            settings.CachePath = string.Empty;
+            CEF.Initialize(settings);
+            Application.ApplicationExit += Application_ApplicationExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
@@ -94,6 +100,16 @@ namespace Yaircc
             {
                 Environment.Exit(1);
             }
+        }
+
+        /// <summary>
+        /// Handles the ApplicationExit of System.Windows.Forms.Application.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private static void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            CEF.Shutdown();
         }
     }
 }
