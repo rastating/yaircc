@@ -697,7 +697,7 @@ namespace Yaircc.UI
                             "appendMessage('{0}', '{1}', '{2}', '{3}', {4})",
                             timestamp,
                             source.PrepareForJS(),
-                            payload.PrepareForJS(),
+                            payload.PrepareForJS().Replace("\r", string.Empty).Replace("\n", string.Empty),
                             classes,
                             (int)GlobalSettings.Instance.UseEmoticons);
                         this.WebView.ExecuteScript(script);
