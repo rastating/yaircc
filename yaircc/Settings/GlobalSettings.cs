@@ -82,6 +82,11 @@ namespace Yaircc.Settings
         /// </summary>
         private GlobalSettings.Boolean useEmoticons;
 
+        /// <summary>
+        /// The flag that indicates whether or not to open links in a private browser.
+        /// </summary>
+        private GlobalSettings.Boolean usePrivateBrowsing;
+
         #endregion
 
         #region Constructors
@@ -143,6 +148,7 @@ namespace Yaircc.Settings
             this.debugMode = Yaircc.Properties.Settings.Default.DebugMode ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
             this.checkForUpdateOnStart = Yaircc.Properties.Settings.Default.CheckForUpdateOnStart ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
             this.useEmoticons = Yaircc.Properties.Settings.Default.UseEmoticons ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
+            this.usePrivateBrowsing = Yaircc.Properties.Settings.Default.UsePrivateBrowsing ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
         }
 
         #endregion
@@ -320,6 +326,16 @@ namespace Yaircc.Settings
             set { this.checkForUpdateOnStart = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether or not to open links in a private browser.
+        /// </summary>
+        [Category("Miscellaneous"), DisplayName("Open links in private browsing mode"), Description("If enabled, all links will be opened in private browsing mode and will not be recorded in your web browsing history.")]
+        public GlobalSettings.Boolean UsePrivateBrowsing
+        {
+            get { return this.usePrivateBrowsing; }
+            set { this.usePrivateBrowsing = value; }
+        }
+
         #endregion
 
         #region Instance Methods
@@ -343,6 +359,7 @@ namespace Yaircc.Settings
                 Yaircc.Properties.Settings.Default.ThemeFileName = this.themeFileName;
                 Yaircc.Properties.Settings.Default.CheckForUpdateOnStart = this.checkForUpdateOnStart == GlobalSettings.Boolean.Yes;
                 Yaircc.Properties.Settings.Default.UseEmoticons = this.useEmoticons == GlobalSettings.Boolean.Yes;
+                Yaircc.Properties.Settings.Default.UsePrivateBrowsing = this.usePrivateBrowsing == GlobalSettings.Boolean.Yes;
                 Yaircc.Properties.Settings.Default.Save();
             }
             catch

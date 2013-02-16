@@ -153,5 +153,17 @@ namespace Yaircc.Properties {
                 this["UseEmoticons"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UsePrivateBrowsing {
+            get {
+                return ((bool)(this["UsePrivateBrowsing"]));
+            }
+            set {
+                this["UsePrivateBrowsing"] = value;
+            }
+        }
     }
 }
