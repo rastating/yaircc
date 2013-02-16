@@ -84,7 +84,7 @@ namespace Yaircc.UI
         /// <param name="url">The URL to open.</param>
         public void OpenUrl(string url)
         {
-            if (GlobalSettings.Instance.UsePrivateBrowsing == GlobalSettings.Boolean.No)
+            if (GlobalSettings.Instance.UsePrivateBrowsing == GlobalSettings.Boolean.No || url.StartsWith("mailto:", StringComparison.OrdinalIgnoreCase))
             {
                 Process.Start(url);
             }
