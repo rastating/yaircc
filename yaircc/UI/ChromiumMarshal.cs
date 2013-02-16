@@ -25,6 +25,7 @@ namespace Yaircc.UI
     using System.IO;
     using System.Text;
     using CefSharp.WinForms;
+    using Yaircc.Settings;
 
     /// <summary>
     /// Represents the the Chromium marshal.
@@ -83,7 +84,15 @@ namespace Yaircc.UI
         /// <param name="url">The URL to open.</param>
         public void OpenUrl(string url)
         {
-            Process.Start(url);
+            if (GlobalSettings.Instance.UsePrivateBrowsing == GlobalSettings.Boolean.No)
+            {
+                Process.Start(url);
+            }
+            else
+            {
+                WebBrowserForm browser = new WebBrowserForm(url);
+                browser.Show();
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product 
-    Id="02cc5e11-cef5-44c4-befa-fd9ee2372ccc" 
+    Id="1148eeab-2e2f-484d-9495-c86100a37bd7" 
     Name="yaircc" 
     Language="1033" 
-    Version="1.1.15.0" 
+    Version="1.1.16.0" 
     Manufacturer="intninety" 
     UpgradeCode="d234ebda-cfc8-47dd-90b6-eea8c6a4fe2d">
     
@@ -64,7 +64,7 @@
     <WixVariable Id="WixUIBannerBmp" Value="WixUIBannerBmp.bmp" />
     <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
-    <Property Id="WixShellExecTarget" Value="[#filCCEA735ACB2429DD6B8735742198E43F]" />
+    <Property Id="WixShellExecTarget" Value="[#fil1FE94CE8B7586B41941DE0E15DA0151C]" />
     <Property Id="LAUNCHAPPONEXIT" Value="1" />
     <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
     

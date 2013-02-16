@@ -6,32 +6,232 @@
   </Fragment>
   <Fragment>
     <ComponentGroup Id="MainGroup">
-      <Component Id="cmpC6333A3266F9F2C87F8A844507C0772D" Directory="INSTALLLOCATION" Guid="{2F27A16F-0245-4CA3-BF96-30D63983CD8B}">
-        <File Id="fil5772280D22A98DD17D2AC4BC1AF10D0A" KeyPath="yes" Source="$(var.SourceDir)\License.txt" />
+      <Component Id="cmpCB7312ADFF0B7E87550DB36F892BD5F6" Directory="INSTALLLOCATION" Guid="{10F6BD59-18B4-4BF2-A205-433C83EA5F5B}">
+        <File Id="fil6612EC2DE61EC93A59D84F3AFC2D7E34" KeyPath="yes" Source="$(var.SourceDir)\avcodec-54.dll" />
       </Component>
-      <Component Id="cmp19204B0D163DB2EA2B461DF67C87D933" Directory="INSTALLLOCATION" Guid="{53C904DE-DF09-4CA5-8B68-C408101E1997}">
-        <File Id="filCCEA735ACB2429DD6B8735742198E43F" KeyPath="yes" Source="$(var.SourceDir)\yaircc.exe" />
+      <Component Id="cmpF1568089262FB113F810178980B3B089" Directory="INSTALLLOCATION" Guid="{7A80395D-C6BF-46D3-AD47-6561836D4051}">
+        <File Id="filC4C8A28099BACAA0C5B64E92EB79F2BC" KeyPath="yes" Source="$(var.SourceDir)\avformat-54.dll" />
       </Component>
-      <Component Id="cmp47161CD58B8E2F4067E73745215E2B1A" Directory="INSTALLLOCATION" Guid="{A67003FE-83FE-4189-B202-29E43110913C}">
-        <File Id="filA6B4A258E845DACDB28EEC262B772702" KeyPath="yes" Source="$(var.SourceDir)\yaircc.exe.config" />
+      <Component Id="cmpF2E1B70A3FD23992A0CA15A1AF6837B8" Directory="INSTALLLOCATION" Guid="{63BF0E62-D480-481A-8083-AB6C6E08B425}">
+        <File Id="fil421BA3857FCC16AB68246829A6ACDB35" KeyPath="yes" Source="$(var.SourceDir)\avutil-51.dll" />
       </Component>
-      <Component Id="cmp6391E20B1CC64199B6A33D327A766FBB" Directory="INSTALLLOCATION" Guid="{20B2D2CF-58A4-4736-9851-27594F905542}">
-        <File Id="fil8C9375F47853ADAE2533FDD77D3EB859" KeyPath="yes" Source="$(var.SourceDir)\yaircc.pdb" />
+      <Component Id="cmp67DBEC4C28D411A47F1EACFF20EB30EC" Directory="INSTALLLOCATION" Guid="{3E2EB6A5-70A9-42C5-B9EE-A5291DBBA0BB}">
+        <File Id="fil9B0156C294484AD5ADCC8E3EB7858E27" KeyPath="yes" Source="$(var.SourceDir)\CefSharp.dll" />
       </Component>
-      <Component Id="cmpAEC3250DE2D48D148EAFF7A720442FBF" Directory="dirC722B493912DBADA3E912E61CAC1DA53" Guid="{88F7258B-085B-4B6C-A300-E1AD47E55EFB}">
-        <File Id="fil4E566DBAB5C6247F37DB86E0EA32CC6A" KeyPath="yes" Source="$(var.SourceDir)\themes\default.css" />
+      <Component Id="cmp5FD9AE9C2E8880F2589D8525CC030165" Directory="INSTALLLOCATION" Guid="{64B7299E-855A-4CE0-812C-8EC645A2AB4A}">
+        <File Id="fil5E7030D26FE4318F11BA8072C2A3E16B" KeyPath="yes" Source="$(var.SourceDir)\CefSharp.WinForms.dll" />
       </Component>
-      <Component Id="cmp15078140D698F1B006DF4A20F278B4AB" Directory="dirC722B493912DBADA3E912E61CAC1DA53" Guid="{9166287A-DD75-4033-A3E5-4FD2C1811FAE}">
-        <File Id="filD31DF3419238E27254356073DE805580" KeyPath="yes" Source="$(var.SourceDir)\themes\terminal.css" />
+      <Component Id="cmp287D10A480BA266129A3AB26F6EBBCFF" Directory="INSTALLLOCATION" Guid="{E5B257B8-D527-4A72-B835-9110B93F7105}">
+        <File Id="fil30A0B38CC8806B72F085927B3BD5A023" KeyPath="yes" Source="$(var.SourceDir)\chrome.pak" />
+      </Component>
+      <Component Id="cmpA79E2D1AE791C3A700BB6E7EB6535BFA" Directory="INSTALLLOCATION" Guid="{09410182-0D4B-44FB-9E12-3CFBFA3056A2}">
+        <File Id="filC7527BD8A68D7680EB68FE4E3CCEF619" KeyPath="yes" Source="$(var.SourceDir)\d3dcompiler_43.dll" />
+      </Component>
+      <Component Id="cmp44CC06D0DAAA0A50781E8B4B8A1EC97C" Directory="INSTALLLOCATION" Guid="{5CDBC001-3946-4E2C-B98C-63E6349B6A81}">
+        <File Id="fil561CA7724951EE7D17553E611EE5F6BA" KeyPath="yes" Source="$(var.SourceDir)\d3dx9_43.dll" />
+      </Component>
+      <Component Id="cmp10548D92F448EE2C3665AFEF834D332D" Directory="INSTALLLOCATION" Guid="{D0305E67-002D-4B5B-9E20-4BEB7469484C}">
+        <File Id="filE7AA0B8CE87FD2A6A1A118C28FD58765" KeyPath="yes" Source="$(var.SourceDir)\debug.log" />
+      </Component>
+      <Component Id="cmp492E8999510B0BFD0FA5531C923516A1" Directory="INSTALLLOCATION" Guid="{F8086489-49DE-442C-9F12-C37FE5232E16}">
+        <File Id="fil2BE4A03438090A5655D0A6B96934F0B5" KeyPath="yes" Source="$(var.SourceDir)\icudt.dll" />
+      </Component>
+      <Component Id="cmp7AFE61643F118C96E3B0DF7432E07EEA" Directory="INSTALLLOCATION" Guid="{21D7C386-54A7-430D-8087-8B0BE35567AD}">
+        <File Id="fil26C33607F01764A8FF7C9F571FC2F264" KeyPath="yes" Source="$(var.SourceDir)\libcef.dll" />
+      </Component>
+      <Component Id="cmp88E62187A2E740A6B973E4868048192F" Directory="INSTALLLOCATION" Guid="{04EDA325-0A18-405F-B8CB-269397086584}">
+        <File Id="fil58C0A9BEC85E83E06D0F37A3AF821987" KeyPath="yes" Source="$(var.SourceDir)\libEGL.dll" />
+      </Component>
+      <Component Id="cmpF16FDB02D8731C02972FFBFA091104ED" Directory="INSTALLLOCATION" Guid="{96E2F88C-465D-456B-835F-5F8265D2FC63}">
+        <File Id="filA8EF99184966359E9B86ED9D68C77D9C" KeyPath="yes" Source="$(var.SourceDir)\libGLESv2.dll" />
+      </Component>
+      <Component Id="cmp234A94648DAFC598B3EC83A6B3B98982" Directory="INSTALLLOCATION" Guid="{89B4CB17-A960-4AF6-8BC3-0207F96EED41}">
+        <File Id="filE449562DA3D4010A01CBA2DFC07AF073" KeyPath="yes" Source="$(var.SourceDir)\License.txt" />
+      </Component>
+      <Component Id="cmp3F3E1E6A454521C1F70DE7D94DD5D244" Directory="INSTALLLOCATION" Guid="{B6D48645-9166-41DD-B826-8006F5F3CFB8}">
+        <File Id="fil1FE94CE8B7586B41941DE0E15DA0151C" KeyPath="yes" Source="$(var.SourceDir)\yaircc.exe" />
+      </Component>
+      <Component Id="cmp599AADF9E768E9D07633BE80207800FA" Directory="INSTALLLOCATION" Guid="{A05B5315-E6F2-46E7-9755-0B8C87B4A3AC}">
+        <File Id="filBFC4A709FD7F30644771DE4B02801A7C" KeyPath="yes" Source="$(var.SourceDir)\yaircc.exe.config" />
+      </Component>
+      <Component Id="cmp5ED9FF1FA1C0D4A6BFEFE699F8953DF1" Directory="INSTALLLOCATION" Guid="{6AB8076B-6E77-424D-AB39-349C22700786}">
+        <File Id="fil54451E5C515D7F21561ED023E8746EBA" KeyPath="yes" Source="$(var.SourceDir)\yaircc.pdb" />
+      </Component>
+      <Component Id="cmp98C1C658B38FC5D8DE81B03CFA8133D9" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{978C7520-71BC-4521-ABDD-84A6284F110B}">
+        <File Id="fil3A6463E0235106F68601D944D29AFE76" KeyPath="yes" Source="$(var.SourceDir)\locales\am.pak" />
+      </Component>
+      <Component Id="cmp76E378DFF4FAF1935F9F9EC10075CDB1" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{4C7BA2A8-019A-4075-B94C-E29D9D913EC8}">
+        <File Id="fil8E078F8E316C7F6B764F14BE58975CAC" KeyPath="yes" Source="$(var.SourceDir)\locales\ar.pak" />
+      </Component>
+      <Component Id="cmp54286C09FEB496C23DC74C80305C9E0F" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{0AFBC0B8-4A30-4C01-A0A6-74C66D227FF7}">
+        <File Id="fil5146F807CC033A61F8C2DC182730092A" KeyPath="yes" Source="$(var.SourceDir)\locales\bg.pak" />
+      </Component>
+      <Component Id="cmp48A8D3BC9F7240CD961A6C865DD3EE48" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{2CEBA80A-4068-4812-8927-71FBA749645A}">
+        <File Id="fil7FA22A47C624F74583CC2D2A00F149A1" KeyPath="yes" Source="$(var.SourceDir)\locales\bn.pak" />
+      </Component>
+      <Component Id="cmp7D9FE9D344978A5769156674D3377F67" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{56C45224-A8CC-4B4E-A7A9-F7BFD0758DDC}">
+        <File Id="fil5A360730FB8AF1B979D272D9FDCEC57D" KeyPath="yes" Source="$(var.SourceDir)\locales\ca.pak" />
+      </Component>
+      <Component Id="cmp7016E6C1D8C1731A9EFDE82E0F42F268" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{70F0EA6B-8FAD-4DD5-B052-F58A4EF542C8}">
+        <File Id="fil632A052D9F9E298E4AB81DF6742B4167" KeyPath="yes" Source="$(var.SourceDir)\locales\cs.pak" />
+      </Component>
+      <Component Id="cmpA7FE5A023BFF1060846BEEC811B132EF" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{FB09DB06-1C23-4BF1-822B-0326866D8845}">
+        <File Id="fil89D3F463CA311A91BBA3AB53993814AA" KeyPath="yes" Source="$(var.SourceDir)\locales\da.pak" />
+      </Component>
+      <Component Id="cmp6D74DDC6AFF05B8AF133775BDA47D7E6" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{60DAA342-5B4F-4D88-9678-CC915B0405DF}">
+        <File Id="fil709C3E48ED03CCEB7BF87BED51D42733" KeyPath="yes" Source="$(var.SourceDir)\locales\de.pak" />
+      </Component>
+      <Component Id="cmp9798B7D4A2BBB070CED4EF1D150DA2C7" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{1DDB989E-9E3B-41D4-8262-B8416AA3EF77}">
+        <File Id="filB0EF17E05624926E6CC623E81B306542" KeyPath="yes" Source="$(var.SourceDir)\locales\el.pak" />
+      </Component>
+      <Component Id="cmp6419434567FFE5CA684B98FFE7B61C91" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{9783BA15-AD67-4903-BA10-78BE89A82772}">
+        <File Id="filC7722D30944E04B659FF10292397CC6F" KeyPath="yes" Source="$(var.SourceDir)\locales\en-GB.pak" />
+      </Component>
+      <Component Id="cmp72207B12F616D0FABDAE07182630870E" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{EE459D34-ECD4-4FFC-9AD8-B3DD2D36C82E}">
+        <File Id="filA9042B3390FF4E45CAA905534EABC770" KeyPath="yes" Source="$(var.SourceDir)\locales\en-US.pak" />
+      </Component>
+      <Component Id="cmp0F8060B8016B21E5FF0D5263EA2B1710" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{F9545BBF-84CC-4AB6-9E5F-53EBD42448A1}">
+        <File Id="filCCDB20588CFEECE5E054FADBE709BEE4" KeyPath="yes" Source="$(var.SourceDir)\locales\es-419.pak" />
+      </Component>
+      <Component Id="cmp0B8D98718C339EB3A4C4F000A2B683D8" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{76211ED0-2018-48B3-A4AD-62A5497A0890}">
+        <File Id="filB055290B1458EA848B09E4A0EBB845F0" KeyPath="yes" Source="$(var.SourceDir)\locales\es.pak" />
+      </Component>
+      <Component Id="cmp43C72D730465CF34C4E3871D2E3786EE" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{B4BCD2D4-EDE9-461C-8DBB-386BE4D01765}">
+        <File Id="fil7A4685C7ECE749B9DD948658D0FBD02F" KeyPath="yes" Source="$(var.SourceDir)\locales\et.pak" />
+      </Component>
+      <Component Id="cmp6A0D35B82CD4085AD4BB2F20BA18B8A8" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{57DE5F2B-B6F4-4501-B680-2F7951C1ACB2}">
+        <File Id="filD8F593C8C2E19A77D73A7705B21452B7" KeyPath="yes" Source="$(var.SourceDir)\locales\fa.pak" />
+      </Component>
+      <Component Id="cmp1750FE4477FA00487B8F3CA936477C4E" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{F6D7D261-E47E-4B0C-9BF4-A47D77710911}">
+        <File Id="filA15626D9E5C762941C656F50EB7D5D3B" KeyPath="yes" Source="$(var.SourceDir)\locales\fi.pak" />
+      </Component>
+      <Component Id="cmp86C8B57A75E23262BA9CC1EF236C7156" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{155EFBA1-4BEB-40B3-B942-CB061FD75856}">
+        <File Id="filBF381D0DDFE6EDD85744E125CBA58A14" KeyPath="yes" Source="$(var.SourceDir)\locales\fil.pak" />
+      </Component>
+      <Component Id="cmp5D291CCFE5EE731B8BE913EC9586FC62" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{645D00BF-EAC6-4EFC-8A62-B77CCF93E048}">
+        <File Id="fil58C8261E49DC920A8762CEE779527563" KeyPath="yes" Source="$(var.SourceDir)\locales\fr.pak" />
+      </Component>
+      <Component Id="cmpF6C5F8C171C9EEE3386CBE814B19A50C" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{C753CE64-9F4E-4118-9302-F3E97FF3EFA0}">
+        <File Id="fil86F661E923C2348EA067343F0C70ED6E" KeyPath="yes" Source="$(var.SourceDir)\locales\gu.pak" />
+      </Component>
+      <Component Id="cmp01FF2C7F90A71572784292ECEA95EF51" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{33415784-2978-4CB2-ADCC-438EBECDE958}">
+        <File Id="fil072C035A94A2485226D387F418983E21" KeyPath="yes" Source="$(var.SourceDir)\locales\he.pak" />
+      </Component>
+      <Component Id="cmpA5F3F2E06AEC8972718C2E64AFA0A698" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{FD70FFFA-C7D9-4864-AF36-D9D46A576EBB}">
+        <File Id="filEE2AECB1DCC8DAE9CD93F472E273B9D2" KeyPath="yes" Source="$(var.SourceDir)\locales\hi.pak" />
+      </Component>
+      <Component Id="cmp9B374C75507C8451551718606ABF060C" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{409F8DC5-C5BA-4F24-BC32-45AF58B9B5A6}">
+        <File Id="filF210BB41E4884D06323836BECCBDB418" KeyPath="yes" Source="$(var.SourceDir)\locales\hr.pak" />
+      </Component>
+      <Component Id="cmp458211E2AF819AF3D4048A04AA749FA3" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{FB3A2093-421E-4B2D-9642-769CB3E4C607}">
+        <File Id="fil80009CF377EEAB92F10D9AB1F06B40C4" KeyPath="yes" Source="$(var.SourceDir)\locales\hu.pak" />
+      </Component>
+      <Component Id="cmp2AB55FAEB44B33505DEA6AE89F722592" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{CB8A9A22-F75E-4740-91C9-49648B45AE59}">
+        <File Id="fil98B99D6C90D120966BB51EEC89BC906E" KeyPath="yes" Source="$(var.SourceDir)\locales\id.pak" />
+      </Component>
+      <Component Id="cmp257E3E753595EA58B71597E1D164F1FB" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{E37C5F22-DED7-4F70-9E38-653FD5F78663}">
+        <File Id="fil97D3EE044CBB6A8D71AC829C958B0AB9" KeyPath="yes" Source="$(var.SourceDir)\locales\it.pak" />
+      </Component>
+      <Component Id="cmpDBBBBAEAD3BCDA17B85F98D5410DBF6B" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{294C3126-71EE-42E2-9D5A-754FC0F4FB5B}">
+        <File Id="filE8E7D40997DE4F35DA5FE3CB8A05BE18" KeyPath="yes" Source="$(var.SourceDir)\locales\ja.pak" />
+      </Component>
+      <Component Id="cmpC7FB236162336D20A0A151FD10C3CC28" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{B09BB8BE-95F4-421C-ACE5-F43104FD8C9C}">
+        <File Id="fil64A710E96FFCEBE554AA0FFD5503EEE6" KeyPath="yes" Source="$(var.SourceDir)\locales\kn.pak" />
+      </Component>
+      <Component Id="cmp9B948FCD4BB71B0C37468D25CF0A1B58" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{72A4312F-A5EA-4B8E-8781-8EC93A36D0D4}">
+        <File Id="filB8A7840331CC840012B25FEFE957A22D" KeyPath="yes" Source="$(var.SourceDir)\locales\ko.pak" />
+      </Component>
+      <Component Id="cmpF93E52C44ADE59BC7B46E48D2B22B7E5" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{3566A3B8-BA1B-4039-9C99-45BC5BAA9226}">
+        <File Id="fil375EEFCE4E927CAC34A98346D138E6EF" KeyPath="yes" Source="$(var.SourceDir)\locales\lt.pak" />
+      </Component>
+      <Component Id="cmp81B2BFB5BE09B3E1337E7002F9A662CF" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{2DB382BB-CDD9-457F-85A9-1ABACF87A1CC}">
+        <File Id="filD43E95486A4C2557E685D84F2BBD540F" KeyPath="yes" Source="$(var.SourceDir)\locales\lv.pak" />
+      </Component>
+      <Component Id="cmp7314759B06C925FA3456DCD9A2E3D54D" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{7A44B5E6-2109-402F-9711-850BD51B0061}">
+        <File Id="filF66C3CE0F7D8CF0325B6C550F8CCD859" KeyPath="yes" Source="$(var.SourceDir)\locales\ml.pak" />
+      </Component>
+      <Component Id="cmp217C499AB157CF3D8243877C66BDD2DA" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{2A0B5A6E-42DD-475A-8511-C2D7BEBCF2F3}">
+        <File Id="fil1B9EF24BA42152BA8ECB5CDDDE30CEAB" KeyPath="yes" Source="$(var.SourceDir)\locales\mr.pak" />
+      </Component>
+      <Component Id="cmp46452972227F0908CF2D8F4E66989972" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{7D1ACDC9-C0EC-423A-9347-9B9718D66E9F}">
+        <File Id="fil7D46BD709FE3EF831550B2DA6701D7F6" KeyPath="yes" Source="$(var.SourceDir)\locales\ms.pak" />
+      </Component>
+      <Component Id="cmp0A43FCF8820925832A36F9E666E36E0F" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{60A08A8D-B84A-4784-A9A2-5304B49C51E9}">
+        <File Id="filDBEA5CB36EC15486614EA127CB4BDE42" KeyPath="yes" Source="$(var.SourceDir)\locales\nb.pak" />
+      </Component>
+      <Component Id="cmp2F672280901B826884464E8079424DD0" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{A8F8B424-9E94-4EFB-8F5E-54DDEA6FB19A}">
+        <File Id="filE7ECFCECE627311419AF79AD9E070E97" KeyPath="yes" Source="$(var.SourceDir)\locales\nl.pak" />
+      </Component>
+      <Component Id="cmp7EB7D2BDD88D987037C92AD882190DA9" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{11919A50-D0DE-4D4D-AA8F-FDFE6F6F074A}">
+        <File Id="fil4B3293C6E198B5052AF49F5A4DD26F6D" KeyPath="yes" Source="$(var.SourceDir)\locales\pl.pak" />
+      </Component>
+      <Component Id="cmp431CF92466E0690D8FC2ACA61F07398A" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{CE38C23C-25E9-48C7-BE6F-B44CE0355925}">
+        <File Id="filC8E9337B876F711090AAD1413E755C12" KeyPath="yes" Source="$(var.SourceDir)\locales\pt-BR.pak" />
+      </Component>
+      <Component Id="cmp05374B6B598B871E3D9CAC93029BA7F7" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{0109A2A1-CEEE-442F-A543-2868824208B3}">
+        <File Id="fil292879139887E1956435CA57BB46C615" KeyPath="yes" Source="$(var.SourceDir)\locales\pt-PT.pak" />
+      </Component>
+      <Component Id="cmpA3FC8B520E07B0D2A146AB5B745D74DD" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{0C4FBC47-D0A6-4506-AFE7-EBDD7512B780}">
+        <File Id="fil965347F1C5DFC026B5AD2D158FFDA77F" KeyPath="yes" Source="$(var.SourceDir)\locales\ro.pak" />
+      </Component>
+      <Component Id="cmpE1F6CC93D01B0204E15CA7D1E5AE586B" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{D2EADC1B-EFB1-40A9-992C-7F1C1C6126F2}">
+        <File Id="fil600010286A43FD01243DED555E048FCD" KeyPath="yes" Source="$(var.SourceDir)\locales\ru.pak" />
+      </Component>
+      <Component Id="cmp87AD916B35B5BB1CE40AB46F278A36FD" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{AEF12315-B3FA-4CEF-9F3A-F90B305875F9}">
+        <File Id="filA77DA578D700A8F375D714BB02454DB3" KeyPath="yes" Source="$(var.SourceDir)\locales\sk.pak" />
+      </Component>
+      <Component Id="cmpC847F17E69D9BB0ACDD5FE0D251CE144" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{D7259176-BE73-4F73-B6D7-180C3A5884B9}">
+        <File Id="fil421F2EBA0E19DAF8B4E8C3E7BC36CDC4" KeyPath="yes" Source="$(var.SourceDir)\locales\sl.pak" />
+      </Component>
+      <Component Id="cmpAAE109234263B6A31A6E6192DF322F34" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{56733F1F-DC5C-4A34-AF78-D7493FC39BD8}">
+        <File Id="fil57F8717C2A127E971B8E184C6A2B63BF" KeyPath="yes" Source="$(var.SourceDir)\locales\sr.pak" />
+      </Component>
+      <Component Id="cmpCE373F146A1CF3F45A09335D9334E402" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{57730A1B-868D-464C-8AE2-EFC30147B0C1}">
+        <File Id="fil62431B2371ED279F6C50D66D4EBF7FED" KeyPath="yes" Source="$(var.SourceDir)\locales\sv.pak" />
+      </Component>
+      <Component Id="cmpB9DF383D9064A269C11773E49798B980" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{F28002AC-B136-4A6C-95E6-E8B429ED151C}">
+        <File Id="fil45BE0219953D2E8F82A698A834516986" KeyPath="yes" Source="$(var.SourceDir)\locales\sw.pak" />
+      </Component>
+      <Component Id="cmp48D8A435A6E0BC483F4EDCBE09017890" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{37CE1333-F30E-411C-8AD5-2A7D708C04DD}">
+        <File Id="filA11379CBFEF8428C7711A67ED2792F8F" KeyPath="yes" Source="$(var.SourceDir)\locales\ta.pak" />
+      </Component>
+      <Component Id="cmp1B78E5D960F1C1AF2F245B3C21800B21" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{07F204AC-5297-454A-A8A4-C3B76E4E7BD5}">
+        <File Id="fil97EE6C2A253111DF3C7B0FEC41DF4A9F" KeyPath="yes" Source="$(var.SourceDir)\locales\te.pak" />
+      </Component>
+      <Component Id="cmp9C35BF90935FE336771F0EF5AFBE7FB0" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{DDEFC221-3F20-4ABE-B078-405E70955BE2}">
+        <File Id="filB4A1C67F9526F6E46679A536510C278A" KeyPath="yes" Source="$(var.SourceDir)\locales\th.pak" />
+      </Component>
+      <Component Id="cmp86AF97FB05900C1711FF448FBF092B13" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{D5CEC170-7500-4183-AE5B-02CFCF3D9838}">
+        <File Id="fil55AA097CFC99821EDBFFDDCA398E8856" KeyPath="yes" Source="$(var.SourceDir)\locales\tr.pak" />
+      </Component>
+      <Component Id="cmp2A46A6188BB5C3B4AAB64812503C1E04" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{B167C517-D908-484D-8BB0-380C91074CE4}">
+        <File Id="filA7D6EC21D59499682D877A0C0387DA55" KeyPath="yes" Source="$(var.SourceDir)\locales\uk.pak" />
+      </Component>
+      <Component Id="cmpF97599F3901414915C2F1D14AC50D193" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{47E6BECC-3D92-4D50-9EFC-92626617D562}">
+        <File Id="filD5A6FFAC0AA085311E6070569C4E762C" KeyPath="yes" Source="$(var.SourceDir)\locales\vi.pak" />
+      </Component>
+      <Component Id="cmp69AFB975947BDABBA095D11BBAE85A3E" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{7176CB72-5411-446B-993D-51630FF7AFC4}">
+        <File Id="fil8D94C395501BD1086F3E8D72CC25F1CD" KeyPath="yes" Source="$(var.SourceDir)\locales\zh-CN.pak" />
+      </Component>
+      <Component Id="cmpDB52C31F3AA47164F16F902120AE2102" Directory="dir070E5486165B1B5179D79726B79D9027" Guid="{70E8E4DB-124E-4540-AC29-6570D7D04276}">
+        <File Id="fil4C46C2E23EBB4976FE5B3BEF73859118" KeyPath="yes" Source="$(var.SourceDir)\locales\zh-TW.pak" />
+      </Component>
+      <Component Id="cmp4C25060AF05EFFBAE123B9BEACB79CCF" Directory="dirC33130F3F8AB02B8F88CD31B293416B0" Guid="{463F2068-5A47-4CB0-A0FB-F6108D18DF13}">
+        <File Id="fil3AA6A7F0D2262D2570B9405B9CCC12DE" KeyPath="yes" Source="$(var.SourceDir)\themes\default.css" />
+      </Component>
+      <Component Id="cmp29480518D319219A9E0713F295948144" Directory="dirC33130F3F8AB02B8F88CD31B293416B0" Guid="{E3EF7813-6C97-462A-9AF5-0D86B8A56A3F}">
+        <File Id="fil73C5D1BBD5D85A01162E416CC3FE67A7" KeyPath="yes" Source="$(var.SourceDir)\themes\terminal.css" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
-    <DirectoryRef Id="dirC722B493912DBADA3E912E61CAC1DA53" />
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Directory Id="dir070E5486165B1B5179D79726B79D9027" Name="locales" />
+    </DirectoryRef>
   </Fragment>
   <Fragment>
     <DirectoryRef Id="INSTALLLOCATION">
-      <Directory Id="dirC722B493912DBADA3E912E61CAC1DA53" Name="themes" />
+      <Directory Id="dirC33130F3F8AB02B8F88CD31B293416B0" Name="themes" />
     </DirectoryRef>
   </Fragment>
 </Wix>
