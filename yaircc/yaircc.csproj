@@ -72,7 +72,7 @@
   <ItemGroup>
     <Reference Include="CefSharp, Version=0.12.4596.50, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\intninety\Desktop\CefSharp-0.12\CefSharp.dll</HintPath>
+      <HintPath>..\..\CefSharp.dll</HintPath>
     </Reference>
     <Reference Include="CefSharp.WinForms, Version=0.12.4596.53, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -248,6 +248,16 @@
     <Compile Include="NickNameTypeConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\ToolStripSpringTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\WebViewLifeSpanHandler.cs" />
+    <Compile Include="WebBrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WebBrowserForm.Designer.cs">
+      <DependentUpon>WebBrowserForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -255,6 +265,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WebBrowserForm.resx">
+      <DependentUpon>WebBrowserForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -394,6 +407,10 @@
     <None Include="Resources\find.png" />
     <None Include="Resources\aluminium.bmp" />
     <None Include="Resources\splash-screen.jpg" />
+    <None Include="Resources\arrow_left.png" />
+    <None Include="Resources\arrow_right.png" />
+    <None Include="Resources\bullet_go.png" />
+    <None Include="Resources\arrow_refresh_small.png" />
     <Content Include="themes\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
