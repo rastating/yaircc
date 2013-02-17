@@ -56,7 +56,7 @@
             this.questionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.questionLabel.AutoSize = true;
             this.questionLabel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.questionLabel.Location = new System.Drawing.Point(12, 205);
+            this.questionLabel.Location = new System.Drawing.Point(12, 252);
             this.questionLabel.Name = "questionLabel";
             this.questionLabel.Size = new System.Drawing.Size(144, 13);
             this.questionLabel.TabIndex = 6;
@@ -65,7 +65,7 @@
             // yesButton
             // 
             this.yesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.yesButton.Location = new System.Drawing.Point(204, 200);
+            this.yesButton.Location = new System.Drawing.Point(292, 247);
             this.yesButton.Name = "yesButton";
             this.yesButton.Size = new System.Drawing.Size(75, 23);
             this.yesButton.TabIndex = 1;
@@ -76,7 +76,7 @@
             // noButton
             // 
             this.noButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.noButton.Location = new System.Drawing.Point(285, 200);
+            this.noButton.Location = new System.Drawing.Point(373, 247);
             this.noButton.Name = "noButton";
             this.noButton.Size = new System.Drawing.Size(75, 23);
             this.noButton.TabIndex = 2;
@@ -86,16 +86,16 @@
             // 
             // summaryTextBox
             // 
-            this.summaryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.summaryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.summaryTextBox.BackColor = System.Drawing.Color.White;
             this.summaryTextBox.Location = new System.Drawing.Point(15, 25);
             this.summaryTextBox.Multiline = true;
             this.summaryTextBox.Name = "summaryTextBox";
             this.summaryTextBox.ReadOnly = true;
             this.summaryTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.summaryTextBox.Size = new System.Drawing.Size(345, 169);
+            this.summaryTextBox.Size = new System.Drawing.Size(433, 216);
             this.summaryTextBox.TabIndex = 0;
             // 
             // statusStrip
@@ -104,9 +104,9 @@
             this.statusStripLabel,
             this.downloadProgressBar});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip.Location = new System.Drawing.Point(0, 235);
+            this.statusStrip.Location = new System.Drawing.Point(0, 282);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(372, 22);
+            this.statusStrip.Size = new System.Drawing.Size(460, 22);
             this.statusStrip.TabIndex = 7;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -135,7 +135,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(372, 257);
+            this.ClientSize = new System.Drawing.Size(460, 304);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.summaryTextBox);
             this.Controls.Add(this.noButton);
@@ -149,8 +149,8 @@
             this.Name = "UpdateInformationDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Update Available";
-            this.Shown += new System.EventHandler(this.UpdateInformationDialog_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UpdateInformationDialog_FormClosing);
+            this.Shown += new System.EventHandler(this.UpdateInformationDialog_Shown);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
