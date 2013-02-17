@@ -41,7 +41,6 @@
             this.treeViewImageList = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.themePreviewBrowser = new System.Windows.Forms.WebBrowser();
             this.createdByLinkLabel = new System.Windows.Forms.LinkLabel();
             this.themeDescriptionLabel = new System.Windows.Forms.Label();
             this.themeNameLabel = new System.Windows.Forms.Label();
@@ -54,14 +53,13 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(6, 8);
             this.splitContainer1.Name = "splitContainer1";
@@ -107,8 +105,8 @@
             this.themesTreeView.SelectedImageIndex = 0;
             this.themesTreeView.Size = new System.Drawing.Size(236, 542);
             this.themesTreeView.TabIndex = 0;
-            this.themesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ThemesTreeView_AfterSelect);
             this.themesTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.ThemesTreeView_BeforeSelect);
+            this.themesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ThemesTreeView_AfterSelect);
             // 
             // treeViewImageList
             // 
@@ -134,10 +132,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.themePreviewBrowser);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Location = new System.Drawing.Point(17, 62);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(695, 442);
@@ -145,21 +142,10 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Preview";
             // 
-            // themePreviewBrowser
-            // 
-            this.themePreviewBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.themePreviewBrowser.IsWebBrowserContextMenuEnabled = false;
-            this.themePreviewBrowser.Location = new System.Drawing.Point(3, 17);
-            this.themePreviewBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.themePreviewBrowser.Name = "themePreviewBrowser";
-            this.themePreviewBrowser.Size = new System.Drawing.Size(689, 422);
-            this.themePreviewBrowser.TabIndex = 6;
-            this.themePreviewBrowser.WebBrowserShortcutsEnabled = false;
-            // 
             // createdByLinkLabel
             // 
-            this.createdByLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.createdByLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.createdByLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(11, 9);
             this.createdByLinkLabel.Location = new System.Drawing.Point(20, 507);
             this.createdByLinkLabel.Name = "createdByLinkLabel";
@@ -262,7 +248,6 @@
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -281,7 +266,6 @@
         private System.Windows.Forms.Button defaultButton;
         private System.Windows.Forms.LinkLabel createdByLinkLabel;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.WebBrowser themePreviewBrowser;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }

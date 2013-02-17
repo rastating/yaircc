@@ -24,6 +24,8 @@ namespace Yaircc
     using System.IO;
     using System.Reflection;
     using System.Windows.Forms;
+    using CefSharp;
+    using CefSharp.WinForms;
     using Yaircc.Settings;
     using Yaircc.UI;
 
@@ -38,6 +40,21 @@ namespace Yaircc
         /// A value indicating whether or not changes have been made to the settings in the dialog.
         /// </summary>
         private bool isDirty;
+
+        /// <summary>
+        /// The WebView used to preview the selected theme.
+        /// </summary>
+        private WebView webView;
+
+        /// <summary>
+        /// A theme pending to be loaded into the WebView.
+        /// </summary>
+        private Theme pendingTheme;
+
+        /// <summary>
+        /// A value indicating whether or not the WebView is ready.
+        /// </summary>
+        private bool webViewIsReady;
 
         #endregion
 
@@ -62,6 +79,32 @@ namespace Yaircc
         public bool IsDirty
         {
             get { return this.isDirty; }
+        }
+
+        /// <summary>
+        /// Gets the WebView used to preview the selected theme.
+        /// </summary>
+        private WebView WebView
+        {
+            get
+            {
+                if (this.webView == null)
+                {
+                    // Disable caching.
+                    BrowserSettings settings = new BrowserSettings();
+                    settings.ApplicationCacheDisabled = true;
+                    settings.PageCacheDisabled = true;
+
+                    // Initialise the WebView.
+                    this.webView = new WebView(string.Empty, settings);
+                    this.webView.Name = string.Format("{0}WebView", this.Name);
+                    this.webView.Dock = DockStyle.Fill;
+                    this.webView.PropertyChanged += this.WebView_PropertyChanged;
+                    this.groupBox1.Controls.Add(this.webView);
+                }
+
+                return this.webView;
+            }
         }
 
         #endregion
@@ -140,34 +183,21 @@ namespace Yaircc
         /// <param name="theme">The theme to load a preview of.</param>
         private void LoadThemePreview(Theme theme)
         {
-            this.groupBox1.Controls.Remove(this.themePreviewBrowser);
-            this.themePreviewBrowser = new WebBrowser();
-            this.themePreviewBrowser.WebBrowserShortcutsEnabled = false;
-            this.themePreviewBrowser.IsWebBrowserContextMenuEnabled = false;
-            this.themePreviewBrowser.Dock = DockStyle.Fill;
-            this.themePreviewBrowser.Visible = true;
-
-            // Load a blank document
-            this.themePreviewBrowser.Navigate("about:blank");
-            if (this.themePreviewBrowser.Document != null)
+            if (this.WebView != null && this.webViewIsReady && !this.WebView.IsLoading)
             {
-                this.themePreviewBrowser.Document.Write(string.Empty);
-            }
+                string style = File.ReadAllText(theme.Path);
 
-            // Load the appropriate resources into the web browser
-            string resourceName = "Yaircc.UI.ThemeSample.htm";
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                style = style.Replace("\r", " ").Replace("\n", " ").Replace("'", @"\'");
+                string script = @"setStyle('" + style + "')";
+
+                this.WebView.ExecuteScript(script);
+                this.WebView.ExecuteScript("$(window).scrollTop(document.body.scrollHeight);");
+                this.pendingTheme = null;
+            }
+            else
             {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    this.themePreviewBrowser.Document.Write(reader.ReadToEnd());
-                }
+                this.pendingTheme = theme;
             }
-
-            string style = File.ReadAllText(theme.Path);
-            this.themePreviewBrowser.Document.InvokeScript("setStyle", new object[] { style });
-            this.groupBox1.Controls.Add(this.themePreviewBrowser);
-            this.themePreviewBrowser.Document.Window.ScrollTo(0, 9999);
         }
 
         /// <summary>
@@ -321,6 +351,43 @@ namespace Yaircc
                 else
                 {
                     MessageBox.Show("The selected file is not a valid yaircc theme.", "Installation Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the PropertyChanged event of CefSharp.WinForms.WebView.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void WebView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            // Once the browser is initialised, load the HTML for the tab.
+            if (!this.webViewIsReady)
+            {
+                if (e.PropertyName.Equals("IsBrowserInitialized", StringComparison.OrdinalIgnoreCase))
+                {
+                    this.webViewIsReady = this.WebView.IsBrowserInitialized;
+                    if (this.webViewIsReady)
+                    {
+                        string resourceName = "Yaircc.UI.ThemeSample.htm";
+                        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                        {
+                            using (StreamReader reader = new StreamReader(stream))
+                            {
+                                this.WebView.LoadHtml(reader.ReadToEnd());
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Once the HTML has finished loading, begin loading the initial content.
+            if (e.PropertyName.Equals("IsLoading", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!this.WebView.IsLoading && this.pendingTheme != null)
+                {
+                    this.LoadThemePreview(this.pendingTheme);
                 }
             }
         }
