@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="MainForm.cs" company="intninety">
+// <copyright file="MainForm.cs" company="rastating">
 //     yaircc - the free, open-source IRC client for Windows.
 //     Copyright (C) 2012-2013 Robert Carr
 //

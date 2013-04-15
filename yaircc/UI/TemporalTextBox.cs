@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="TemporalTextBox.cs" company="intninety">
+// <copyright file="TemporalTextBox.cs" company="rastating">
 //     An extended .NET TextBox control targetted at .NET 3.5 and above.
 //     Copyright (C) 2012-2013 Robert Carr
 //
