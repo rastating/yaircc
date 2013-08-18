@@ -193,6 +193,7 @@ namespace Yaircc
                 if (channelsTabControl.SelectedTab == channel.TabPage)
                 {
                     userTreeView.BringToFront();
+                    this.inputTextBox.MaxLength = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).MaximumMessageSize;
                 }
 
                 this.RefreshWindowsMenuItems(null);
@@ -292,6 +293,15 @@ namespace Yaircc
             {
                 this.channelBrowserToolStripButton.Enabled = true;
                 this.channelBrowserToolStripMenuItem.Enabled = true;
+
+                if (this.CurrentTab.TabType == IRCTabType.Channel)
+                {
+                    IRCChannel channel = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab);
+                    if (channel != null)
+                    {
+                        this.inputTextBox.MaxLength = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).MaximumMessageSize;
+                    }
+                }
             }
         }
 
@@ -518,6 +528,15 @@ namespace Yaircc
                     if (this.CurrentTab.Marshal != null)
                     {
                         this.Text = string.Format("{0} @ {1} - yaircc", this.CurrentTab.Text, this.CurrentTab.Marshal.Connection.ToString());
+                        IRCChannel channel = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab);
+                        if (channel != null)
+                        {
+                            this.inputTextBox.MaxLength = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).MaximumMessageSize;
+                            if (this.inputTextBox.Text.Length > this.inputTextBox.MaxLength)
+                            {
+                                this.inputTextBox.Text = this.inputTextBox.Text.Substring(0, this.inputTextBox.MaxLength);
+                            }
+                        }
                     }
                 }
                 else if (this.CurrentTab.TabType == IRCTabType.Console)
@@ -527,6 +546,11 @@ namespace Yaircc
                 else if (this.CurrentTab.TabType == IRCTabType.PM)
                 {
                     this.Text = string.Format("Conversation with {0} on {1} - yaircc", this.CurrentTab.Text, this.CurrentTab.Marshal.Connection.ToString());
+                    IRCChannel channel = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab);
+                    if (channel != null)
+                    {
+                        this.inputTextBox.MaxLength = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).MaximumMessageSize;
+                    }
                 }
 
                 // Scroll the the log to the bottom

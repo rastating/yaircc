@@ -159,8 +159,6 @@ namespace Yaircc.UI
         /// </summary>
         private WebView webView;
 
-        #endregion
-
         /// <summary>
         /// A value indicating whether or not the tab is still initialising.
         /// </summary>
@@ -175,6 +173,8 @@ namespace Yaircc.UI
         /// The queue of pending messages.
         /// </summary>
         private Queue<Action> messageQueue;
+
+        #endregion
 
         #region Constructors
 

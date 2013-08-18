@@ -45,7 +45,7 @@ namespace Yaircc.Net.IRC
         /// <param name="receiver">The recipient of the message.</param>
         /// <param name="message">The message.</param>
         public PrivMsgMessage(string receiver, string message)
-            : base(string.Empty, "PRIVMSG", new string[0], message)
+            : base(string.Empty, "PRIVMSG", new string[] { receiver }, message)
         {
         }
 
