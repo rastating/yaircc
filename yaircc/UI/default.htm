@@ -56,6 +56,11 @@
 			        }
 			    });
 
+			    // Transform Spotify URIs
+			    $(payloadColumn).html(
+                    $(payloadColumn).html().replace(/(spotify:([^\s]+:)+[a-zA-Z0-9]+)/g, '<a href="$1">$1</a>')
+                );
+
 			    $(payloadColumn).find('a').each(function(index) {
 			        if ($(this).text().length > 60) {
 			            $(this).text($(this).text().substring(0, 57) + '...');
