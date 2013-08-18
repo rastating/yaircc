@@ -24,6 +24,7 @@ namespace Yaircc.UI
     using System.Diagnostics;
     using System.IO;
     using System.Text;
+    using System.Text.RegularExpressions;
     using CefSharp.WinForms;
     using Yaircc.Settings;
 
@@ -90,8 +91,17 @@ namespace Yaircc.UI
             }
             else
             {
-                WebBrowserForm browser = new WebBrowserForm(url);
-                browser.Show();
+                // If the URL is in the format of a Spotify URI then we need to shell this instead of opening
+                // in the private browsing mode form.
+                if (Regex.IsMatch(url, @"spotify:([^\s]+:)+[a-zA-Z0-9]+"))
+                {
+                    Process.Start(url);
+                }
+                else
+                {
+                    WebBrowserForm browser = new WebBrowserForm(url);
+                    browser.Show();
+                }
             }
         }
     }
