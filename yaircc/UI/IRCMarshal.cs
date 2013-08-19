@@ -588,6 +588,36 @@ namespace Yaircc.UI
             {
                 this.fullUserHost = message.TrailingParameter;
                 this.AwaitingUserHostMessage = false;
+
+                // Execute any auto commands.
+                if (this.AutoCommands.Count > 0)
+                {
+                    for (int i = 0; i < this.AutoCommands.Count; i++)
+                    {
+                        MessageParseResult parseResult = MessageFactory.CreateFromUserInput(this.AutoCommands[i], null);
+                        if (parseResult.Success)
+                        {
+                            this.Send(this.ServerTab, parseResult.IRCMessage);
+                        }
+                    }
+                }
+
+                if (this.reconnecting)
+                {
+                    // Pause the thread for a second to give time for any authentication to 
+                    // take place and then rejoin the channels.
+                    System.Threading.Thread.Sleep(1000);
+                    this.Channels.ForEach(i =>
+                    {
+                        if (i.TabPage.TabType == IRCTabType.Channel)
+                        {
+                            this.Send(this.ServerTab, new JoinMessage(i.Name));
+                        }
+                    });
+
+                    this.reconnecting = false;
+                }
+
                 return;
             }
 
@@ -732,35 +762,6 @@ namespace Yaircc.UI
 
                 // Send the user host message so we can determine the full user host string.
                 this.Send(this.ServerTab, new UserHostMessage(new string[] { this.connection.Nickname }));
-
-                // Execute any auto commands.
-                if (this.AutoCommands.Count > 0)
-                {
-                    for (int i = 0; i < this.AutoCommands.Count; i++)
-                    {
-                        MessageParseResult parseResult = MessageFactory.CreateFromUserInput(this.AutoCommands[i], null);
-                        if (parseResult.Success)
-                        {
-                            this.Send(this.ServerTab, parseResult.IRCMessage);
-                        }
-                    }
-                }
-
-                if (this.reconnecting)
-                {
-                    // Pause the thread for a second to give time for any authentication to 
-                    // take place and then rejoin the channels.
-                    System.Threading.Thread.Sleep(1000);
-                    this.Channels.ForEach(i =>
-                        {
-                            if (i.TabPage.TabType == IRCTabType.Channel)
-                            {
-                                this.Send(this.ServerTab, new JoinMessage(i.Name));
-                            }
-                        });
-
-                    this.reconnecting = false;
-                }
             }
         }
 
