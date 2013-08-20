@@ -57,9 +57,20 @@
 			    });
 
 			    // Transform Spotify URIs
+			    regex = new RegExp(/(spotify:([^\s]+:)+[a-zA-Z0-9]+)/g);
+			    var result, spotifyUris = [];
+			    while ((result = regex.exec($(payloadColumn).html())) != null) {
+			        spotifyUris.push(result[1]);
+			    }
+
 			    $(payloadColumn).html(
                     $(payloadColumn).html().replace(/(spotify:([^\s]+:)+[a-zA-Z0-9]+)/g, '<a href="$1">$1</a>')
                 );
+
+			    var i = 0, uri;
+			    while (uri = spotifyUris[i++]) {
+			        $(payloadColumn).html($(payloadColumn).html() + '<br /><iframe src="https://embed.spotify.com/?uri=' + uri + '" width="256" height="80" frameborder="0" allowtransparency="true"></iframe>');
+			    }
 
 			    $(payloadColumn).find('a').each(function(index) {
 			        if ($(this).text().length > 60) {
