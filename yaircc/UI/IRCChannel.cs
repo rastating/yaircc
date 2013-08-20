@@ -77,6 +77,11 @@ namespace Yaircc.UI
         /// </summary>
         private IRCMarshal marshal;
 
+        /// <summary>
+        /// The maximum number of characters that can be sent in a PRIVMSG message.
+        /// </summary>
+        private int maximumMessageSize;
+
         #endregion
 
         #region Constructors
@@ -138,12 +143,35 @@ namespace Yaircc.UI
         #region Properties
 
         /// <summary>
+        /// Gets the maximum number of characters that can be sent in a PRIVMSG message.
+        /// </summary>
+        public int MaximumMessageSize
+        {
+            get 
+            {
+                // The maximum message size (including headers) for an IRC message is 512 characters
+                // and as the headers vary from channel to channel we need to construct an empty
+                // PRIVMSG message to calculate how much room we have for the user's message.
+                PrivMsgMessage blankMessage = new PrivMsgMessage(this.name, string.Empty);
+                this.maximumMessageSize = 508 - blankMessage.ToString().Length - this.marshal.FullUserHost.Length;
+                return this.maximumMessageSize;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the name of the channel.
         /// </summary>
         public string Name
         {
-            get { return this.name; }
-            set { this.name = value; }
+            get 
+            { 
+                return this.name; 
+            }
+
+            set 
+            { 
+                this.name = value;
+            }
         }
 
         /// <summary>

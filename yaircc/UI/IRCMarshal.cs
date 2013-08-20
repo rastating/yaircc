@@ -82,6 +82,11 @@ namespace Yaircc.UI
         private bool awaitingModeMessage;
 
         /// <summary>
+        /// A value indicating whether or not the initial user host message is pending.
+        /// </summary>
+        private bool awaitingUserHostMessage;
+
+        /// <summary>
         /// A timer used to invoke a connection attempt to the server.
         /// </summary>
         private System.Timers.Timer reconnectTimer;
@@ -121,6 +126,11 @@ namespace Yaircc.UI
         /// </summary>
         private MainForm parent;
 
+        /// <summary>
+        /// The full user host that will be seen by other clients.
+        /// </summary>
+        private string fullUserHost;
+
         #endregion
 
         #region Constructors
@@ -138,6 +148,7 @@ namespace Yaircc.UI
             this.parent = parent;
             this.previousNickName = connection.Nickname;
             this.AwaitingModeMessage = true;
+            this.AwaitingUserHostMessage = true;
             this.connection = connection;
             this.SetupConnectionEventHandlers();
             this.channels = new List<IRCChannel>();
@@ -198,7 +209,7 @@ namespace Yaircc.UI
 
             private set
             {
-                if (value)
+                if (value || this.AwaitingUserHostMessage)
                 {
                     this.parent.InvokeAction(() => this.parent.MarshalUnregistered(this));
                 }
@@ -208,6 +219,31 @@ namespace Yaircc.UI
                 }
 
                 this.awaitingModeMessage = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether or not the initial user host message is pending.
+        /// </summary>
+        public bool AwaitingUserHostMessage
+        {
+            get
+            {
+                return this.awaitingUserHostMessage;
+            }
+
+            private set
+            {
+                if (value || this.AwaitingModeMessage)
+                {
+                    this.parent.InvokeAction(() => this.parent.MarshalUnregistered(this));
+                }
+                else
+                {
+                    this.parent.InvokeAction(() => this.parent.MarshalRegistered(this));
+                }
+
+                this.awaitingUserHostMessage = value;
             }
         }
 
@@ -226,6 +262,14 @@ namespace Yaircc.UI
         {
             get { return this.connection; }
             set { this.connection = value; }
+        }
+
+        /// <summary>
+        /// Gets the full user host that will be seen by other clients.
+        /// </summary>
+        public string FullUserHost
+        {
+            get { return this.fullUserHost; }
         }
 
         /// <summary>
@@ -537,6 +581,54 @@ namespace Yaircc.UI
                 return;
             }
 
+            // If we are still awaiting the UserHost reply (i.e. we are awaiting confirmation of the full userhost 
+            // prefix that we will use to determine the max PRIVMSG lengths) then cache it in the marshal for future
+            // reference.
+            if (this.AwaitingUserHostMessage && reply == Reply.RPL_USERHOST)
+            {
+                this.fullUserHost = message.TrailingParameter;
+                this.AwaitingUserHostMessage = false;
+
+                // Execute any auto commands.
+                if (this.AutoCommands.Count > 0)
+                {
+                    for (int i = 0; i < this.AutoCommands.Count; i++)
+                    {
+                        MessageParseResult parseResult = MessageFactory.CreateFromUserInput(this.AutoCommands[i], null);
+                        if (parseResult.Success)
+                        {
+                            this.Send(this.ServerTab, parseResult.IRCMessage);
+                        }
+                    }
+                }
+
+                if (this.reconnecting)
+                {
+                    // Pause the thread for a second to give time for any authentication to 
+                    // take place and then rejoin the channels.
+                    System.Threading.Thread.Sleep(1000);
+                    this.Channels.ForEach(i =>
+                    {
+                        if (i.TabPage.TabType == IRCTabType.Channel)
+                        {
+                            this.Send(this.ServerTab, new JoinMessage(i.Name));
+                        }
+                    });
+
+                    this.reconnecting = false;
+                }
+
+                return;
+            }
+
+            // If the user has received a new hidden host then we need to re-evaluate
+            // their full user host mask that will be seen by other clients.
+            if (reply == Reply.RPL_HOSTHIDDEN)
+            {
+                this.AwaitingUserHostMessage = true;
+                this.Send(this.ServerTab, new UserHostMessage(new string[] { this.connection.Nickname }));
+            }
+
             // If we have a names reply or an end of names reply, then we need to check the channel 
             // it is in regards to exists in our channel list, and if it does check to see if it 
             // is awaiting a reply from a names request (i.e. it is wanting to refresh the user list).
@@ -668,34 +760,8 @@ namespace Yaircc.UI
                 this.AwaitingModeMessage = false;
                 this.Send(this.ServerTab, new ModeMessage(new string[] { this.Connection.Nickname, this.Connection.Mode }));
 
-                // Execute any auto commands.
-                if (this.AutoCommands.Count > 0)
-                {
-                    for (int i = 0; i < this.AutoCommands.Count; i++)
-                    {
-                        MessageParseResult parseResult = MessageFactory.CreateFromUserInput(this.AutoCommands[i], null);
-                        if (parseResult.Success)
-                        {
-                            this.Send(this.ServerTab, parseResult.IRCMessage);
-                        }
-                    }
-                }
-
-                if (this.reconnecting)
-                {
-                    // Pause the thread for a second to give time for any authentication to 
-                    // take place and then rejoin the channels.
-                    System.Threading.Thread.Sleep(1000);
-                    this.Channels.ForEach(i =>
-                        {
-                            if (i.TabPage.TabType == IRCTabType.Channel)
-                            {
-                                this.Send(this.ServerTab, new JoinMessage(i.Name));
-                            }
-                        });
-
-                    this.reconnecting = false;
-                }
+                // Send the user host message so we can determine the full user host string.
+                this.Send(this.ServerTab, new UserHostMessage(new string[] { this.connection.Nickname }));
             }
         }
 
