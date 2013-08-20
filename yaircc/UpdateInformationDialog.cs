@@ -70,7 +70,17 @@ namespace Yaircc
             this.client.DownloadFileCompleted += new AsyncCompletedEventHandler(this.Client_DownloadFileCompleted);
 
             this.update = update;
-            this.summaryTextBox.Text = update.Summary.Replace("\n", Environment.NewLine);
+
+            this.update.ReleaseNotes.ForEach(notes => 
+            {
+                string section = string.Format(
+                    "-- Version {0}, Released {1} --\r\n{2}\r\n\r\n", 
+                    notes.Version, 
+                    notes.Date, 
+                    notes.Summary.Replace("\n", Environment.NewLine));
+
+                this.summaryTextBox.Text += section;
+            });
 
             this.Localise();
         }
