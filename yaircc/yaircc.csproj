@@ -147,6 +147,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings_Validation.resx</DependentUpon>
     </Compile>
+    <Compile Include="Net\ReleaseNotes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
