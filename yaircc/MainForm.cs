@@ -1309,6 +1309,7 @@ namespace Yaircc
                 Version updateVersion = new Version(update.Version);
                 if (executingVersion < updateVersion)
                 {
+                    update.FetchReleaseNotes(executingVersion);
                     e.Result = update;
                 }
                 else
