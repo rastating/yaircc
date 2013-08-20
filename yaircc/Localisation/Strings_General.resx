@@ -215,7 +215,7 @@
     <value>Do you want to download it?</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
-    <value>A new version of yaircc ({0}) is available.</value>
+    <value>A new version of yaircc ({0}) is available which contains the changes in the release notes below.</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>

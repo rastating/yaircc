@@ -28,9 +28,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("yaircc")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("intninety")]
+[assembly: AssemblyCompany("rastating")]
 [assembly: AssemblyProduct("yaircc")]
-[assembly: AssemblyCopyright("Copyright © intninety 2012 - 2013")]
+[assembly: AssemblyCopyright("Copyright © rastating 2012 - 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

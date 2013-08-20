@@ -39,6 +39,11 @@ namespace Yaircc.Net
         private Uri latestVersionUri;
 
         /// <summary>
+        /// The Uri from which to fetch the release notes XML from.
+        /// </summary>
+        private Uri releaseNotesUri;
+
+        /// <summary>
         /// The version number of the update.
         /// </summary>
         private string version;
@@ -63,6 +68,11 @@ namespace Yaircc.Net
         /// </summary>
         private string hash;
 
+        /// <summary>
+        /// The release notes applicable between this version and the user's version.
+        /// </summary>
+        private List<ReleaseNotes> releaseNotes;
+
         #endregion
 
         #region Constructors
@@ -73,6 +83,7 @@ namespace Yaircc.Net
         public ProgramUpdate()
         {
             this.latestVersionUri = new Uri(@"https://www.yaircc.com/latest.xml");
+            this.releaseNotesUri = new Uri(@"https://www.yaircc.com/release-notes.xml");
         }
 
         #endregion
@@ -119,9 +130,38 @@ namespace Yaircc.Net
             get { return this.hash; }
         }
 
+        /// <summary>
+        /// Gets the release notes applicable between this version and the user's version.
+        /// </summary>
+        public List<ReleaseNotes> ReleaseNotes
+        {
+            get { return this.releaseNotes; }
+        }
+
         #endregion
 
         #region Instance Methods
+
+        /// <summary>
+        /// Fetches and parses the release notes from the user's version up to this version.
+        /// </summary>
+        /// <param name="version">The version of the current executable.</param>
+        /// <returns>true if successful, otherwise false.</returns>
+        public bool FetchReleaseNotes(Version version)
+        {
+            bool retval = true;
+
+            try
+            {
+                this.releaseNotes = Net.ReleaseNotes.GetReleaseNotes(version);
+            }
+            catch
+            {
+                retval = false;
+            }
+
+            return retval;
+        }
 
         /// <summary>
         /// Fetch the information on the latest version of yaircc.
