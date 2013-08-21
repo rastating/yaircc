@@ -63,13 +63,21 @@
 			        spotifyUris.push(result[1]);
 			    }
 
+			    regex = new RegExp(/http:\/\/open\.spotify\.[^\/"]+\/([a-zA-Z0-9\/]+)/g);
+			    while ((result = regex.exec(payload)) != null) {
+			        spotifyUris.push('spotify:' + result[1].replace(/\//g, ':'));
+			    }
+
 			    $(payloadColumn).html(
                     $(payloadColumn).html().replace(/(spotify:([^\s]+:)+[a-zA-Z0-9]+)/g, '<a href="$1">$1</a>')
                 );
 
 			    var i = 0, uri;
 			    while (uri = spotifyUris[i++]) {
-			        $(payloadColumn).html($(payloadColumn).html() + '<br /><iframe src="https://embed.spotify.com/?uri=' + uri + '" width="256" height="80" frameborder="0" allowtransparency="true"></iframe>');
+			        if (i == 1) {
+			            $(payloadColumn).html($(payloadColumn).html() + '<br />');
+			        }
+			        $(payloadColumn).html($(payloadColumn).html() + '<iframe src="https://embed.spotify.com/?uri=' + uri + '" width="256" height="80" style="padding-top: 10px; padding-right: 10px;" frameborder="0" allowtransparency="true"></iframe>');
 			    }
 
 			    $(payloadColumn).find('a').each(function(index) {
@@ -80,26 +88,26 @@
 
 			    if (transformEmoticons == 1) {
 			        var html = $(payloadColumn).html()
-			                    .replace(/(:(\-)?\))/gi, '<span class="smiley smile"><span>$1</span></span>')
-			                    .replace(/([^mailto])(:(\-)?D)/gi, '$1<span class="smiley grin"><span>$2</span></span>')
-			                    .replace(/(:(\-)?\|)/gi, '<span class="smiley ambivalent"><span>$1</span></span>')
-			                    .replace(/(^|[\s\0]|<wbr>|<wbr\/>|<wbr \/>|&nbsp;|<\/wbr>)(:(\-)?\\)/gi, '$1<span class="smiley slant-reverse"><span>$2</span></span>')
-			                    .replace(/(^|[\s\0]|<wbr>|<wbr\/>|<wbr \/>|&nbsp;|<\/wbr>)(:(\-)?\/)/gi, '$1<span class="smiley slant"><span>$2</span></span>')
-			                    .replace(/([^mailto])(:(\-)?S)/gi, '$1<span class="smiley confused"><span>$2</span></span>')
-			                    .replace(/(8(\-)?\))/gi, '<span class="smiley cool"><span>$1</span></span>')
-			                    .replace(/(\(Y\))/gi, '<span class="smiley thumbs-up"><span>$1</span></span>')
-			                    .replace(/(\(N\))/gi, '<span class="smiley thumbs-down"><span>$1</span></span>')
-			                    .replace(/(:(\-)?O)/gi, '<span class="smiley gasp"><span>$1</span></span>')
-			                    .replace(/(:(\-)?\()/gi, '<span class="smiley frown"><span>$1</span></span>')
-			                    .replace(/(:'(\-)?\()/gi, '<span class="smiley cry"><span>$1</span></span>')
-			                    .replace(/(:(\-)?P)/gi, '<span class="smiley tongue"><span>$1</span></span>')
-			                    .replace(/(\(L\))/gi, '<span class="smiley heart"><span>$1</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?\))($|\s*?|<\/span>)/gi, '$1<span class="smiley smile"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?D)($|\s*?|<\/span>)/gi, '$1<span class="smiley grin"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?\|)($|\s*?|<\/span>)/gi, '$1<span class="smiley ambivalent"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?\\)($|\s*?|<\/span>)/gi, '$1<span class="smiley slant-reverse"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?\/)($|\s*?|<\/span>)/gi, '$1<span class="smiley slant"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?S)($|\s*?|<\/span>)/gi, '$1<span class="smiley confused"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(8(\-)?\))($|\s*?|<\/span>)/gi, '$1<span class="smiley cool"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(\(Y\))($|\s*?|<\/span>)/gi, '$1<span class="smiley thumbs-up"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(\(N\))($|\s*?|<\/span>)/gi, '$1<span class="smiley thumbs-down"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?O)($|\s*?|<\/span>)/gi, '$1<span class="smiley gasp"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?\()($|\s*?|<\/span>)/gi, '$1<span class="smiley frown"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:'(\-)?\()($|\s*?|<\/span>)/gi, '$1<span class="smiley cry"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?P)($|\s*?|<\/span>)/gi, '$1<span class="smiley tongue"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(\(L\))($|\s*?|<\/span>)/gi, '$1<span class="smiley heart"><span>$2</span></span>')
 			                    .replace('&lt;3', '<span class="smiley heart"><span>&lt;3</span></span>')
-			                    .replace(/([^mailto])(:(\-)?\*)/gi, '$1<span class="smiley kiss"><span>$2</span></span>')
-			                    .replace(/(\(K\))/gi, '<span class="smiley kiss"><span>$1</span></span>')
-			                    .replace(/(:(\-)?@)/gi, '<span class="smiley angry"><span>$1</span></span>')
-			                    .replace(/(:(\-)?X)/gi, '<span class="smiley sealed"><span>$1</span></span>')
-			                    .replace(/(;(\-)?\))/gi, '<span class="smiley wink"><span>$1</span></span>');
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?\*)($|\s*?|<\/span>)/gi, '$1<span class="smiley kiss"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(\(K\))($|\s*?|<\/span>)/gi, '$1<span class="smiley kiss"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?@)($|\s*?|<\/span>)/gi, '$1<span class="smiley angry"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(:(\-)?X)($|\s*?|<\/span>)/gi, '$1<span class="smiley sealed"><span>$2</span></span>')
+			                    .replace(/(^|<span>|[?!\s]+)(;(\-)?\))($|\s*?|<\/span>)/gi, '$1<span class="smiley wink"><span>$2</span></span>');
 
 			        $(payloadColumn).html(html);
 			    }
