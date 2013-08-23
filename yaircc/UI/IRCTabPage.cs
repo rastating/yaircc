@@ -694,12 +694,13 @@ namespace Yaircc.UI
                         source = type == MessageType.UserMessage ? string.Format("<{0}>", source) : source;
                         payload = transform.Invoke(payload);
                         string script = string.Format(
-                            "appendMessage('{0}', '{1}', '{2}', '{3}', {4})",
+                            "appendMessage('{0}', '{1}', '{2}', '{3}', {4}, {5})",
                             timestamp,
                             source.PrepareForJS(),
                             payload.PrepareForJS().Replace("\r", string.Empty).Replace("\n", string.Empty),
                             classes,
-                            (int)GlobalSettings.Instance.UseEmoticons);
+                            (int)GlobalSettings.Instance.UseEmoticons,
+                            (int)GlobalSettings.Instance.UseEmbeddedMedia);
                         this.WebView.ExecuteScript(script);
 
                         if (this.Marshal != null)

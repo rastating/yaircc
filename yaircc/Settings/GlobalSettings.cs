@@ -87,6 +87,11 @@ namespace Yaircc.Settings
         /// </summary>
         private GlobalSettings.Boolean usePrivateBrowsing;
 
+        /// <summary>
+        /// The flag that indicates whether or not to use embedded media players when a user posts a media link.
+        /// </summary>
+        private GlobalSettings.Boolean useEmbeddedMedia;
+
         #endregion
 
         #region Constructors
@@ -149,6 +154,7 @@ namespace Yaircc.Settings
             this.checkForUpdateOnStart = Yaircc.Properties.Settings.Default.CheckForUpdateOnStart ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
             this.useEmoticons = Yaircc.Properties.Settings.Default.UseEmoticons ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
             this.usePrivateBrowsing = Yaircc.Properties.Settings.Default.UsePrivateBrowsing ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
+            this.useEmbeddedMedia = Yaircc.Properties.Settings.Default.UseEmbeddedMedia ? GlobalSettings.Boolean.Yes : GlobalSettings.Boolean.No;
         }
 
         #endregion
@@ -307,6 +313,16 @@ namespace Yaircc.Settings
         }
 
         /// <summary>
+        /// Gets or sets a value that indicates whether or not to use embedded media players when a user posts a media link.
+        /// </summary>
+        [Category("User Interface"), DisplayName("Use embedded media players"), Description("Enable or disable the use of embedded media players when a supported URI is sent or received.\r\nCurrently supported URIs: Spotify, YouTube.")]
+        public GlobalSettings.Boolean UseEmbeddedMedia
+        {
+            get { return this.useEmbeddedMedia; }
+            set { this.useEmbeddedMedia = value; }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether or not to enable the developer debugging features.
         /// </summary>
         [Category("Miscellaneous"), DisplayName("Enable debug mode"), Description("Enable the developer debug features. This may cause unexpected results, only enable this if you want to help in testing an issue.")]
@@ -360,6 +376,7 @@ namespace Yaircc.Settings
                 Yaircc.Properties.Settings.Default.CheckForUpdateOnStart = this.checkForUpdateOnStart == GlobalSettings.Boolean.Yes;
                 Yaircc.Properties.Settings.Default.UseEmoticons = this.useEmoticons == GlobalSettings.Boolean.Yes;
                 Yaircc.Properties.Settings.Default.UsePrivateBrowsing = this.usePrivateBrowsing == GlobalSettings.Boolean.Yes;
+                Yaircc.Properties.Settings.Default.UseEmbeddedMedia = this.useEmbeddedMedia == GlobalSettings.Boolean.Yes;
                 Yaircc.Properties.Settings.Default.Save();
             }
             catch
