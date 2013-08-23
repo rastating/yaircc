@@ -86,6 +86,26 @@
 			                $(this).text($(this).text().substring(0, 57) + '...');
 			            }
 			        });
+
+			        regex = new RegExp(/youtube\.[^\/]+\/.+?v=([a-zA-Z0-9]+)/g);
+			        var youTubeIds = [];
+			        while ((result = regex.exec(payload)) != null) {
+			            youTubeIds.push(result[1]);
+			        }
+
+			        regex = new RegExp(/youtu\.be\/([a-zA-Z0-9]+)/g);
+			        while ((result = regex.exec(payload)) != null) {
+			            youTubeIds.push(result[1]);
+			        }
+
+			        var youTubeId;
+			        i = 0;
+			        while (youTubeId = youTubeIds[i++]) {
+			            if (i == 1) {
+			                $(payloadColumn).html($(payloadColumn).html() + '<br />');
+			            }
+			            $(payloadColumn).html($(payloadColumn).html() + '<iframe width="364" height="205" src="https://www.youtube.com/embed/' + youTubeId + '" style="padding-top: 10px; padding-right: 10px;" frameborder="0"></iframe>');
+			        }
 			    }
 			    else {
 			        $(payloadColumn).html(
