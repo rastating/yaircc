@@ -97,6 +97,11 @@ namespace Yaircc.UI
         private ChannelCreatedHandler channelCreated;
 
         /// <summary>
+        /// Occurs when a marshal un-sets both the <see cref="AwaitingModeMessage" /> and awaiting <see cref="UserHostMessage" /> flags.
+        /// </summary>
+        private NetworkRegisteredHandler networkRegistered;
+
+        /// <summary>
         /// A list of commands to execute when the mode message has been received.
         /// </summary>
         private List<string> autoCommands;
@@ -180,6 +185,13 @@ namespace Yaircc.UI
         /// <param name="channel">The channel that was created.</param>
         public delegate void ChannelCreatedHandler(object sender, IRCChannel channel);
 
+        /// <summary>
+        /// Delegate for event <see cref="NetworkRegistered" />.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        public delegate void NetworkRegisteredHandler(object sender, EventArgs e);
+
         #endregion
 
         #region Events
@@ -191,6 +203,15 @@ namespace Yaircc.UI
         {
             add { this.channelCreated += value; }
             remove { this.channelCreated -= value; }
+        }
+
+        /// <summary>
+        /// Occurs when a marshal un-sets both the <see cref="AwaitingModeMessage" /> and awaiting <see cref="UserHostMessage" /> flags.
+        /// </summary>
+        public event NetworkRegisteredHandler NetworkRegistered
+        {
+            add { this.networkRegistered += value; }
+            remove { this.networkRegistered -= value; }
         }
 
         #endregion
@@ -219,6 +240,11 @@ namespace Yaircc.UI
                 }
 
                 this.awaitingModeMessage = value;
+
+                if (this.IsConnectedAndRegistered && this.networkRegistered != null)
+                {
+                    this.networkRegistered.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -244,6 +270,11 @@ namespace Yaircc.UI
                 }
 
                 this.awaitingUserHostMessage = value;
+
+                if (this.IsConnectedAndRegistered && this.networkRegistered != null)
+                {
+                    this.networkRegistered.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -321,6 +352,14 @@ namespace Yaircc.UI
         {
             get { return this.disconnecting; }
             set { this.disconnecting = value; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether or not the user has connected and registered on the network.
+        /// </summary>
+        public bool IsConnectedAndRegistered
+        {
+            get { return !this.AwaitingModeMessage && !this.AwaitingUserHostMessage; }
         }
 
         /// <summary>
