@@ -194,6 +194,7 @@ namespace Yaircc
                 {
                     userTreeView.BringToFront();
                     this.inputTextBox.MaxLength = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).MaximumMessageSize;
+                    this.UpdateStatusBarText();
                 }
 
                 this.RefreshWindowsMenuItems(null);
@@ -302,6 +303,8 @@ namespace Yaircc
                         this.inputTextBox.MaxLength = this.CurrentTab.Marshal.GetChannelByTab(this.CurrentTab).MaximumMessageSize;
                     }
                 }
+
+                this.UpdateStatusBarText();
             }
         }
 
@@ -568,6 +571,7 @@ namespace Yaircc
             }
 
             this.inputTextBox.Focus();
+            this.UpdateStatusBarText();
         }
 
         /// <summary>
@@ -1091,6 +1095,7 @@ namespace Yaircc
 
                     IRCMarshal marshal = new IRCMarshal(connection, this.channelsTabControl, commands, this);
                     marshal.ChannelCreated += new IRCMarshal.ChannelCreatedHandler(this.ChannelCreated);
+                    marshal.NetworkRegistered += (s, e) => this.InvokeAction(() => this.UpdateStatusBarText());
 
                     serverTab.Marshal = marshal;
                     marshal.ServerTab = serverTab;
@@ -1366,8 +1371,8 @@ namespace Yaircc
                 }
             }
 
-            this.statusLabel.Text = Strings_General.Ready;
             this.autoCheckingForUpdate = false;
+            this.UpdateStatusBarText();
         }
 
         /// <summary>
@@ -1545,6 +1550,44 @@ namespace Yaircc
                         (this.channelsTabControl.TabPages[i] as IRCTabPage).LoadTheme(GlobalSettings.Instance.ThemeFileName);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Updates the status bar text with a description of the currently selected tab.
+        /// </summary>
+        private void UpdateStatusBarText()
+        {
+            IRCMarshal marshal = this.CurrentTab.Marshal;
+
+            if (marshal != null)
+            {
+                IRCTabPage tab = this.CurrentTab;
+                Connection connection = marshal.Connection;
+
+                if (tab.TabType == IRCTabType.Server)
+                {
+                    if (marshal.IsConnectedAndRegistered)
+                    {
+                        this.statusLabel.Text = string.Format("Connected to {0} as {1}.", tab.Text, connection.Nickname);
+                    }
+                    else
+                    {
+                        this.statusLabel.Text = string.Format("Connecting to {0}...", tab.Text);
+                    }
+                }
+                else if (tab.TabType == IRCTabType.Channel)
+                {
+                    this.statusLabel.Text = string.Format("Talking in {0} on {1} as {2}.", tab.Text, marshal.ServerTab.Text, connection.Nickname);
+                }
+                else if (tab.TabType == IRCTabType.PM)
+                {
+                    this.statusLabel.Text = string.Format("Talking to {0} on {1} as {2}.", tab.Text, marshal.ServerTab.Text, connection.Nickname);
+                }
+            }
+            else
+            {
+                this.statusLabel.Text = Strings_General.Ready;
             }
         }
 
