@@ -1024,6 +1024,16 @@ namespace Yaircc
         }
 
         /// <summary>
+        /// Handles the Click event of ToolStripMenuItem.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void MentionUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.InsertNickNameIntoMessage(this.mentionUserToolStripMenuItem.Tag as string);
+        }
+
+        /// <summary>
         /// Toggles whether or not a control and all child controls are enabled.
         /// </summary>
         /// <param name="control">The control to enable or disable.</param>
@@ -1419,6 +1429,9 @@ namespace Yaircc
                         this.whoIsMenuItem.Text = string.Format("Who is {0}?", info.Node.Text);
                         this.whoIsMenuItem.Tag = info.Node.Text;
                         this.whoIsMenuItem.Visible = true;
+                        this.mentionUserToolStripMenuItem.Text = string.Format("Mention {0}", info.Node.Text);
+                        this.mentionUserToolStripMenuItem.Tag = info.Node.Text;
+                        this.mentionUserToolStripMenuItem.Visible = true;
                         this.openPrivateChatMenuItem.Tag = info.Node.Text;
                         this.openPrivateChatMenuItem.Visible = true;
                         this.userSeparator.Visible = true;
@@ -1428,6 +1441,7 @@ namespace Yaircc
                         this.whoIsMenuItem.Visible = false;
                         this.openPrivateChatMenuItem.Visible = false;
                         this.userSeparator.Visible = false;
+                        this.mentionUserToolStripMenuItem.Visible = false;
                     }
 
                     this.groupByModeToolStripMenuItem.Checked = this.CurrentTab.GroupingByMode;
