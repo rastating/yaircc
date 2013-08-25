@@ -157,6 +157,10 @@
 			        e.preventDefault();
 			        marshal.OpenUrl($(this).attr('href'));
 			    });
+
+			    $('#message-table tbody tr').last().find('td.source span').click(function () {
+			        marshal.InsertNickNameIntoMessage($(this).text());
+			    });
 			}
 
 			function listEmoticon(timestamp, source, detail) {

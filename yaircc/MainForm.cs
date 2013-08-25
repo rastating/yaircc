@@ -285,6 +285,30 @@ namespace Yaircc
         }
 
         /// <summary>
+        /// Inserts the specified nick name into the input textbox.
+        /// </summary>
+        /// <param name="nickName">The nick name to insert.</param>
+        public void InsertNickNameIntoMessage(string nickName)
+        {
+            nickName = nickName.Trim('[', ']', '<', '>');
+            int originalSelectionStart = this.inputTextBox.SelectionStart;
+            int insertedCharacters = 0;
+
+            if (this.inputTextBox.TextLength == 0 || this.inputTextBox.Text[this.inputTextBox.TextLength - 1] == ' ')
+            {
+                this.inputTextBox.Text = this.inputTextBox.Text.Insert(this.inputTextBox.SelectionStart, string.Format("{0} ", nickName));
+            }
+            else
+            {
+                this.inputTextBox.Text = this.inputTextBox.Text.Insert(this.inputTextBox.SelectionStart, string.Format(" {0}", nickName));
+            }
+
+            insertedCharacters = nickName.Length + 1;
+            this.inputTextBox.Focus();
+            this.inputTextBox.Select(originalSelectionStart + insertedCharacters, 0);
+        }
+
+        /// <summary>
         /// Indicates that a marshal has successfully registered on a network.
         /// </summary>
         /// <param name="marshal">The marshal that has registered.</param>

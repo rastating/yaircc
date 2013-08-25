@@ -39,12 +39,19 @@ namespace Yaircc.UI
         private Action initialisationAction;
 
         /// <summary>
+        /// The form that the marshal is owned by.
+        /// </summary>
+        private MainForm owner;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="ChromiumMarshal"/> class.
         /// </summary>
         /// <param name="initialisationAction">The action to invoke after the DOM has been loaded.</param>
-        public ChromiumMarshal(Action initialisationAction)
+        /// <param name="owner">The owning form.</param>
+        public ChromiumMarshal(Action initialisationAction, MainForm owner)
         {
             this.initialisationAction = initialisationAction;
+            this.owner = owner;
         }
 
         /// <summary>
@@ -103,6 +110,18 @@ namespace Yaircc.UI
                     browser.Show();
                 }
             }
+        }
+
+        /// <summary>
+        /// Inserts the specified nick name into the input textbox.
+        /// </summary>
+        /// <param name="nickName">The nick name to insert.</param>
+        public void InsertNickNameIntoMessage(string nickName)
+        {
+            this.owner.InvokeAction(() =>
+            {
+                this.owner.InsertNickNameIntoMessage(nickName);
+            });
         }
     }
 }

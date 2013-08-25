@@ -54,6 +54,11 @@ body, tr, tbody, table {
 	color: black !important;
 }
 
+.source span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .ActionMessage .source, .ActionMessage .payload {
 	font-style: italic;
 }
