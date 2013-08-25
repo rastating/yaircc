@@ -5,7 +5,7 @@ yaircc (pronounced yerk) is a free, open-source IRC client for Windows that comp
 To download the latest stable release visit https://www.yaircc.com/
 
 ## Author
-- [rastating](http://blog.intninety.co.uk/) ([@iamrastating](https://twitter.com/iamrastating))
+- [rastating](http://www.rastating.com/) ([@iamrastating](https://twitter.com/iamrastating))
 
 ## Contributors
 - [Asif Aleem](http://www.freebiesgallery.com/) ([@freebiegallery](https://twitter.com/freebiegallery)) - Splash Screen Design
