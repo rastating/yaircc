@@ -1162,7 +1162,7 @@ namespace Yaircc.UI
             this.WebView.Dock = DockStyle.Fill;
 
             // Setup and regsiter the marshal for the WebView.
-            this.chromiumMarshal = new ChromiumMarshal(new Action(() => { this.FlushQueuedMessages(); this.initialising = false; }), this.OwningForm);
+            this.chromiumMarshal = new ChromiumMarshal(new Action(() => { this.FlushQueuedMessages(); this.initialising = false; }), this);
             this.WebView.RegisterJsObject("marshal", this.chromiumMarshal);
             
             // Setup the event handlers for the WebView.

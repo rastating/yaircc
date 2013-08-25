@@ -26,6 +26,7 @@ namespace Yaircc.UI
     using System.Text;
     using System.Text.RegularExpressions;
     using CefSharp.WinForms;
+    using Yaircc.Net.IRC;
     using Yaircc.Settings;
 
     /// <summary>
@@ -39,16 +40,16 @@ namespace Yaircc.UI
         private Action initialisationAction;
 
         /// <summary>
-        /// The form that the marshal is owned by.
+        /// The IRCTabPage that the marshal is owned by.
         /// </summary>
-        private MainForm owner;
+        private IRCTabPage owner;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="ChromiumMarshal"/> class.
         /// </summary>
         /// <param name="initialisationAction">The action to invoke after the DOM has been loaded.</param>
         /// <param name="owner">The owning form.</param>
-        public ChromiumMarshal(Action initialisationAction, MainForm owner)
+        public ChromiumMarshal(Action initialisationAction, IRCTabPage owner)
         {
             this.initialisationAction = initialisationAction;
             this.owner = owner;
@@ -73,6 +74,19 @@ namespace Yaircc.UI
             if (this.initialisationAction != null)
             {
                 this.initialisationAction.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Joins the specified channel.
+        /// </summary>
+        /// <param name="channelName">The channel to join.</param>
+        public void JoinChannel(string channelName)
+        {
+            if (this.owner.Marshal != null)
+            {
+                JoinMessage message = new JoinMessage(channelName);
+                this.owner.Marshal.Send(this.owner, message);
             }
         }
 
@@ -120,7 +134,7 @@ namespace Yaircc.UI
         {
             this.owner.InvokeAction(() =>
             {
-                this.owner.InsertNickNameIntoMessage(nickName);
+                this.owner.OwningForm.InsertNickNameIntoMessage(nickName);
             });
         }
     }
