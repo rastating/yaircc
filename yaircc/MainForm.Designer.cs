@@ -97,8 +97,9 @@
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userTreeViewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.whoIsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mentionUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openPrivateChatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.whoIsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -750,8 +751,9 @@
             // userTreeViewContextMenu
             // 
             this.userTreeViewContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.whoIsMenuItem,
+            this.mentionUserToolStripMenuItem,
             this.openPrivateChatMenuItem,
+            this.whoIsMenuItem,
             this.userSeparator,
             this.collapseAllToolStripMenuItem,
             this.expandAllToolStripMenuItem,
@@ -760,16 +762,14 @@
             this.toolStripMenuItem11,
             this.orderByMenuItem});
             this.userTreeViewContextMenu.Name = "contextMenuStrip1";
-            this.userTreeViewContextMenu.Size = new System.Drawing.Size(171, 154);
+            this.userTreeViewContextMenu.Size = new System.Drawing.Size(171, 198);
             // 
-            // whoIsMenuItem
+            // mentionUserToolStripMenuItem
             // 
-            this.whoIsMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.whoIsMenuItem.Image = global::Yaircc.Properties.Resources.information;
-            this.whoIsMenuItem.Name = "whoIsMenuItem";
-            this.whoIsMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.whoIsMenuItem.Text = "Who is int0x90?";
-            this.whoIsMenuItem.Click += new System.EventHandler(this.WhoIsMenuItem_Click);
+            this.mentionUserToolStripMenuItem.Name = "mentionUserToolStripMenuItem";
+            this.mentionUserToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.mentionUserToolStripMenuItem.Text = "Mention rastating";
+            this.mentionUserToolStripMenuItem.Click += new System.EventHandler(this.MentionUserToolStripMenuItem_Click);
             // 
             // openPrivateChatMenuItem
             // 
@@ -778,6 +778,15 @@
             this.openPrivateChatMenuItem.Size = new System.Drawing.Size(170, 22);
             this.openPrivateChatMenuItem.Text = "Open Private Chat";
             this.openPrivateChatMenuItem.Click += new System.EventHandler(this.OpenPrivateChatMenuItem_Click);
+            // 
+            // whoIsMenuItem
+            // 
+            this.whoIsMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.whoIsMenuItem.Image = global::Yaircc.Properties.Resources.vcard;
+            this.whoIsMenuItem.Name = "whoIsMenuItem";
+            this.whoIsMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.whoIsMenuItem.Text = "Who is int0x90?";
+            this.whoIsMenuItem.Click += new System.EventHandler(this.WhoIsMenuItem_Click);
             // 
             // userSeparator
             // 
@@ -1033,6 +1042,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem channelBrowserToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem9;
+        private System.Windows.Forms.ToolStripMenuItem mentionUserToolStripMenuItem;
     }
 }
 

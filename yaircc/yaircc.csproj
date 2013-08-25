@@ -412,6 +412,8 @@
     <None Include="Resources\arrow_right.png" />
     <None Include="Resources\bullet_go.png" />
     <None Include="Resources\arrow_refresh_small.png" />
+    <None Include="Resources\vcard.png" />
+    <None Include="Resources\comment.png" />
     <Content Include="themes\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
