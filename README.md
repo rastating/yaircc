@@ -9,6 +9,7 @@ To download the latest stable release visit https://www.yaircc.com/
 
 ## Contributors
 - [Asif Aleem](http://www.freebiesgallery.com/) ([@freebiegallery](https://twitter.com/freebiegallery)) - Splash Screen Design
+- [Chris West](http://cwestblog.com/) - Author of a JavaScript prototype that is used to replace multiple literals.
 - [Everaldo Coelho](http://www.everaldo.com/) ([@_Everaldo](https://twitter.com/_Everaldo)) - Graphic Design
 - Mark James ([@markjames](https://twitter.com/markjames)) - Icon Design
 - [Phyushin](https://github.com/phyushin) ([@phyushin](https://twitter.com/phyushin)) - Testing
