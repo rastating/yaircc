@@ -136,6 +136,11 @@ namespace Yaircc.UI
         /// </summary>
         private string fullUserHost;
 
+        /// <summary>
+        /// A value indicating whether or not the auto commands for the network have been executed.
+        /// </summary>
+        private bool hasExecutedAutoCommands;
+
         #endregion
 
         #region Constructors
@@ -326,7 +331,17 @@ namespace Yaircc.UI
         /// </summary>
         public bool IsConnected
         {
-            get { return this.connection.IsConnected; }
+            get 
+            {
+                bool retval = this.connection.IsConnected;
+
+                if (!retval)
+                {
+                    this.hasExecutedAutoCommands = false;
+                }
+
+                return retval; 
+            }
         }
 
         /// <summary>
@@ -635,7 +650,7 @@ namespace Yaircc.UI
                 this.AwaitingUserHostMessage = false;
 
                 // Execute any auto commands.
-                if (this.AutoCommands.Count > 0)
+                if (!this.hasExecutedAutoCommands && this.AutoCommands.Count > 0)
                 {
                     for (int i = 0; i < this.AutoCommands.Count; i++)
                     {
@@ -645,6 +660,8 @@ namespace Yaircc.UI
                             this.Send(this.ServerTab, parseResult.IRCMessage);
                         }
                     }
+
+                    this.hasExecutedAutoCommands = true;
                 }
 
                 if (this.reconnecting)
