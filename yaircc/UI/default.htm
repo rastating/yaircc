@@ -9,6 +9,16 @@
 			    return this.split(target).join(replacement);
 			};
 
+			String.prototype.htmlEncode = function() {
+			    // Create a in-memory div, set it's inner text(which jQuery automatically encodes)
+			    // then grab the encoded contents back out.
+			    return $('<div/>').text(this).html();
+			}
+
+			String.prototype.htmlDecode = function() {
+			    return $('<div/>').html(this).text();
+			}
+
 			var isAtBottom = true;
 			var previousScrollTop = 0;
 
@@ -96,6 +106,7 @@
 			    var i = 0, channelName;
 			    var html = $(payloadColumn).html();
 			    while (channelName = channelNames[i++]) {
+			        channelName = channelName.htmlEncode();
 			        html = html.replaceAll(channelName, '<span class="channelName">' + channelName + '</span>');
 			    }
 
