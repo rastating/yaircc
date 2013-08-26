@@ -771,6 +771,7 @@ namespace Yaircc
         /// <param name="e">The event arguments.</param>
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Close();
             Application.Exit();
         }
 
