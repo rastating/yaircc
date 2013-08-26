@@ -384,6 +384,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\splash.png" />
+    <Content Include="yaircc.ico" />
     <None Include="app.config" />
     <None Include="Resources\application_form_magnify.png" />
     <None Include="Resources\1350082650_sort-alphabet.png" />
@@ -406,7 +408,6 @@
     <None Include="Resources\folder_palette.png" />
     <None Include="Resources\folder_find.png" />
     <None Include="Resources\find.png" />
-    <None Include="Resources\aluminium.bmp" />
     <None Include="Resources\splash-screen.jpg" />
     <None Include="Resources\arrow_left.png" />
     <None Include="Resources\arrow_right.png" />
@@ -451,7 +452,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="UI\ThemeSample.htm" />
-    <Content Include="yaircc.ico" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
