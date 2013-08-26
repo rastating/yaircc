@@ -483,9 +483,15 @@ namespace Yaircc.UI
                 }
                 else if (message is JoinMessage)
                 {
-                    if (!this.Channels.Exists(i => i.Name.Equals(message.Parameters[0], StringComparison.OrdinalIgnoreCase)))
+                    IRCChannel channel = this.Channels.Find(i => i.Name.Equals(message.Parameters[0], StringComparison.OrdinalIgnoreCase));
+                    if (channel == null)
                     {
-                        IRCChannel channel = this.CreateChannel(message.Parameters[0], true);
+                        channel = this.CreateChannel(message.Parameters[0], true);
+                    }
+                    else
+                    {
+                        // If we're already in the channel, just switch tabs.
+                        this.TabHost.InvokeAction(() => this.TabHost.SelectedTab = channel.TabPage);
                     }
                 }
                 else if (message is NickMessage)
