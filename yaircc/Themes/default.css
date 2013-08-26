@@ -54,6 +54,24 @@ body, tr, tbody, table {
 	color: black !important;
 }
 
+.source span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+span.channelName {
+    color: rgb(0, 0, 238);
+}
+
+span.channelName {
+    color: rgb(0, 0, 238);
+    text-decoration: underline;
+}
+
+span.channelName:hover {
+    cursor: pointer;
+}
+
 .ActionMessage .source, .ActionMessage .payload {
 	font-style: italic;
 }
