@@ -251,7 +251,12 @@ namespace Yaircc
                 }
                 else
                 {
-                    channel.TabPage.UserTreeView.TopNode = channel.TabPage.UserTreeView.Nodes[0];
+                    // Check that the node count is greater than zero, even though it can be assumed
+                    // as if a problem occurs on the server side it would cause an exception to be thrown.
+                    if (channel.TabPage.UserTreeView.Nodes.Count > 0)
+                    {
+                        channel.TabPage.UserTreeView.TopNode = channel.TabPage.UserTreeView.Nodes[0];
+                    }
                 }
             });
         }
