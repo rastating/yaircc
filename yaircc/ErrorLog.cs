@@ -21,8 +21,9 @@
 namespace Yaircc
 {
     using System;
-    using System.Windows.Forms;
-    using System.Xml.Serialization;
+using System.Reflection;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 
     /// <summary>
     /// Represents logs of errors that occur during application execution.
@@ -52,6 +53,11 @@ namespace Yaircc
         /// </summary>
         private string applicationVersion;
 
+        /// <summary>
+        /// The current application version number.
+        /// </summary>
+        private string appVersion;
+
         #endregion
 
         #region Constructors
@@ -66,6 +72,7 @@ namespace Yaircc
             this.osVersion = Environment.OSVersion.ToString();
             this.applicationVersion = Application.ProductVersion;
             this.creationDateTime = DateTime.Now;
+            this.appVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         /// <summary>
@@ -95,6 +102,15 @@ namespace Yaircc
         {
             get { return this.osVersion; }
             set { this.osVersion = value; }
+        }
+
+        /// <summary>
+        /// Gets the current application version number.
+        /// </summary>
+        public string AppVersion
+        {
+            get { return this.appVersion; }
+            set { this.appVersion = value; }
         }
 
         #endregion

@@ -86,7 +86,7 @@ namespace Yaircc
         public MainForm()
         {
             this.InitializeComponent();
-            
+
             this.splashScreen = new SplashScreen(this);
             this.splashScreen.Show();
 
