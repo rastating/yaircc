@@ -558,7 +558,15 @@ namespace Yaircc.Net.IRC
             try
             {
                 NetworkStream stream = this.client.GetStream();
-                stream.EndWrite(result);
+
+                // If the network stream is closed an ObjectDisposedException will be thrown
+                // in the thread that EndWrite executes on, causing the global exception handle
+                // to be invoked and result in yaircc crashing, so we must first check to see
+                // if we explicitly can write to the network stream.
+                if (stream.CanWrite)
+                {
+                    stream.EndWrite(result);
+                }
             }
             catch (ObjectDisposedException)
             {
