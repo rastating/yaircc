@@ -21,6 +21,24 @@ a
 	color: #00ffff;
 }
 
+.source span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+span.channelName {
+    color: #00ffff;
+}
+
+span.channelName {
+    color: #00ffff;
+    text-decoration: underline;
+}
+
+span.channelName:hover {
+    cursor: pointer;
+}
+
 #splash {
 	color: #DDD;
 	font-size: 24pt;
