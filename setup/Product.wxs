@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product 
-    Id="52894760-080e-4836-a515-96d116cf0e52" 
+    Id="2946d90a-6885-472d-9582-0055d5d70fa4" 
     Name="yaircc" 
     Language="1033" 
     Version="1.1.19.0" 
