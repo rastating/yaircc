@@ -74,13 +74,13 @@
 			}
 
 			function transformYouTubeUrls(payloadColumn, payload) {
-			    var regex = new RegExp(/youtube\.[^\/]+\/.+?v=([a-zA-Z0-9]+)/g);
+			    var regex = new RegExp(/youtube\.[^\/]+\/.+?v=([a-zA-Z0-9_]+)/g);
 			    var result, youTubeIds = [];
 			    while ((result = regex.exec(payload)) != null) {
 			        youTubeIds.push(result[1]);
 			    }
 
-			    regex = new RegExp(/youtu\.be\/([a-zA-Z0-9]+)/g);
+			    regex = new RegExp(/youtu\.be\/([a-zA-Z0-9_]+)/g);
 			    while ((result = regex.exec(payload)) != null) {
 			        youTubeIds.push(result[1]);
 			    }
