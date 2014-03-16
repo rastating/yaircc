@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="PrefixType.cs" company="rastating">
 //     yaircc - the free, open-source IRC client for Windows.
-//     Copyright (C) 2012-2013 Robert Carr
+//     Copyright (C) 2012-2014 Robert Carr
 //
 //     This program is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
