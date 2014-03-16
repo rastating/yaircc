@@ -82,8 +82,8 @@ namespace Yaircc.Net
         /// </summary>
         public ProgramUpdate()
         {
-            this.latestVersionUri = new Uri(@"https://www.yaircc.com/latest.xml");
-            this.releaseNotesUri = new Uri(@"https://www.yaircc.com/release-notes.xml");
+            this.latestVersionUri = new Uri(@"http://www.yaircc.com/latest.xml");
+            this.releaseNotesUri = new Uri(@"http://www.yaircc.com/release-notes.xml");
         }
 
         #endregion
