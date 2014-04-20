@@ -30,7 +30,7 @@ namespace Yaircc.Net.IRC
     /// <summary>
     /// Represents a connection to an IRC server.
     /// </summary>
-    public class Connection
+    public class Connection : IDisposable
     {
         #region Fields
 
@@ -118,6 +118,11 @@ namespace Yaircc.Net.IRC
         /// Occurs when data is received.
         /// </summary>
         private DataReceivedHandler dataReceived;
+
+        /// <summary>
+        /// A value indicating whether or not the connection has been disposed.
+        /// </summary>
+        private bool isDisposed;
 
         #endregion
 
@@ -344,28 +349,31 @@ namespace Yaircc.Net.IRC
 
             private set
             {
-                if (this.isConnected != value)
+                if (!this.isDisposed)
                 {
-                    this.isConnected = value;
+                    if (this.isConnected != value)
+                    {
+                        this.isConnected = value;
 
-                    if (value)
-                    {
-                        this.timer = new System.Timers.Timer(5000);
-                        this.timer.Elapsed += new System.Timers.ElapsedEventHandler(this.Timer_Elapsed);
-                        this.timer.Enabled = true;
-                    }
-                    else
-                    {
-                        if (this.timer != null)
+                        if (value)
                         {
-                            this.timer.Enabled = false;
-                            this.timer.Dispose();
-                            this.timer = null;
+                            this.timer = new System.Timers.Timer(5000);
+                            this.timer.Elapsed += new System.Timers.ElapsedEventHandler(this.Timer_Elapsed);
+                            this.timer.Enabled = true;
                         }
-
-                        if (this.connectionTerminated != null)
+                        else
                         {
-                            this.connectionTerminated.Invoke(this, EventArgs.Empty);
+                            if (this.timer != null)
+                            {
+                                this.timer.Enabled = false;
+                                this.timer.Dispose();
+                                this.timer = null;
+                            }
+
+                            if (this.connectionTerminated != null)
+                            {
+                                this.connectionTerminated.Invoke(this, EventArgs.Empty);
+                            }
                         }
                     }
                 }
@@ -514,6 +522,22 @@ namespace Yaircc.Net.IRC
             if (this.beganConnecting != null)
             {
                 this.beganConnecting(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
+        public void Dispose()
+        {
+            this.isDisposed = true;
+            this.client.Close();
+
+            if (this.timer != null)
+            {
+                this.timer.Stop();
+                this.timer.Dispose();
+                this.timer = null;
             }
         }
 

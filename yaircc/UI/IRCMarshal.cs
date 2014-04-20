@@ -447,6 +447,7 @@ namespace Yaircc.UI
             this.Channels.Clear();
             this.TabHost.InvokeAction(() => this.TabHost.TabPages.Remove(this.ServerTab));
             this.ServerTab.Dispose();
+            this.Connection.Dispose();
         }
 
         #endregion
