@@ -1179,7 +1179,16 @@ namespace Yaircc
         /// <param name="server">The server to connect to.</param>
         private void ProcessConnectionRequest(Server server)
         {
-            string command = string.Format("/server {0}:{1}", server.Address, server.Port);
+            string command = null;
+            if (string.IsNullOrEmpty(server.Password))
+            {
+                command = string.Format("/server {0} {1}", server.Address, server.Port);
+            }
+            else
+            {
+                command = string.Format("/server {0} {1} {2}", server.Address, server.Port, server.Password);
+            }
+
             this.ProcessConnectionRequest(command, server);
         }
 

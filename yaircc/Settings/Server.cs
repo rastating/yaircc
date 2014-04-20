@@ -48,6 +48,11 @@ namespace Yaircc.Settings
         private int port;
 
         /// <summary>
+        /// The server password.
+        /// </summary>
+        private string password;
+
+        /// <summary>
         /// A value indicating whether to automatically connect to the server on start-up.
         /// </summary>
         private bool automaticallyConnect;
@@ -95,6 +100,7 @@ namespace Yaircc.Settings
             this.userName = GlobalSettings.Instance.UserName;
             this.mode = GlobalSettings.Instance.Mode;
             this.commands = new List<string>();
+            this.password = string.Empty;
         }
 
         #endregion
@@ -135,6 +141,15 @@ namespace Yaircc.Settings
         {
             get { return this.port; }
             set { this.port = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the server password.
+        /// </summary>
+        public string Password
+        {
+            get { return this.password; }
+            set { this.password = value; }
         }
 
         /// <summary>
