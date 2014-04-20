@@ -210,6 +210,7 @@ namespace Yaircc
             this.userNameTextBox.Text = string.Empty;
             this.realNameTextBox.Text = string.Empty;
             this.modeTextBox.Text = string.Empty;
+            this.passwordTextBox.Text = string.Empty;
             this.commandsListBox.Items.Clear();
         }
 
@@ -412,6 +413,7 @@ namespace Yaircc
                 server.Port = int.Parse(this.portTextBox.Text);
                 server.RealName = this.realNameTextBox.Text;
                 server.UserName = this.userNameTextBox.Text;
+                server.Password = this.passwordTextBox.Text;
 
                 server.Commands.Clear();
                 server.Commands = this.commandsListBox.Items.OfType<string>().ToList();
@@ -473,6 +475,7 @@ namespace Yaircc
                 this.realNameTextBox.Text = server.RealName;
                 this.modeTextBox.Text = server.Mode;
                 this.commandsListBox.Items.Clear();
+                this.passwordTextBox.Text = server.Password;
                 server.Commands.ForEach(i => this.commandsListBox.Items.Add(i));
 
                 this.editCommandButton.Enabled = false;

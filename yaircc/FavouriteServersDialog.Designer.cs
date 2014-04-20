@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("irc.get-sourced.net");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("irc.quakenet.org");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Favourites", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("irc.get-sourced.net");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("irc.quakenet.org");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Favourites", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FavouriteServersDialog));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.serverTreeView = new System.Windows.Forms.TreeView();
@@ -73,6 +73,8 @@
             this.removeServerButton = new System.Windows.Forms.Button();
             this.addServerButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -88,9 +90,9 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(6, 8);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -113,23 +115,23 @@
             this.serverTreeView.ImageList = this.treeViewImageList;
             this.serverTreeView.Location = new System.Drawing.Point(0, 0);
             this.serverTreeView.Name = "serverTreeView";
-            treeNode1.ImageKey = "bullet_white";
-            treeNode1.Name = "Node1";
-            treeNode1.SelectedImageKey = "bullet_white";
-            treeNode1.Text = "irc.get-sourced.net";
-            treeNode2.ImageKey = "bullet_white";
-            treeNode2.Name = "Node0";
-            treeNode2.SelectedImageKey = "bullet_white";
-            treeNode2.Text = "irc.quakenet.org";
-            treeNode3.Name = "Node2";
-            treeNode3.Text = "Favourites";
+            treeNode4.ImageKey = "bullet_white";
+            treeNode4.Name = "Node1";
+            treeNode4.SelectedImageKey = "bullet_white";
+            treeNode4.Text = "irc.get-sourced.net";
+            treeNode5.ImageKey = "bullet_white";
+            treeNode5.Name = "Node0";
+            treeNode5.SelectedImageKey = "bullet_white";
+            treeNode5.Text = "irc.quakenet.org";
+            treeNode6.Name = "Node2";
+            treeNode6.Text = "Favourites";
             this.serverTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode6});
             this.serverTreeView.SelectedImageIndex = 0;
             this.serverTreeView.Size = new System.Drawing.Size(234, 387);
             this.serverTreeView.TabIndex = 0;
-            this.serverTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ServerTreeView_AfterSelect);
             this.serverTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.ServerTreeView_BeforeSelect);
+            this.serverTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ServerTreeView_AfterSelect);
             // 
             // treeViewImageList
             // 
@@ -174,10 +176,10 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox2.Location = new System.Drawing.Point(11, 156);
+            this.groupBox2.Location = new System.Drawing.Point(11, 189);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(449, 148);
             this.groupBox2.TabIndex = 2;
@@ -186,9 +188,9 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.05814F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.94186F));
@@ -295,21 +297,21 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Location = new System.Drawing.Point(11, 9);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(449, 141);
+            this.groupBox1.Size = new System.Drawing.Size(449, 174);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connection";
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.05814F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.94186F));
@@ -319,15 +321,18 @@
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.aliasTextBox, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.automaticallyConnectCheckBox, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.automaticallyConnectCheckBox, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label9, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.passwordTextBox, 1, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(15, 20);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(416, 103);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(416, 136);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // portTextBox
@@ -394,10 +399,10 @@
             // automaticallyConnectCheckBox
             // 
             this.automaticallyConnectCheckBox.AutoSize = true;
-            this.automaticallyConnectCheckBox.Location = new System.Drawing.Point(86, 84);
+            this.automaticallyConnectCheckBox.Location = new System.Drawing.Point(86, 111);
             this.automaticallyConnectCheckBox.Name = "automaticallyConnectCheckBox";
             this.automaticallyConnectCheckBox.Size = new System.Drawing.Size(222, 17);
-            this.automaticallyConnectCheckBox.TabIndex = 3;
+            this.automaticallyConnectCheckBox.TabIndex = 4;
             this.automaticallyConnectCheckBox.Text = "Automatically connect when yaircc starts";
             this.automaticallyConnectCheckBox.UseVisualStyleBackColor = true;
             this.automaticallyConnectCheckBox.CheckedChanged += new System.EventHandler(this.HandleChange);
@@ -478,9 +483,9 @@
             // 
             // commandsListBox
             // 
-            this.commandsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.commandsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.commandsListBox.FormattingEnabled = true;
             this.commandsListBox.Location = new System.Drawing.Point(14, 41);
             this.commandsListBox.Name = "commandsListBox";
@@ -495,7 +500,7 @@
             this.label8.Size = new System.Drawing.Size(359, 29);
             this.label8.TabIndex = 0;
             this.label8.Text = "The commands entered in the list below will be executed automatically once a conn" +
-                "ection has been successfully established to the server.";
+    "ection has been successfully established to the server.";
             // 
             // closeButton
             // 
@@ -552,6 +557,26 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(3, 81);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 27);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Password:";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // passwordTextBox
+            // 
+            this.passwordTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.passwordTextBox.Location = new System.Drawing.Point(86, 84);
+            this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.Size = new System.Drawing.Size(327, 21);
+            this.passwordTextBox.TabIndex = 3;
+            this.passwordTextBox.TextChanged += new System.EventHandler(this.HandleChange);
+            // 
             // FavouriteServersDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -570,8 +595,8 @@
             this.Name = "FavouriteServersDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Favourite Servers";
-            this.Shown += new System.EventHandler(this.FavouriteServersDialog_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FavouriteServersDialog_FormClosing);
+            this.Shown += new System.EventHandler(this.FavouriteServersDialog_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -629,5 +654,7 @@
         private System.Windows.Forms.Button addCommandButton;
         private System.Windows.Forms.Button moveUpButton;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox passwordTextBox;
     }
 }
