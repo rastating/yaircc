@@ -36,7 +36,7 @@ namespace Yaircc.Net
         /// <summary>
         /// The URL from which the release notes can be downloaded.
         /// </summary>
-        private static Uri releaseNotesUri = new Uri(@"https://www.yaircc.com/release-notes.xml");
+        private static Uri releaseNotesUri = new Uri(@"http://www.yaircc.com/release-notes.xml");
 
         /// <summary>
         /// The date of the release.
