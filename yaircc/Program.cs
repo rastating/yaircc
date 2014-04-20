@@ -64,7 +64,7 @@ namespace Yaircc
         {
             using (WebClient client = new WebClient())
             {
-                string url = "https://www.yaircc.com/error.php";
+                string url = "http://www.yaircc.com/error.php";
                 NameValueCollection data = new NameValueCollection();
                 data["payload"] = log;
                 client.UploadValues(url, "POST", data);
