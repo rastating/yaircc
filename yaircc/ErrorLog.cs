@@ -105,7 +105,7 @@ using System.Xml.Serialization;
         }
 
         /// <summary>
-        /// Gets the current application version number.
+        /// Gets or sets the current application version number.
         /// </summary>
         public string AppVersion
         {
