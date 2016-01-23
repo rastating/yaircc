@@ -25,6 +25,6 @@ All comments must be in English (British English preferred for consistency, but 
 Alternatively if you want to contribute in way of resources such as icons, [Open an Issue](https://github.com/rastating/yaircc/issues/new) describing how you want to contribute.
 
 ## Building the Project
-To build the latest version of the project a number of dependencies will be required, which can be found here: https://mega.co.nz/#!6d9VWD5A!oaq2XtpaMudvQjpZau94HWgGN7g5t9UUkkGranxCm6g
+To build the latest version of the project a number of dependencies will be required, which can be found here: https://mega.nz/#!fY0BgCbC!oaq2XtpaMudvQjpZau94HWgGN7g5t9UUkkGranxCm6g
 
 A reference must be added in the project to both CefSharp.dll and CefSharp.WinForms.dll, and the rest of the files must be present in the output directory in order to run.
