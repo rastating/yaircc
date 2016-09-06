@@ -2,8 +2,6 @@
 
 yaircc (pronounced yerk) is a free, open-source IRC client for Windows that complies with the standards set by both RFC 1459 and RFC 2812, and also supports a number of defacto standards that have become a part of many IRC clients over the years, such as custom font colours, action messages and more.
 
-To download the latest stable release visit http://www.yaircc.com/
-
 ## Author
 - [rastating](http://www.rastating.com/) ([@iamrastating](https://twitter.com/iamrastating))
 
