@@ -16,7 +16,7 @@ yaircc (pronounced yerk) is a free, open-source IRC client for Windows that comp
 - Yusuke Kamiyamane ([@ykamiyamane](http://twitter.com/ykamiyamane)) - Icon Design
 
 ## Contributing
-If you want to contribute to the project ensure that all code written passes a StyleCop test using the settings found in the main project (https://github.com/intninety/yaircc/blob/master/yaircc/Settings.StyleCop). 
+If you want to contribute to the project ensure that all code written passes a StyleCop test using the settings found in the main project (https://github.com/rastating/yaircc/blob/master/yaircc/Settings.StyleCop). 
 
 All comments must be in English (British English preferred for consistency, but any flavour will work as long as it's legible!).
 
